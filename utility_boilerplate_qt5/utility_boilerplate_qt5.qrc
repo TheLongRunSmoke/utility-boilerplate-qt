@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/utility_boilerplate_qt5">
+        <file alias="ic_new">images/new.png</file>
+        <file alias="ic_open">images/open.png</file>
+        <file alias="ic_save">images/save.png</file>
+        <file alias="ic_copy">images/copy.png</file>
+        <file alias="ic_cut">images/cut.png</file>
+        <file alias="ic_paste">images/paste.png</file>
+    </qresource>
+</RCC>

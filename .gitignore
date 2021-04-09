@@ -1,0 +1,5 @@
+# Idea-related stuff
+.idea
+# CMake
+cmake-build-*/
+build
