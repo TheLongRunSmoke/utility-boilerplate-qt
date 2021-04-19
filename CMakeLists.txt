@@ -4,8 +4,6 @@ project(utility_boilerplate_qt)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_PREFIX_PATH "D:\\Qt\\5.15.0\\mingw81_64\\")
-
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5" "${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5/build")
