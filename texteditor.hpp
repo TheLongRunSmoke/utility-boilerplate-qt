@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include "ui_TextEditor.h"
+#include "ui_texteditor.h"
 
 class TextEditor : public QWidget
 {

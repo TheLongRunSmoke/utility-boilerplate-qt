@@ -1,4 +1,5 @@
 #include <QWidget>
+#include <QWindow>
 #include <QGridLayout>
 #include <QCloseEvent>
 #include <QGuiApplication>
@@ -16,9 +17,9 @@
 #include "settings.hpp"
 #include "helpers.hpp"
 
-UtilityMainWindow::UtilityMainWindow(QWidget* parent)
+UtilityMainWindow::UtilityMainWindow(QWidget *parent)
         : QMainWindow(parent) {
-    auto* mainFrame = new QFrame(this);
+    auto *mainFrame = new QFrame(this);
     setCentralWidget(mainFrame);
     mainLayout = new QGridLayout(mainFrame);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -36,13 +37,13 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
-void UtilityMainWindow::loadFile(const QString& fileName) {
+void UtilityMainWindow::loadFile(const QString &fileName) {
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
     updateRecentFileActions();
 }
 
-QGridLayout* UtilityMainWindow::getLayout() {
+QGridLayout *UtilityMainWindow::getLayout() {
     return mainLayout;
 }
 
@@ -51,7 +52,7 @@ QGridLayout* UtilityMainWindow::getLayout() {
  *
  * @param filePath
  */
-void UtilityMainWindow::setCurrentFile(const QString& filePath) {
+void UtilityMainWindow::setCurrentFile(const QString &filePath) {
     currentFile = filePath;
     QString shownName = currentFile;
     if (shownName.isEmpty())
@@ -64,13 +65,13 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
  * Initialize menus and toolbars.
  */
 void UtilityMainWindow::createActions() {
-    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     fileToolBar = addToolBar(tr("File"));
     createFileActions(fileMenu, fileToolBar);
-    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
+    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
     editToolBar = addToolBar(tr("Edit"));
     createEditActions(editMenu, editToolBar);
-    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
+    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
 }
 
@@ -80,7 +81,7 @@ void UtilityMainWindow::createActions() {
  * @param menu
  * @param toolbar
  */
-void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
+void UtilityMainWindow::createFileActions(QMenu *menu, QToolBar *toolbar) {
     addAction(
             tr("&New"),
             tr("Create a new file"),
@@ -120,11 +121,11 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
             menu);
 }
 
-void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
+void UtilityMainWindow::createEditActions(QMenu *menu, QToolBar *toolbar) {
 
 }
 
-void UtilityMainWindow::createHelpActions(QMenu* menu) {
+void UtilityMainWindow::createHelpActions(QMenu *menu) {
     addAction(
             tr("&About"),
             tr("About application."),
@@ -153,7 +154,7 @@ QIODevice::OpenMode UtilityMainWindow::getFileWriteMode() {
     return QFile::WriteOnly;
 }
 
-bool UtilityMainWindow::isFileReadable(const QString& filename) {
+bool UtilityMainWindow::isFileReadable(const QString &filename) {
     QFile file(filename);
     if (!file.open(getFileReadMode())) {
         QMessageBox::warning(this, tr("Application"),
@@ -232,7 +233,7 @@ void UtilityMainWindow::paste() {
  * Check window geometry. If window not on screen reset to default.
  */
 void UtilityMainWindow::validateGeometry() {
-    const QRect available = screen()->availableVirtualGeometry();
+    const QRect available = QGuiApplication::primaryScreen()->availableVirtualGeometry();
     const QRect win = geometry();
     if (isOnScreen(win.left(), available.width()) ||
         isOnScreen(win.right(), available.width()) ||
@@ -258,7 +259,7 @@ bool UtilityMainWindow::isOnScreen(int pos, int max) {
  */
 void UtilityMainWindow::resetWindowGeometry() {
     // Take screen geometry.
-    const QRect availableGeometry = screen()->availableGeometry();
+    const QRect availableGeometry = QGuiApplication::primaryScreen()->availableGeometry();
     // Set window size as a screen quarter...
     resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
     // ... and place in screen center.
@@ -287,7 +288,7 @@ void UtilityMainWindow::writeSettings() {
 
 #ifndef QT_NO_SESSIONMANAGER
 
-void UtilityMainWindow::commitData(QSessionManager& manager) {
+void UtilityMainWindow::commitData(QSessionManager &manager) {
     if (manager.allowsInteraction()) {
         if (!isSaved())
             manager.cancel();
@@ -319,7 +320,7 @@ bool UtilityMainWindow::isSaved() {
     return true;
 }
 
-void UtilityMainWindow::closeEvent(QCloseEvent* event) {
+void UtilityMainWindow::closeEvent(QCloseEvent *event) {
     writeSettings();
     if (isSaved()) {
         event->accept();
@@ -342,11 +343,11 @@ void UtilityMainWindow::createStatusBar() {
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addAction(const QString& name, const QString& tip,
+void UtilityMainWindow::addAction(const QString &name, const QString &tip,
                                   const FuncReference method, const QKeySequence::StandardKey keySequence,
-                                  const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
+                                  const QIcon &icon, QMenu *menu, QToolBar *toolbar) {
     // Create action with or without icon.
-    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
+    auto *action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
     action->setStatusTip(tip);
     // Add hotkey if specified.
     if (keySequence != QKeySequence::StandardKey::UnknownKey)
@@ -358,15 +359,15 @@ void UtilityMainWindow::addAction(const QString& name, const QString& tip,
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method, QMenu* menu,
-                                  QToolBar* toolbar) {
+void UtilityMainWindow::addAction(const QString &name, const QString &tip, FuncReference method, QMenu *menu,
+                                  QToolBar *toolbar) {
     addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
 }
 
 template<typename FuncReference>
 void UtilityMainWindow::addActionToPosition(const QIcon icon, const QString name, const QString tip,
                                             const QKeySequence::StandardKey keySequence, const int position,
-                                            const FuncReference method, QMenu* menu, QToolBar* toolbar) {
+                                            const FuncReference method, QMenu *menu, QToolBar *toolbar) {
 
 }
 
@@ -374,7 +375,7 @@ QString UtilityMainWindow::defaultFileName() {
     return "untitled";
 }
 
-void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
+void UtilityMainWindow::addSeparator(QMenu *menu, QToolBar *toolBar) {
     if (menu != nullptr)
         menu->addSeparator();
     if (toolBar != nullptr)
