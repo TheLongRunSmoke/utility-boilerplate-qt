@@ -8,8 +8,8 @@ class TextEditor : public QWidget
 	Q_OBJECT
 
 public:
-	TextEditor(QWidget *parent = Q_NULLPTR);
-	~TextEditor();
+	explicit TextEditor(QWidget *parent = Q_NULLPTR);
+	~TextEditor() override;
 	void setText(const QString& text);
 	QString getText();
 	bool isModified();

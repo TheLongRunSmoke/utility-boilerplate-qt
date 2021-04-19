@@ -10,24 +10,29 @@
  * Inheritance from UtilityMainWindow give you a "ready to go" window
  * with menu, status bar and common operation like creating, opening and saving files.
  */
-class MainWindow : public UtilityMainWindow
-{
-	Q_OBJECT
+class MainWindow : public UtilityMainWindow {
+Q_OBJECT
 
 public:
-	MainWindow(QWidget* parent = Q_NULLPTR);
-	void loadFile(const QString& fileName) override;
+    MainWindow(QWidget* parent = Q_NULLPTR);
+
+    void loadFile(const QString& fileName) override;
 
 protected:
-	QString getExtensions() override;
-	QIODevice::OpenMode getFileReadMode() override;
-	QIODevice::OpenMode getFileWriteMode() override;
-	bool isDocumentModified() override;
-	void clearDocument() override;
-	bool saveFile(const QString& fileName) override;
+    QString getExtensions() override;
+
+    QIODevice::OpenMode getFileReadMode() override;
+
+    QIODevice::OpenMode getFileWriteMode() override;
+
+    bool isDocumentModified() override;
+
+    void clearDocument() override;
+
+    bool saveFile(const QString& fileName) override;
 
 private:
-	TextEditor* textEditor;
+    TextEditor* textEditor;  // <- This is your widget.
 
 };
 

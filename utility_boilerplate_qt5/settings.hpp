@@ -8,11 +8,11 @@ class Settings : public QSettings
 {
 public:
 	Settings();
-	const QByteArray geometry();
-	void setGeometry(QByteArray geometry);
+	QByteArray geometry();
+	void setGeometry(const QByteArray& geometry);
 	bool hasRecentFiles();
 	QStringList recentFiles();
-	void putRecentFile(const QString path);
+	void putRecentFile(const QString& path);
 private:
 	static QString path();
 	inline static QString geometryKey();

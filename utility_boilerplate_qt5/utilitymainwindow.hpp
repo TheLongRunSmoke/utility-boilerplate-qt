@@ -20,7 +20,14 @@ protected:
 
     void closeEvent(QCloseEvent* event) override;
 
-    void setCurrentFile(const QString& fileName);
+    /**
+     * Set current file filename for window.
+     *
+     * If empty, result of defaultFileName() will be used.
+     *
+     * @param filePath file path.
+     */
+    void setCurrentFile(const QString& filePath);
 
     void createActions();
 
@@ -30,13 +37,15 @@ protected:
 
     virtual void createHelpActions(QMenu* menu);
 
+    virtual QString defaultFileName();
+
     virtual QString getExtensions();
 
     virtual QIODevice::OpenMode getFileReadMode();
 
     virtual QIODevice::OpenMode getFileWriteMode();
 
-    virtual bool isFileReadable(QString filename);
+    virtual bool isFileReadable(const QString& filename);
 
     virtual void clearDocument() = 0;
 
@@ -46,13 +55,21 @@ protected:
 
     template<typename FuncReference>
     void addAction(
-            const QIcon& icon,
             const QString& name,
             const QString& tip,
-            QKeySequence::StandardKey keySequence,
             FuncReference method,
-            QMenu* menu,
-            QToolBar* toolbar);
+            QKeySequence::StandardKey keySequence,
+            const QIcon& icon = QIcon(),
+            QMenu* menu = nullptr,
+            QToolBar* toolbar = nullptr);
+
+    template<typename FuncReference>
+    void addAction(
+            const QString& name,
+            const QString& tip,
+            FuncReference method,
+            QMenu* menu = nullptr,
+            QToolBar* toolbar = nullptr);
 
     template<typename FuncReference>
     void addActionToPosition(
@@ -65,6 +82,16 @@ protected:
             QMenu* menu,
             QToolBar* toolbar);
 
+    /**
+     * Add separator in to menu and/or toolbar.
+     *
+     * @param menu menu pointer, can be nullptr.
+     * @param toolBar toolbar pointer, can be nullptr.
+     */
+    static void addSeparator(
+            QMenu* menu,
+            QToolBar* toolBar = nullptr);
+
 protected slots:
 
     void newFile();
@@ -76,6 +103,8 @@ protected slots:
     bool save();
 
     bool saveAs();
+
+    void exit();
 
     void about();
 
@@ -92,7 +121,11 @@ protected slots:
 #endif
 
 private:
+    /**
+     * Current working file name.
+     */
     QString currentFile;
+
     QGridLayout* mainLayout;
     QToolBar* fileToolBar{};
     QToolBar* editToolBar{};
@@ -101,7 +134,7 @@ private:
 
     void validateGeometry();
 
-    bool isOnScreen(int pos, int max);
+    static bool isOnScreen(int pos, int max);
 
     void resetWindowGeometry();
 
@@ -109,6 +142,13 @@ private:
 
     void writeSettings();
 
+    /**
+     * Check that working file saved interactively.
+     *
+     * If file modified, dialog shown and UI locked until user select what to do and file actually saved.
+     *
+     * @return true if file saved.
+     */
     bool isSaved();
 
     QAction* recentFileActs[5]{};
@@ -120,6 +160,8 @@ private:
     void setRecentFilesVisible(bool visible);
 
     struct WrongMenuPosition;
+
+    void checkForRecentFiles();
 };
 
 #endif // UMAINWINDOW_H

@@ -46,40 +46,78 @@ QGridLayout* UtilityMainWindow::getLayout() {
     return mainLayout;
 }
 
-void UtilityMainWindow::setCurrentFile(const QString& fileName) {
-    currentFile = fileName;
-    setWindowModified(false);
+/**
+ *
+ *
+ * @param filePath
+ */
+void UtilityMainWindow::setCurrentFile(const QString& filePath) {
+    currentFile = filePath;
     QString shownName = currentFile;
     if (shownName.isEmpty())
-        shownName = "untitled";
-    setWindowFilePath(shownName);
-    currentFile = fileName;
-    setWindowTitle(currentFile);
+        shownName = defaultFileName();
+    setWindowTitle(shownName.append(" - ").append(QCoreApplication::applicationName()));
+    setWindowModified(false);
 }
 
+/**
+ * Initialize menus and toolbars.
+ */
 void UtilityMainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     fileToolBar = addToolBar(tr("File"));
-    addAction(
-            QIcon::fromTheme("document-new", QIcon(":/utility_boilerplate_qt5/ic_new")),
-            tr("&New"),
-            tr("Create a new file"),
-            QKeySequence::New,
-            &UtilityMainWindow::newFile,
-            fileMenu,
-            fileToolBar);
-    addAction(
-            QIcon::fromTheme("document-open", QIcon(":/utility_boilerplate_qt5/ic_open")),
-            tr("&Open"),
-            tr("Open file"),
-            QKeySequence::Open,
-            &UtilityMainWindow::open,
-            fileMenu,
-            fileToolBar);
+    createFileActions(fileMenu, fileToolBar);
+    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
+    editToolBar = addToolBar(tr("Edit"));
+    createEditActions(editMenu, editToolBar);
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
+    createHelpActions(helpMenu);
 }
 
+/**
+ * Create File menu and toolbar.
+ *
+ * @param menu
+ * @param toolbar
+ */
 void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
+    addAction(
+            tr("&New"),
+            tr("Create a new file"),
+            &UtilityMainWindow::newFile,
+            QKeySequence::New,
+            QIcon::fromTheme("document-new", QIcon(":/utility_boilerplate_qt5/ic_new")),
+            menu,
+            toolbar);
+    addAction(
+            tr("&Open"),
+            tr("Open file"),
+            &UtilityMainWindow::open,
+            QKeySequence::Open,
+            QIcon::fromTheme("document-open", QIcon(":/utility_boilerplate_qt5/ic_open")),
+            menu,
+            toolbar);
+    addAction(
+            tr("&Save"),
+            tr("Save file"),
+            &UtilityMainWindow::save,
+            QKeySequence::Save,
+            QIcon::fromTheme("document-save", QIcon(":/utility_boilerplate_qt5/ic_save")),
+            menu,
+            toolbar);
+    addAction(
+            tr("Save as…"),
+            tr("Save file as…"),
+            &UtilityMainWindow::saveAs,
+            menu);
+    addSeparator(menu);
 
+    addSeparator(menu);
+    addAction(
+            tr("E&xit"),
+            tr("Quit"),
+            &UtilityMainWindow::exit,
+            menu);
 }
 
 void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
@@ -87,6 +125,19 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 }
 
 void UtilityMainWindow::createHelpActions(QMenu* menu) {
+    addAction(
+            tr("&About"),
+            tr("About application."),
+            &UtilityMainWindow::about,
+            menu);
+    addAction(
+            tr("About &Qt"),
+            tr("Show the Qt library's About box"),
+            &QApplication::aboutQt,
+            menu);
+}
+
+void UtilityMainWindow::checkForRecentFiles() {
 
 }
 
@@ -102,14 +153,14 @@ QIODevice::OpenMode UtilityMainWindow::getFileWriteMode() {
     return QFile::WriteOnly;
 }
 
-bool UtilityMainWindow::isFileReadable(const QString filename) {
-//    QFile file(fileName);
-//    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-//        QMessageBox::warning(this, tr("Application"),
-//                             tr("Cannot read file %1:\n%2.")
-//                                     .arg(QDir::toNativeSeparators(fileName), file.errorString()));
-//        return;
-//    }
+bool UtilityMainWindow::isFileReadable(const QString& filename) {
+    QFile file(filename);
+    if (!file.open(getFileReadMode())) {
+        QMessageBox::warning(this, tr("Application"),
+                             tr("Cannot read file %1:\n%2.")
+                                     .arg(QDir::toNativeSeparators(filename), file.errorString()));
+        return false;
+    }
     return true;
 }
 
@@ -121,9 +172,15 @@ void UtilityMainWindow::newFile() {
 
 void UtilityMainWindow::open() {
     if (!isSaved()) return;
-    QString fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty())
-        loadFile(fileName);
+    QFileDialog dialog(this);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setNameFilter(getExtensions());
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    if (dialog.exec() != QDialog::Accepted)
+        return;
+    QString file = dialog.selectedFiles().first();
+    if (!file.isEmpty())
+        loadFile(file);
 }
 
 void UtilityMainWindow::openRecentFile() {
@@ -141,10 +198,15 @@ bool UtilityMainWindow::save() {
 bool UtilityMainWindow::saveAs() {
     QFileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
+    dialog.setNameFilter(getExtensions());
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     if (dialog.exec() != QDialog::Accepted)
         return false;
     return saveFile(dialog.selectedFiles().first());
+}
+
+void UtilityMainWindow::exit() {
+    if (isSaved()) QCoreApplication::quit();
 }
 
 void UtilityMainWindow::about() {
@@ -197,8 +259,9 @@ bool UtilityMainWindow::isOnScreen(int pos, int max) {
 void UtilityMainWindow::resetWindowGeometry() {
     // Take screen geometry.
     const QRect availableGeometry = screen()->availableGeometry();
-    resize(availableGeometry.width() / 3, availableGeometry.height() / 2);
-    // Place window in screen center.
+    // Set window size as a screen quarter...
+    resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
+    // ... and place in screen center.
     move((availableGeometry.width() - width()) / 2,
          (availableGeometry.height() - height()) / 2);
 }
@@ -225,14 +288,14 @@ void UtilityMainWindow::writeSettings() {
 #ifndef QT_NO_SESSIONMANAGER
 
 void UtilityMainWindow::commitData(QSessionManager& manager) {
-//    if (manager.allowsInteraction()) {
-//        if (!maybeSave())
-//            manager.cancel();
-//    } else {
-//        // Non-interactive: save without asking
-//        //if (textEdit->document()->isModified())
-//        //	save();
-//    }
+    if (manager.allowsInteraction()) {
+        if (!isSaved())
+            manager.cancel();
+    } else {
+        // Non-interactive: save without asking
+        if (isDocumentModified())
+            save();
+    }
 }
 
 #endif
@@ -257,8 +320,8 @@ bool UtilityMainWindow::isSaved() {
 }
 
 void UtilityMainWindow::closeEvent(QCloseEvent* event) {
+    writeSettings();
     if (isSaved()) {
-        writeSettings();
         event->accept();
     } else {
         event->ignore();
@@ -279,15 +342,25 @@ void UtilityMainWindow::createStatusBar() {
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addAction(const QIcon& icon, const QString& name, const QString& tip,
-                                  const QKeySequence::StandardKey keySequence, const FuncReference method,
-                                  QMenu* menu, QToolBar* toolbar) {
-    auto* action = new QAction(icon, name, this);
+void UtilityMainWindow::addAction(const QString& name, const QString& tip,
+                                  const FuncReference method, const QKeySequence::StandardKey keySequence,
+                                  const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
+    // Create action with or without icon.
+    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
     action->setStatusTip(tip);
-    action->setShortcuts(keySequence);
+    // Add hotkey if specified.
+    if (keySequence != QKeySequence::StandardKey::UnknownKey)
+        action->setShortcuts(keySequence);
+    // Connect to slot and add to menu and toolbar, if specified.
     connect(action, &QAction::triggered, this, method);
-    menu->addAction(action);
-    toolbar->addAction(action);
+    if (menu != nullptr) menu->addAction(action);
+    if (toolbar != nullptr) toolbar->addAction(action);
+}
+
+template<typename FuncReference>
+void UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method, QMenu* menu,
+                                  QToolBar* toolbar) {
+    addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
 }
 
 template<typename FuncReference>
@@ -296,3 +369,15 @@ void UtilityMainWindow::addActionToPosition(const QIcon icon, const QString name
                                             const FuncReference method, QMenu* menu, QToolBar* toolbar) {
 
 }
+
+QString UtilityMainWindow::defaultFileName() {
+    return "untitled";
+}
+
+void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
+    if (menu != nullptr)
+        menu->addSeparator();
+    if (toolBar != nullptr)
+        toolBar->addSeparator();
+}
+

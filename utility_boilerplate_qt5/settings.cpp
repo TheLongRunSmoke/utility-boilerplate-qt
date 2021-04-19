@@ -4,11 +4,11 @@
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {}
 
-const QByteArray Settings::geometry() {
+QByteArray Settings::geometry() {
     return value(geometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setGeometry(QByteArray geometry) {
+void Settings::setGeometry(const QByteArray& geometry) {
     setValue(geometryKey(), geometry);
 }
 
@@ -29,7 +29,7 @@ QStringList Settings::recentFiles() {
     return result;
 }
 
-void Settings::putRecentFile(const QString path) {
+void Settings::putRecentFile(const QString& path) {
     QStringList files = recentFiles();
     files.insert(0, path);
     const int count = std::min(files.size(), 5);
