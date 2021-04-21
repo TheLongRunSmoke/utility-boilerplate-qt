@@ -66,3 +66,24 @@ bool MainWindow::isDocumentModified() {
 void MainWindow::clearDocument() {
     textEditor->clear();
 }
+
+/**
+ * To support copy-paste functional, pass this call to widget in focus. Only one widget here.
+ */
+void MainWindow::cut() {
+    textEditor->cut();
+}
+
+/**
+ * To support copy-paste functional, pass this call to widget in focus. Only one widget here.
+ */
+void MainWindow::copy() {
+    textEditor->copy();
+}
+
+/**
+ * To support copy-paste functional, pass this call to widget in focus. Only one widget here.
+ */
+void MainWindow::paste() {
+    textEditor->paste();
+}

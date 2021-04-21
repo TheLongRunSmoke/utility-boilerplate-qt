@@ -3,11 +3,8 @@
 #include <QGridLayout>
 #include <QCloseEvent>
 #include <QGuiApplication>
-#include <QSettings>
 #include <QScreen>
-#include <QString>
 #include <QMenu>
-#include <QStatusBar>
 #include <QMenuBar>
 #include <QToolBar>
 #include <QFrame>
@@ -17,9 +14,9 @@
 #include "settings.hpp"
 #include "helpers.hpp"
 
-UtilityMainWindow::UtilityMainWindow(QWidget *parent)
+UtilityMainWindow::UtilityMainWindow(QWidget* parent)
         : QMainWindow(parent) {
-    auto *mainFrame = new QFrame(this);
+    auto* mainFrame = new QFrame(this);
     setCentralWidget(mainFrame);
     mainLayout = new QGridLayout(mainFrame);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -37,13 +34,13 @@ UtilityMainWindow::UtilityMainWindow(QWidget *parent)
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
-void UtilityMainWindow::loadFile(const QString &fileName) {
+void UtilityMainWindow::loadFile(const QString& fileName) {
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
     updateRecentFileActions();
 }
 
-QGridLayout *UtilityMainWindow::getLayout() {
+QGridLayout* UtilityMainWindow::getLayout() {
     return mainLayout;
 }
 
@@ -52,7 +49,7 @@ QGridLayout *UtilityMainWindow::getLayout() {
  *
  * @param filePath
  */
-void UtilityMainWindow::setCurrentFile(const QString &filePath) {
+void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     currentFile = filePath;
     QString shownName = currentFile;
     if (shownName.isEmpty())
@@ -65,13 +62,14 @@ void UtilityMainWindow::setCurrentFile(const QString &filePath) {
  * Initialize menus and toolbars.
  */
 void UtilityMainWindow::createActions() {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     fileToolBar = addToolBar(tr("File"));
     createFileActions(fileMenu, fileToolBar);
-    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
     editToolBar = addToolBar(tr("Edit"));
     createEditActions(editMenu, editToolBar);
-    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+    menuCleanUp(editMenu, editToolBar);
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
 }
 
@@ -81,7 +79,7 @@ void UtilityMainWindow::createActions() {
  * @param menu
  * @param toolbar
  */
-void UtilityMainWindow::createFileActions(QMenu *menu, QToolBar *toolbar) {
+void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
     addAction(
             tr("&New"),
             tr("Create a new file"),
@@ -112,20 +110,55 @@ void UtilityMainWindow::createFileActions(QMenu *menu, QToolBar *toolbar) {
             &UtilityMainWindow::saveAs,
             menu);
     addSeparator(menu);
-
+    auto* recentFileAction = addAction(
+            tr("R&ecent files…"),
+            tr("Open recent files."),
+            &UtilityMainWindow::exit,
+            menu);
     addSeparator(menu);
     addAction(
             tr("E&xit"),
             tr("Quit"),
             &UtilityMainWindow::exit,
             menu);
+    checkForRecentFiles(recentFileAction, menu);
 }
 
-void UtilityMainWindow::createEditActions(QMenu *menu, QToolBar *toolbar) {
+void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
+
+#ifndef QT_NO_CLIPBOARD
+
+    addAction(
+            tr("Cu&t"),
+            tr("Cut the current selection's contents to the clipboard"),
+            &UtilityMainWindow::cut,
+            QKeySequence::Cut,
+            QIcon::fromTheme("edit-cut", QIcon(":/utility_boilerplate_qt5/ic_cut")),
+            menu,
+            toolbar);
+    addAction(
+            tr("&Copy"),
+            tr("Copy the current selection's contents to the clipboard"),
+            &UtilityMainWindow::copy,
+            QKeySequence::Copy,
+            QIcon::fromTheme("edit-copy", QIcon(":/utility_boilerplate_qt5/ic_copy")),
+            menu,
+            toolbar);
+    addAction(
+            tr("&Paste"),
+            tr("Paste the clipboard's contents into the current selection"),
+            &UtilityMainWindow::paste,
+            QKeySequence::Paste,
+            QIcon::fromTheme("edit-paste", QIcon(":/utility_boilerplate_qt5/ic_paste")),
+            menu,
+            toolbar);
+    addSeparator(menu, toolbar);
+
+#endif // !QT_NO_CLIPBOARD
 
 }
 
-void UtilityMainWindow::createHelpActions(QMenu *menu) {
+void UtilityMainWindow::createHelpActions(QMenu* menu) {
     addAction(
             tr("&About"),
             tr("About application."),
@@ -138,8 +171,13 @@ void UtilityMainWindow::createHelpActions(QMenu *menu) {
             menu);
 }
 
-void UtilityMainWindow::checkForRecentFiles() {
-
+void UtilityMainWindow::checkForRecentFiles(QAction* action, QMenu* menu) {
+    auto* settings = new Settings();
+    if (!settings->hasRecentFiles()){
+        action->setDisabled(true);
+        delete settings;
+        return;
+    }
 }
 
 QString UtilityMainWindow::getExtensions() {
@@ -154,7 +192,7 @@ QIODevice::OpenMode UtilityMainWindow::getFileWriteMode() {
     return QFile::WriteOnly;
 }
 
-bool UtilityMainWindow::isFileReadable(const QString &filename) {
+bool UtilityMainWindow::isFileReadable(const QString& filename) {
     QFile file(filename);
     if (!file.open(getFileReadMode())) {
         QMessageBox::warning(this, tr("Application"),
@@ -288,7 +326,7 @@ void UtilityMainWindow::writeSettings() {
 
 #ifndef QT_NO_SESSIONMANAGER
 
-void UtilityMainWindow::commitData(QSessionManager &manager) {
+void UtilityMainWindow::commitData(QSessionManager& manager) {
     if (manager.allowsInteraction()) {
         if (!isSaved())
             manager.cancel();
@@ -320,7 +358,7 @@ bool UtilityMainWindow::isSaved() {
     return true;
 }
 
-void UtilityMainWindow::closeEvent(QCloseEvent *event) {
+void UtilityMainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     if (isSaved()) {
         event->accept();
@@ -343,11 +381,11 @@ void UtilityMainWindow::createStatusBar() {
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addAction(const QString &name, const QString &tip,
-                                  const FuncReference method, const QKeySequence::StandardKey keySequence,
-                                  const QIcon &icon, QMenu *menu, QToolBar *toolbar) {
+QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip,
+                                      const FuncReference method, const QKeySequence::StandardKey keySequence,
+                                      const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
     // Create action with or without icon.
-    auto *action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
+    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
     action->setStatusTip(tip);
     // Add hotkey if specified.
     if (keySequence != QKeySequence::StandardKey::UnknownKey)
@@ -356,18 +394,19 @@ void UtilityMainWindow::addAction(const QString &name, const QString &tip,
     connect(action, &QAction::triggered, this, method);
     if (menu != nullptr) menu->addAction(action);
     if (toolbar != nullptr) toolbar->addAction(action);
+    return action;
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addAction(const QString &name, const QString &tip, FuncReference method, QMenu *menu,
-                                  QToolBar *toolbar) {
-    addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
+QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method, QMenu* menu,
+                                      QToolBar* toolbar) {
+    return addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
 }
 
 template<typename FuncReference>
 void UtilityMainWindow::addActionToPosition(const QIcon icon, const QString name, const QString tip,
                                             const QKeySequence::StandardKey keySequence, const int position,
-                                            const FuncReference method, QMenu *menu, QToolBar *toolbar) {
+                                            const FuncReference method, QMenu* menu, QToolBar* toolbar) {
 
 }
 
@@ -375,10 +414,16 @@ QString UtilityMainWindow::defaultFileName() {
     return "untitled";
 }
 
-void UtilityMainWindow::addSeparator(QMenu *menu, QToolBar *toolBar) {
+void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
     if (menu != nullptr)
         menu->addSeparator();
     if (toolBar != nullptr)
         toolBar->addSeparator();
+}
+
+void UtilityMainWindow::menuCleanUp(QMenu* menu, QToolBar* toolbar) {
+    if (menu->isEmpty()) menu->setVisible(false);
+    if (toolbar == nullptr) return;
+    if (toolbar->actions().isEmpty()) toolbar->setVisible(false);
 }
 

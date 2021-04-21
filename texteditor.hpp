@@ -14,6 +14,9 @@ public:
 	QString getText();
 	bool isModified();
 	void clear();
+    void cut();
+    void copy();
+    void paste();
 
 private:
 	Ui::TextEditor ui;

@@ -54,7 +54,7 @@ protected:
     virtual bool saveFile(const QString& fileName) = 0;
 
     template<typename FuncReference>
-    void addAction(
+    QAction* addAction(
             const QString& name,
             const QString& tip,
             FuncReference method,
@@ -64,7 +64,7 @@ protected:
             QToolBar* toolbar = nullptr);
 
     template<typename FuncReference>
-    void addAction(
+    QAction* addAction(
             const QString& name,
             const QString& tip,
             FuncReference method,
@@ -161,7 +161,9 @@ private:
 
     struct WrongMenuPosition;
 
-    void checkForRecentFiles();
+    static void checkForRecentFiles(QAction* action, QMenu* pMenu);
+
+    static void menuCleanUp(QMenu* menu, QToolBar* toolbar = nullptr);
 };
 
 #endif // UMAINWINDOW_H

@@ -24,4 +24,16 @@ void TextEditor::clear() {
     ui.textEdit->setPlainText(QString());
 }
 
+void TextEditor::cut() {
+    ui.textEdit->cut();
+}
+
+void TextEditor::copy() {
+    ui.textEdit->copy();
+}
+
+void TextEditor::paste() {
+    ui.textEdit->paste();
+}
+
 

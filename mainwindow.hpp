@@ -31,6 +31,15 @@ protected:
 
     bool saveFile(const QString& fileName) override;
 
+
+protected slots:
+
+    void cut() override;
+
+    void copy() override;
+
+    void paste() override;
+
 private:
     TextEditor* textEditor;  // <- This is your widget.
 
