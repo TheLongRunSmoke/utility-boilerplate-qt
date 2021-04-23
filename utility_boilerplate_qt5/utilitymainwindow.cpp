@@ -37,18 +37,12 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
 void UtilityMainWindow::loadFile(const QString& fileName) {
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
-    updateRecentFileActions();
 }
 
 QGridLayout* UtilityMainWindow::getLayout() {
     return mainLayout;
 }
 
-/**
- *
- *
- * @param filePath
- */
 void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     currentFile = filePath;
     QString shownName = currentFile;
@@ -80,6 +74,7 @@ void UtilityMainWindow::createActions() {
  * @param toolbar
  */
 void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
+    connect(menu, &QMenu::aboutToShow, this, &UtilityMainWindow::checkRecentFilesAvailability);
     addAction(
             tr("&New"),
             tr("Create a new file"),
@@ -110,18 +105,14 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
             &UtilityMainWindow::saveAs,
             menu);
     addSeparator(menu);
-    auto* recentFileAction = addAction(
-            tr("R&ecent files…"),
-            tr("Open recent files."),
-            &UtilityMainWindow::exit,
-            menu);
+    recentFilesSubmenu = menu->addMenu(tr("R&ecent files…"));
+    connect(recentFilesSubmenu, &QMenu::aboutToShow, this, &UtilityMainWindow::updateRecentFiles);
     addSeparator(menu);
     addAction(
             tr("E&xit"),
             tr("Quit"),
             &UtilityMainWindow::exit,
             menu);
-    checkForRecentFiles(recentFileAction, menu);
 }
 
 void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
@@ -171,13 +162,22 @@ void UtilityMainWindow::createHelpActions(QMenu* menu) {
             menu);
 }
 
-void UtilityMainWindow::checkForRecentFiles(QAction* action, QMenu* menu) {
-    auto* settings = new Settings();
-    if (!settings->hasRecentFiles()){
-        action->setDisabled(true);
-        delete settings;
-        return;
+void UtilityMainWindow::updateRecentFiles() {
+    const QStringList recentFiles = Settings().recentFiles();
+    recentFilesSubmenu->clear();
+    for (int i = 0; i < recentFiles.size(); ++i) {
+        const QString fileName = QFileInfo(recentFiles.at(i)).fileName();
+        auto* action = new QAction(
+                tr("&%1 %2").arg(i + 1).arg(fileName),
+                this);
+        action->setData(recentFiles.at(i));
+        connect(action, &QAction::triggered, this, &UtilityMainWindow::openRecentFile);
+        recentFilesSubmenu->addAction(action);
     }
+}
+
+void UtilityMainWindow::checkRecentFilesAvailability() {
+    recentFilesSubmenu->setEnabled(Settings().hasRecentFiles());
 }
 
 QString UtilityMainWindow::getExtensions() {
@@ -223,14 +223,21 @@ void UtilityMainWindow::open() {
 }
 
 void UtilityMainWindow::openRecentFile() {
-
+    if (!isSaved()) return;
+    if (const auto* action = qobject_cast<const QAction*>(sender()))
+        loadFile(action->data().toString());
 }
 
 bool UtilityMainWindow::save() {
     if (currentFile.isEmpty()) {
         return saveAs();
     } else {
-        return saveFile(currentFile);
+        if (saveFile(currentFile)) {
+            loadFile(currentFile);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -241,7 +248,12 @@ bool UtilityMainWindow::saveAs() {
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     if (dialog.exec() != QDialog::Accepted)
         return false;
-    return saveFile(dialog.selectedFiles().first());
+    QString file = dialog.selectedFiles().first();
+    if (saveFile(file)) {
+        loadFile(file);
+    } else {
+        return false;
+    }
 }
 
 void UtilityMainWindow::exit() {
@@ -366,14 +378,6 @@ void UtilityMainWindow::closeEvent(QCloseEvent* event) {
         event->ignore();
     }
     QWidget::closeEvent(event);
-}
-
-void UtilityMainWindow::updateRecentFileActions() {
-
-}
-
-void UtilityMainWindow::setRecentFilesVisible(bool visible) {
-
 }
 
 void UtilityMainWindow::createStatusBar() {

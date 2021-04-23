@@ -19,7 +19,7 @@ bool Settings::hasRecentFiles() {
 }
 
 QStringList Settings::recentFiles() {
-    QStringList result;
+    QStringList result = QStringList();
     const int count = beginReadArray(recentFilesKey());
     for (int i = 0; i < count; i++) {
         setArrayIndex(i);

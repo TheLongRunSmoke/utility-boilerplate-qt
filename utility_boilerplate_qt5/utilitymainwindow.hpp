@@ -104,6 +104,10 @@ protected slots:
 
     bool saveAs();
 
+    void updateRecentFiles();
+
+    void checkRecentFilesAvailability();
+
     void exit();
 
     void about();
@@ -151,17 +155,7 @@ private:
      */
     bool isSaved();
 
-    QAction* recentFileActs[5]{};
-    QAction* recentFileSeparator{};
-    QAction* recentFileSubMenuAct{};
-
-    void updateRecentFileActions();
-
-    void setRecentFilesVisible(bool visible);
-
-    struct WrongMenuPosition;
-
-    static void checkForRecentFiles(QAction* action, QMenu* pMenu);
+    QMenu* recentFilesSubmenu;
 
     static void menuCleanUp(QMenu* menu, QToolBar* toolbar = nullptr);
 };
