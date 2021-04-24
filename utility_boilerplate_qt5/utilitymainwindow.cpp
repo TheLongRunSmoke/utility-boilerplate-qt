@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include "utilitymainwindow.hpp"
 #include "settings.hpp"
+#include "settingsdialog.hpp"
 #include "helpers.hpp"
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent)
@@ -35,6 +36,7 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
 }
 
 void UtilityMainWindow::loadFile(const QString& fileName) {
+    if (!isFileReadable(fileName)) return;
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
 }
@@ -62,7 +64,6 @@ void UtilityMainWindow::createActions() {
     QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
     editToolBar = addToolBar(tr("Edit"));
     createEditActions(editMenu, editToolBar);
-    menuCleanUp(editMenu, editToolBar);
     QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
 }
@@ -147,6 +148,12 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 
 #endif // !QT_NO_CLIPBOARD
 
+    addAction(
+            tr("Settings"),
+            tr("Show application settings."),
+            &UtilityMainWindow::showSettings,
+            menu);
+
 }
 
 void UtilityMainWindow::createHelpActions(QMenu* menu) {
@@ -192,15 +199,23 @@ QIODevice::OpenMode UtilityMainWindow::getFileWriteMode() {
     return QFile::WriteOnly;
 }
 
-bool UtilityMainWindow::isFileReadable(const QString& filename) {
+bool UtilityMainWindow::isFileAccessibleLike(const QString& filename, const QIODevice::OpenMode mode) {
     QFile file(filename);
-    if (!file.open(getFileReadMode())) {
-        QMessageBox::warning(this, tr("Application"),
-                             tr("Cannot read file %1:\n%2.")
+    if (!file.open(mode)) {
+        QMessageBox::warning(this, tr("Error"),
+                             tr("Cannot open file %1 %2")
                                      .arg(QDir::toNativeSeparators(filename), file.errorString()));
         return false;
     }
     return true;
+}
+
+bool UtilityMainWindow::isFileReadable(const QString& filename) {
+    return isFileAccessibleLike(filename, getFileReadMode());
+}
+
+bool UtilityMainWindow::isFileWritable(const QString& filename) {
+    return isFileAccessibleLike(filename, getFileWriteMode());
 }
 
 void UtilityMainWindow::newFile() {
@@ -232,6 +247,7 @@ bool UtilityMainWindow::save() {
     if (currentFile.isEmpty()) {
         return saveAs();
     } else {
+        if (!isFileWritable(currentFile)) return false;
         if (saveFile(currentFile)) {
             loadFile(currentFile);
             return true;
@@ -251,6 +267,7 @@ bool UtilityMainWindow::saveAs() {
     QString file = dialog.selectedFiles().first();
     if (saveFile(file)) {
         loadFile(file);
+        return true;
     } else {
         return false;
     }
@@ -267,16 +284,28 @@ void UtilityMainWindow::about() {
                           "toolbars, and a status bar."));
 }
 
+/**
+ * Cut operation slot. Can't be pure virtual, due Qt restriction.
+ */
 void UtilityMainWindow::cut() {
-
+    QMessageBox::warning(this, tr("Warning"),
+                         tr("Not implemented yet. Override UtilityMainWindow::cut() slot before using."));
 }
 
+/**
+ * Copy operation slot. Can't be pure virtual, due Qt restriction.
+ */
 void UtilityMainWindow::copy() {
-
+    QMessageBox::warning(this, tr("Warning"),
+                         tr("Not implemented yet. Override UtilityMainWindow::copy() slot before using."));
 }
 
+/**
+ * Paste operation slot. Can't be pure virtual, due Qt restriction.
+ */
 void UtilityMainWindow::paste() {
-
+    QMessageBox::warning(this, tr("Warning"),
+                         tr("Not implemented yet. Override UtilityMainWindow::paste() slot before using."));
 }
 
 /**
@@ -425,9 +454,7 @@ void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
         toolBar->addSeparator();
 }
 
-void UtilityMainWindow::menuCleanUp(QMenu* menu, QToolBar* toolbar) {
-    if (menu->isEmpty()) menu->setVisible(false);
-    if (toolbar == nullptr) return;
-    if (toolbar->actions().isEmpty()) toolbar->setVisible(false);
+void UtilityMainWindow::showSettings() {
+    SettingsDialog().show();
 }
 

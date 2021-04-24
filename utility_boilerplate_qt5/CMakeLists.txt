@@ -15,7 +15,7 @@ add_library(utility_boilerplate_qt5 STATIC
         utilitymainwindow.cpp
         settings.cpp
         helpers.cpp
-)
+        settingsdialog.cpp settingsdialog.hpp settingswidget.cpp settingswidget.hpp)
 
 target_link_libraries(utility_boilerplate_qt5
         Qt5::Core

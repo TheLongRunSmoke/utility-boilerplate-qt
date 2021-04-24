@@ -31,6 +31,7 @@ QStringList Settings::recentFiles() {
 
 void Settings::putRecentFile(const QString& path) {
     QStringList files = recentFiles();
+    if (files.contains(path)) return;
     files.insert(0, path);
     const int count = std::min(files.size(), 5);
     beginWriteArray(recentFilesKey());

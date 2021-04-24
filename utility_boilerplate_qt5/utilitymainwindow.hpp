@@ -47,6 +47,8 @@ protected:
 
     virtual bool isFileReadable(const QString& filename);
 
+    virtual bool isFileWritable(const QString& filename);
+
     virtual void clearDocument() = 0;
 
     virtual bool isDocumentModified() = 0;
@@ -157,7 +159,9 @@ private:
 
     QMenu* recentFilesSubmenu;
 
-    static void menuCleanUp(QMenu* menu, QToolBar* toolbar = nullptr);
+    bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
+
+    static void showSettings();
 };
 
 #endif // UMAINWINDOW_H

@@ -11,10 +11,11 @@
  * with menu, status bar and common operation like creating, opening and saving files.
  */
 class MainWindow : public UtilityMainWindow {
+
 Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = Q_NULLPTR);
+    explicit MainWindow(QWidget* parent = Q_NULLPTR);
 
     void loadFile(const QString& fileName) override;
 
@@ -31,7 +32,6 @@ protected:
 
     bool saveFile(const QString& fileName) override;
 
-
 protected slots:
 
     void cut() override;
@@ -42,7 +42,6 @@ protected slots:
 
 private:
     TextEditor* textEditor;  // <- This is your widget.
-
 };
 
 #endif // MAINWINDOW_H
