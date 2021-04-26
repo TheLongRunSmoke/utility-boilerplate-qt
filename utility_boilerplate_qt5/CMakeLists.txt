@@ -10,12 +10,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-add_library(utility_boilerplate_qt5 STATIC
+file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         utility_boilerplate_qt5.qrc
-        utilitymainwindow.cpp
-        settings.cpp
-        helpers.cpp
-        settingsdialog.cpp settingsdialog.hpp settingswidget.cpp settingswidget.hpp)
+        *.cpp
+        settings/*.cpp)
+
+add_library(utility_boilerplate_qt5 STATIC ${UTILITY_BOILERPLATE_QT5_SOURCES})
 
 target_link_libraries(utility_boilerplate_qt5
         Qt5::Core

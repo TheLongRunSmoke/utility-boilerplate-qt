@@ -11,8 +11,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "utilitymainwindow.hpp"
-#include "settings.hpp"
-#include "settingsdialog.hpp"
+#include "settings/settings.hpp"
+#include "settings/settingsdialog.hpp"
 #include "helpers.hpp"
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent)

@@ -12,15 +12,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(
-        utility_boilerplate_qt
-        main.cpp
+file(GLOB SOURCES
         utility_boilerplate_qt.qrc
         utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-        mainwindow.cpp
-        texteditor.cpp
-        texteditor.ui
-)
+        *.cpp)
+
+add_executable(utility_boilerplate_qt ${SOURCES})
 
 target_link_libraries(utility_boilerplate_qt
         Qt5::Core
