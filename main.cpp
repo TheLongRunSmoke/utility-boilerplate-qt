@@ -8,6 +8,7 @@ int main(int argc, char *argv[]){
 	// Set you own app name and version here.
 	QCoreApplication::setApplicationName("Utility Boilerplate Qt");
 	QCoreApplication::setApplicationVersion("1.0");
+    QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	// Create normal Qt application class.
 	QApplication app(argc, argv);
 	// Parse command line arguments.

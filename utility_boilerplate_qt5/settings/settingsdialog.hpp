@@ -2,17 +2,18 @@
 #define UTILITY_BOILERPLATE_QT_SETTINGSDIALOG_HPP
 
 #include <QDialog>
+#include "settings.hpp"
 #include "settingsdialog.hpp"
-#include "settingswidget.hpp"
 
 class SettingsDialog : public QDialog {
 Q_OBJECT
 
 public:
     explicit SettingsDialog(QWidget* parent = Q_NULLPTR);
+    ~SettingsDialog();
 
 private:
-    SettingsWidget settingsWidget;
+    Settings* _settings;
 };
 
 

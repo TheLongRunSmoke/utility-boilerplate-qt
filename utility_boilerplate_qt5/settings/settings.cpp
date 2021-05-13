@@ -1,14 +1,16 @@
 #include <QCoreApplication>
-#include <QDir>
 #include "settings.hpp"
+#include "items/dropdownitem.hpp"
 
-Settings::Settings() : QSettings(path(), QSettings::IniFormat) {}
+Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
+    _items.push_front(new DropDownItem("theme", tr("Theme"), QStringList()));
+}
 
 QByteArray Settings::geometry() {
     return value(geometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setGeometry(const QByteArray& geometry) {
+void Settings::setGeometry(const QByteArray &geometry) {
     setValue(geometryKey(), geometry);
 }
 
@@ -29,7 +31,7 @@ QStringList Settings::recentFiles() {
     return result;
 }
 
-void Settings::putRecentFile(const QString& path) {
+void Settings::putRecentFile(const QString &path) {
     QStringList files = recentFiles();
     if (files.contains(path)) return;
     files.insert(0, path);
@@ -58,5 +60,15 @@ inline QString Settings::fileKey() {
     return QString("file");
 }
 
+std::list<SettingItem *> *Settings::items() {
+    return &_items;
+}
 
-
+Settings::~Settings() {
+    if (!_items.empty()) {
+        for (auto *it : _items) {
+            delete it;
+        }
+    }
+    _items.clear();
+}

@@ -424,7 +424,7 @@ QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip,
     if (keySequence != QKeySequence::StandardKey::UnknownKey)
         action->setShortcuts(keySequence);
     // Connect to slot and add to menu and toolbar, if specified.
-    connect(action, &QAction::triggered, this, method);
+    connect(action, &QAction::triggered, this, method, Qt::QueuedConnection);
     if (menu != nullptr) menu->addAction(action);
     if (toolbar != nullptr) toolbar->addAction(action);
     return action;
@@ -455,6 +455,6 @@ void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
 }
 
 void UtilityMainWindow::showSettings() {
-    SettingsDialog().show();
+    SettingsDialog().exec();
 }
 

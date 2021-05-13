@@ -10,10 +10,15 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+# I use glob here, because it's a small project and cmake reload do not need any significant time.
 file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         utility_boilerplate_qt5.qrc
         *.cpp
-        settings/*.cpp)
+        *.hpp
+        settings/*.cpp
+        settings/*.hpp
+        settings/items/*.cpp
+        settings/items/*.hpp)
 
 add_library(utility_boilerplate_qt5 STATIC ${UTILITY_BOILERPLATE_QT5_SOURCES})
 

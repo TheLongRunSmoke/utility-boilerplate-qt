@@ -12,10 +12,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+# I use glob here, because it's a small project and cmake reload do not need any significant time.
 file(GLOB SOURCES
         utility_boilerplate_qt.qrc
         utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-        *.cpp)
+        *.cpp
+        *.hpp)
 
 add_executable(utility_boilerplate_qt ${SOURCES})
 
