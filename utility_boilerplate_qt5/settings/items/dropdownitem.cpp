@@ -8,6 +8,7 @@ DropDownItem::DropDownItem(QString key, QString name, QStringList elements)
           _elements{std::move(elements)} {}
 
 QWidget *DropDownItem::view(QWidget *parent) {
+    int* test = new int(0);
     if (_view) return _view;
     _view = new QWidget(parent);
     auto *layout = new QHBoxLayout;
@@ -33,6 +34,6 @@ QString DropDownItem::value() {
 }
 
 DropDownItem::~DropDownItem() {
-    delete _view;
     delete _comboBox;
+    delete _view;
 }

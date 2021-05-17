@@ -16,8 +16,7 @@ set(CMAKE_AUTORCC ON)
 file(GLOB SOURCES
         utility_boilerplate_qt.qrc
         utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-        *.cpp
-        *.hpp)
+        *.*)
 
 add_executable(utility_boilerplate_qt ${SOURCES})
 

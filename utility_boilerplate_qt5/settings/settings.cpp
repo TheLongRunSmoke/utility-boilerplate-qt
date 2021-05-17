@@ -3,7 +3,8 @@
 #include "items/dropdownitem.hpp"
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
-    _items.push_front(new DropDownItem("theme", tr("Theme"), QStringList()));
+    _items.push_front(
+            std::unique_ptr<SettingItem>(new DropDownItem("theme", tr("Theme"), QStringList())));
 }
 
 QByteArray Settings::geometry() {
@@ -60,15 +61,10 @@ inline QString Settings::fileKey() {
     return QString("file");
 }
 
-std::list<SettingItem *> *Settings::items() {
+std::list<std::unique_ptr<SettingItem>> *Settings::items() {
     return &_items;
 }
 
 Settings::~Settings() {
-    if (!_items.empty()) {
-        for (auto *it : _items) {
-            delete it;
-        }
-    }
     _items.clear();
 }

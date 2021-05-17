@@ -4,22 +4,23 @@
 #include <QSettings>
 #include <QApplication>
 #include <QSet>
+#include <memory>
 #include "items/settingitem.hpp"
 
 class Settings : public QSettings
 {
 public:
 	Settings();
-	~Settings();
+	~Settings() override;
 	QByteArray geometry();
 	void setGeometry(const QByteArray& geometry);
 	bool hasRecentFiles();
 	QStringList recentFiles();
 	void putRecentFile(const QString& path);
-	std::list<SettingItem*>* items();
+	std::list<std::unique_ptr<SettingItem>>* items();
 
 protected:
-    std::list<SettingItem*> _items = std::list<SettingItem*>();
+    std::list<std::unique_ptr<SettingItem>> _items = std::list<std::unique_ptr<SettingItem>>();
 
 private:
 	static QString path();

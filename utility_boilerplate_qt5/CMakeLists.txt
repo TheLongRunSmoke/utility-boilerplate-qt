@@ -13,12 +13,24 @@ set(CMAKE_AUTORCC ON)
 # I use glob here, because it's a small project and cmake reload do not need any significant time.
 file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         utility_boilerplate_qt5.qrc
-        *.cpp
-        *.hpp
-        settings/*.cpp
-        settings/*.hpp
-        settings/items/*.cpp
-        settings/items/*.hpp)
+        *.*
+        nvwa/*.*
+        settings/*.*
+        settings/items/*.*)
+
+if (NOT CMAKE_BUILD_TYPE)
+    set (CMAKE_BUILD_TYPE Release)
+endif ()
+
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    set(UTILITY_BOILERPLATE_QT5_SOURCES
+            ${UTILITY_BOILERPLATE_QT5_SOURCES}
+            nvwa/_nvwa.h
+            nvwa/c++_features.h
+            nvwa/debug_new.cpp
+            nvwa/debug_new.h
+            nvwa/fast_mutex.h)
+endif ()
 
 add_library(utility_boilerplate_qt5 STATIC ${UTILITY_BOILERPLATE_QT5_SOURCES})
 

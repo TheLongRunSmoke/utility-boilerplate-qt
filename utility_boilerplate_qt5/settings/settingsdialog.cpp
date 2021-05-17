@@ -27,5 +27,5 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
 }
 
 SettingsDialog::~SettingsDialog() {
-//    delete _settings;
+    delete _settings;
 }
