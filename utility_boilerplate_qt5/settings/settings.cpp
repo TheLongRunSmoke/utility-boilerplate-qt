@@ -1,6 +1,8 @@
 #include <QCoreApplication>
 #include "settings.hpp"
 #include "items/dropdownitem.hpp"
+#include <debug_new>
+
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
     _items.push_front(

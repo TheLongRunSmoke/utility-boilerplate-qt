@@ -1,0 +1,10 @@
+#ifndef UTILITY_BOILERPLATE_QT_DEBUG_NEW_
+#define UTILITY_BOILERPLATE_QT_DEBUG_NEW_
+
+// Facade file to make debug_new easy to include.
+
+#ifndef NDEBUG
+#include "../debug_new.h"
+#endif
+
+#endif //UTILITY_BOILERPLATE_QT_DEBUG_NEW_

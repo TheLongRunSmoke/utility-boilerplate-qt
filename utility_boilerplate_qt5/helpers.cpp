@@ -1,6 +1,7 @@
 #include "helpers.hpp"
 
 #include <QCommandLineParser>
+#include <debug_new>
 
 /**
 * Handle command line params, keys and help message.

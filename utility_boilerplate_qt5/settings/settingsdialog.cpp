@@ -2,6 +2,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include "settingsdialog.hpp"
+#include <debug_new>
 
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
 

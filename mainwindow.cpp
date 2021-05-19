@@ -5,6 +5,7 @@
 #include <QSaveFile>
 #include <QMessageBox>
 #include "mainwindow.hpp"
+#include <debug_new>
 
 MainWindow::MainWindow(QWidget *parent)
         : UtilityMainWindow(parent) {

@@ -14,6 +14,7 @@
 #include "settings/settings.hpp"
 #include "settings/settingsdialog.hpp"
 #include "helpers.hpp"
+#include <debug_new>
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent)
         : QMainWindow(parent) {
