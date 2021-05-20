@@ -1,5 +1,5 @@
-#ifndef UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
-#define UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
+#ifndef UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
+#define UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
 
 #include <QString>
 #include <QLayout>
@@ -7,28 +7,36 @@
 /**
  * Abstract class for setting item.
  */
-class SettingItem {
+class UserSettingItem {
 
 public:
-    explicit SettingItem(
+    explicit UserSettingItem(
             QString key
     ) : _key{std::move(key)} {};
 
-    virtual ~SettingItem() {};
+    virtual ~UserSettingItem() = default;
 
     /**
      * View for settings dialog.
      *
      * @return pointer on QWidget representation.
      */
-    virtual QWidget* view(QWidget* parent) = 0;
+    virtual QWidget *view(QWidget *parent) = 0;
 
     /**
      * Actual selected value.
      */
     virtual QString value() = 0;
 
+    /**
+     * Storage key.
+     */
+    QString key() { return _key; }
+
+    virtual QString defaultValue() = 0;
+
 protected:
+
     /**
      * Key that used for storage.
      */
@@ -36,4 +44,4 @@ protected:
 };
 
 
-#endif //UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
+#endif //UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP

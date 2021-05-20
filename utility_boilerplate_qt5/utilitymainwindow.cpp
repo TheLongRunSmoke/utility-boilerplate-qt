@@ -150,7 +150,7 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 #endif // !QT_NO_CLIPBOARD
 
     addAction(
-            tr("Settings"),
+            tr("Se&ttings"),
             tr("Show application settings."),
             &UtilityMainWindow::showSettings,
             menu);

@@ -1,12 +1,18 @@
 #include <QCoreApplication>
 #include "settings.hpp"
-#include "items/dropdownitem.hpp"
+#include "items/comboboxitem.hpp"
 #include <debug_new>
+#include <QStyleFactory>
 
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
-    _items.push_front(
-            std::unique_ptr<SettingItem>(new DropDownItem("theme", tr("Theme"), QStringList())));
+    createUserSettings();
+}
+
+void Settings::createUserSettings() {
+    addUserSettingFirst(
+            new ComboBoxItem("theme", tr("Theme"), QStyleFactory::keys())
+    );
 }
 
 QByteArray Settings::geometry() {
@@ -63,10 +69,38 @@ inline QString Settings::fileKey() {
     return QString("file");
 }
 
-std::list<std::unique_ptr<SettingItem>> *Settings::items() {
+std::list<std::unique_ptr<UserSettingItem>> *Settings::items() {
     return &_items;
 }
 
 Settings::~Settings() {
     _items.clear();
 }
+
+void Settings::saveUserSettings() {
+    for (auto const &it : _items) {
+        setValue(it->key(), it->value());
+    }
+}
+
+void Settings::addUserSettingFirst(UserSettingItem *pItem) {
+    _items.push_front(std::unique_ptr<UserSettingItem>(pItem));
+}
+
+void Settings::addUserSettingLast(UserSettingItem *pItem) {
+    _items.push_back(std::unique_ptr<UserSettingItem>(pItem));
+}
+
+void Settings::initDefaults() {
+    for (auto const &it : _items) {
+        if (value(it->key()).isNull()) {
+            setValue(it->key(), it->defaultValue());
+        }
+    }
+}
+
+QString Settings::style() {
+    return value("theme", "").toString();
+}
+
+

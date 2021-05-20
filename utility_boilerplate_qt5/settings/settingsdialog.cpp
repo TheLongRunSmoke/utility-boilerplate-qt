@@ -30,3 +30,8 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
 SettingsDialog::~SettingsDialog() {
     delete _settings;
 }
+
+void SettingsDialog::accept() {
+    _settings->saveUserSettings();
+    QDialog::accept();
+}

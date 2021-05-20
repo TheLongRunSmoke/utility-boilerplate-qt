@@ -1,14 +1,14 @@
-#include "dropdownitem.hpp"
+#include "comboboxitem.hpp"
 
 #include <QLabel>
 #include <debug_new>
 
-DropDownItem::DropDownItem(QString key, QString name, QStringList elements)
-        : SettingItem(std::move(key)),
+ComboBoxItem::ComboBoxItem(QString key, QString name, QStringList elements)
+        : UserSettingItem(std::move(key)),
           _name{std::move(name)},
           _elements{std::move(elements)} {}
 
-QWidget *DropDownItem::view(QWidget *parent) {
+QWidget *ComboBoxItem::view(QWidget *parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
     auto *layout = new QHBoxLayout;
@@ -28,12 +28,18 @@ QWidget *DropDownItem::view(QWidget *parent) {
     return _view;
 }
 
-QString DropDownItem::value() {
-    if (!_comboBox) return _elements.first();
+QString ComboBoxItem::value() {
+    if (!_comboBox) return defaultValue();
+    if (_comboBox->count() == 0) return defaultValue();
     return _elements.at(_comboBox->currentIndex());
 }
 
-DropDownItem::~DropDownItem() {
+ComboBoxItem::~ComboBoxItem() {
     delete _comboBox;
     delete _view;
+}
+
+QString ComboBoxItem::defaultValue() {
+    if (_elements.isEmpty()) return QString("default");
+    return _elements.first();
 }

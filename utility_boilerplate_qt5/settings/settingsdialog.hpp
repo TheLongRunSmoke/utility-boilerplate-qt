@@ -12,6 +12,8 @@ public:
     explicit SettingsDialog(QWidget* parent = Q_NULLPTR);
     ~SettingsDialog();
 
+    void accept() override;
+
 private:
     Settings* _settings;
 };
