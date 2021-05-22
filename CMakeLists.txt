@@ -4,7 +4,11 @@ project(utility_boilerplate_qt)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+message("Check Qt version...")
+execute_process(COMMAND qmake --version)
+message("Check Qt requirements...")
+find_package(Qt5 5.10 COMPONENTS Core Widgets REQUIRED)
+message("Main project Qt requirements OK")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
