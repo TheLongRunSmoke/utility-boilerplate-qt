@@ -28,6 +28,8 @@ public:
      */
     virtual QString value() = 0;
 
+    virtual void setValue(QString value) = 0;
+
     /**
      * Storage key.
      */

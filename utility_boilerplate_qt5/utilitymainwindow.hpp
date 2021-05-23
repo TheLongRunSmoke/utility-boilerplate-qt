@@ -124,6 +124,8 @@ protected slots:
 
     void commitData(QSessionManager&);
 
+    bool event(QEvent *event) override;
+
 #endif
 
 private:

@@ -17,12 +17,23 @@
  * @return false entity is shown in trace as normal.
  */
 extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, void **stacktrace) {
-    // Input can be not zero-terminated, reading with stream is safer way.
-    std::stringstream strm;
-    strm << file;
-    // If file name not empty, it must be leak in a project.
-    if (!strm.str().empty()) return false;
-    return true;
+    // If file name empty, it is leak not in project...or you forget to include debug_new header somewhere.
+    if (file == nullptr) return true;
+    auto filename = std::string(file);
+    // Let's whitelist something.
+    // I used QEvent, it's object deleted outside of origin file and will be detected.
+    auto whitelist = std::map<std::string, std::list<int>>{
+           // {"settingsdialog.cpp", std::list<int>{36}}
+    };
+    // Iterate through whitelist and return true if coincidence found.
+    for (auto const &it: whitelist) {
+        if (filename.find(it.first) == std::string::npos) continue;
+        for (auto const &row : it.second) {
+            if (line == row) return true;
+        }
+    }
+    // Has file name and not whitelisted? We found a leak!
+    return false;
 }
 #endif
 
@@ -39,13 +50,14 @@ int main(int argc, char *argv[]) {
     // Set you own app name and version here.
     QCoreApplication::setApplicationName("Utility Boilerplate Qt");
     QCoreApplication::setApplicationVersion("1.0");
-    // Let's get rid of question mark.
+    // Get rid of question mark.
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
     // Create normal Qt application class.
     QApplication app(argc, argv);
     // Init default settings.
     Settings *settings = new Settings();
     settings->initDefaults();
+    // Set style from settings.
     QApplication::setStyle(settings->style());
     delete settings;
     // Parse command line arguments.

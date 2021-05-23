@@ -5,14 +5,15 @@
 #include <QComboBox>
 
 /**
- * Basic combo box control.
+ * User setting with basic combobox control.
  */
 class ComboBoxItem : public UserSettingItem {
 
 public:
     ComboBoxItem(QString key,
                  QString name,
-                 QStringList elements);
+                 QStringList elements,
+                 const QString &defaultValue = nullptr);
 
     ~ComboBoxItem() override;
 
@@ -20,13 +21,17 @@ public:
 
     QString value() override;
 
+    void setValue(QString value) override;
+
+    QString defaultValue() override;
+
 private:
     QWidget *_view = nullptr;
     QComboBox *_comboBox = nullptr;
     QString _name = nullptr;
     QStringList _elements = QStringList();
-
-    QString defaultValue() override;
+    QString _value = nullptr;
+    QString _defaultValue = nullptr;
 };
 
 #endif //UTILITY_BOILERPLATE_QT_COMBOBOXITEM_HPP

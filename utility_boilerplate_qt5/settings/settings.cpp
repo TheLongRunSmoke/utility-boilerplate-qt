@@ -7,26 +7,24 @@
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
     createUserSettings();
+    loadSetting();
 }
 
 void Settings::createUserSettings() {
-    auto *item = new ComboBoxItem("theme", tr("Theme"), QStyleFactory::keys());
-    addUserSettingFirst(
-            item
-    );
-    auto *item1 = new ComboBoxItem("1", tr("1"), QStyleFactory::keys());
-    addUserSettingLast(
-            item1
-    );
-    auto *item2 = new ComboBoxItem("2", tr("2"), QStyleFactory::keys());
-    addUserSettingLast(
-            item2
-    );
-    auto *item3 = new ComboBoxItem("3", tr("3"), QStyleFactory::keys());
-    addUserSettingLast(
-            item3
-    );
+    auto *item = new ComboBoxItem(
+            "theme",
+            tr("Theme"),
+            QStyleFactory::keys(),
+            QApplication::style()->objectName());
+    addUserSettingFirst(item);
+}
 
+void Settings::loadSetting() {
+    for (auto const &it : _items) {
+        auto savedValue = value(it->key());
+        if (savedValue.isNull()) continue;
+        it->setValue(savedValue.toString());
+    }
 }
 
 QByteArray Settings::geometry() {

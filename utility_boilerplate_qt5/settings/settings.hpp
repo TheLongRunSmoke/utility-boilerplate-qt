@@ -14,8 +14,7 @@ class Settings : public QSettings {
     using user_settings_terator_pair_t =
     std::pair<
             std::list<Settings::user_settings_t>::const_iterator,
-            std::list<Settings::user_settings_t>::const_iterator
-    >;
+            std::list<Settings::user_settings_t>::const_iterator>;
 
 public:
 
@@ -69,6 +68,8 @@ private:
     inline static QString recentFilesKey();
 
     static inline QString fileKey();
+
+    void loadSetting();
 };
 
 #endif //SETTINGS_H
