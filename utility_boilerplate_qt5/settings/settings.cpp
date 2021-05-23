@@ -10,9 +10,23 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 }
 
 void Settings::createUserSettings() {
+    auto *item = new ComboBoxItem("theme", tr("Theme"), QStyleFactory::keys());
     addUserSettingFirst(
-            new ComboBoxItem("theme", tr("Theme"), QStyleFactory::keys())
+            item
     );
+    auto *item1 = new ComboBoxItem("1", tr("1"), QStyleFactory::keys());
+    addUserSettingLast(
+            item1
+    );
+    auto *item2 = new ComboBoxItem("2", tr("2"), QStyleFactory::keys());
+    addUserSettingLast(
+            item2
+    );
+    auto *item3 = new ComboBoxItem("3", tr("3"), QStyleFactory::keys());
+    addUserSettingLast(
+            item3
+    );
+
 }
 
 QByteArray Settings::geometry() {
@@ -69,8 +83,8 @@ inline QString Settings::fileKey() {
     return QString("file");
 }
 
-std::list<std::unique_ptr<UserSettingItem>> *Settings::items() {
-    return &_items;
+Settings::user_settings_terator_pair_t Settings::items() {
+    return std::make_pair(_items.cbegin(), _items.cend());
 }
 
 Settings::~Settings() {

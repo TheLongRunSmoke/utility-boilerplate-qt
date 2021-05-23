@@ -3,16 +3,22 @@
 
 #include <QSettings>
 #include <QApplication>
-#include <QSet>
 #include <memory>
 #include "items/usersettingitem.hpp"
 #include "items/comboboxitem.hpp"
 
 class Settings : public QSettings {
 
-    typedef std::unique_ptr<UserSettingItem> user_settings_uptr;
+    using user_settings_t = std::unique_ptr<UserSettingItem>;
+
+    using user_settings_terator_pair_t =
+    std::pair<
+            std::list<Settings::user_settings_t>::const_iterator,
+            std::list<Settings::user_settings_t>::const_iterator
+    >;
 
 public:
+
     Settings();
 
     ~Settings() override;
@@ -27,8 +33,11 @@ public:
 
     void putRecentFile(const QString &path);
 
-    std::list<user_settings_uptr> *items();
+    user_settings_terator_pair_t items();
 
+    /**
+     * Initialize empty settings with defaults.
+     */
     void initDefaults();
 
     void saveUserSettings();
@@ -36,7 +45,8 @@ public:
     QString style();
 
 protected:
-    std::list<user_settings_uptr> _items = std::list<user_settings_uptr>();
+
+    std::list<user_settings_t> _items = std::list<user_settings_t>();
 
     void createUserSettings();
 

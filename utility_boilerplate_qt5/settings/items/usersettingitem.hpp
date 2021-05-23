@@ -43,5 +43,4 @@ protected:
     QString _key = nullptr;
 };
 
-
 #endif //UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
