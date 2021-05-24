@@ -14,6 +14,9 @@ public:
 
     void accept() override;
 
+    public slots:
+        void apply();
+
 private:
     Settings* _settings;
 };

@@ -19,6 +19,8 @@
 
 UtilityMainWindow::UtilityMainWindow(QWidget *parent)
         : QMainWindow(parent) {
+    // Set object name, to easily identified this window.
+    setObjectName(UtilityMainWindow::objectName());
     auto *mainFrame = new QFrame(this);
     setCentralWidget(mainFrame);
     mainLayout = new QGridLayout(mainFrame);
@@ -467,5 +469,9 @@ void UtilityMainWindow::addSeparator(QMenu *menu, QToolBar *toolBar) {
 
 void UtilityMainWindow::showSettings() {
     SettingsDialog().exec();
+}
+
+QString UtilityMainWindow::objectName() {
+    return QString(WINDOW_ID);
 }
 
