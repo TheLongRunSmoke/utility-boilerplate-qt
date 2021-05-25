@@ -3,6 +3,7 @@
 #include "settings.hpp"
 #include "items/comboboxitem.hpp"
 #include "items/checkboxitem.hpp"
+#include "items/separatoritem.hpp"
 #include <debug_new>
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
@@ -17,6 +18,7 @@ void Settings::createUserSettings() {
             QStyleFactory::keys(),
             QApplication::style()->objectName());
     addUserSettingFirst(item);
+    addUserSettingLast(new SeparatorItem());
     auto *checkBoxFalse = new CheckBoxItem(
             "checkbox_default_false",
             tr("Default false"));
@@ -30,6 +32,7 @@ void Settings::createUserSettings() {
 
 void Settings::readUserSettings() {
     for (auto const &it : _items) {
+        if (it->key().isEmpty()) continue;
         auto savedValue = value("User/" + it->key());
         if (savedValue.isNull()) continue;
         it->setValue(savedValue.toString());
@@ -101,6 +104,7 @@ Settings::~Settings() {
 void Settings::saveUserSettings() {
     beginGroup("User");
     for (auto const &it : _items) {
+        if (it->key().isEmpty()) continue;
         setValue(it->key(), it->value());
     }
     endGroup();
@@ -117,6 +121,7 @@ void Settings::addUserSettingLast(UserSettingItem *pItem) {
 void Settings::initDefaults() {
     beginGroup("User");
     for (auto const &it : _items) {
+        if (it->key().isEmpty()) continue;
         if (value(it->key()).isNull()) {
             setValue(it->key(), it->defaultValue());
         }
