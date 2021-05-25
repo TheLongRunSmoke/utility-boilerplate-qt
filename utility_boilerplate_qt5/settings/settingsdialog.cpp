@@ -12,6 +12,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     // Collect user setting controls to layout.
     auto *layout = new QVBoxLayout();
+    layout->setSpacing(0);
     auto p = _settings->items();
     for (auto const &it = p.first; p.first != p.second; p.first++) {
         layout->addWidget(it->get()->view(this));

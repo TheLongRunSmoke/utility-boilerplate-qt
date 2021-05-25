@@ -25,7 +25,7 @@ public:
 
     QString defaultValue() override;
 
-private:
+protected:
     QWidget *_view = nullptr;
     QComboBox *_comboBox = nullptr;
     QString _name = nullptr;

@@ -1,13 +1,13 @@
 #include <QCoreApplication>
+#include <QStyleFactory>
 #include "settings.hpp"
 #include "items/comboboxitem.hpp"
+#include "items/checkboxitem.hpp"
 #include <debug_new>
-#include <QStyleFactory>
-
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
     createUserSettings();
-    loadSetting();
+    readUserSettings();
 }
 
 void Settings::createUserSettings() {
@@ -17,11 +17,20 @@ void Settings::createUserSettings() {
             QStyleFactory::keys(),
             QApplication::style()->objectName());
     addUserSettingFirst(item);
+    auto *checkBoxFalse = new CheckBoxItem(
+            "checkbox_default_false",
+            tr("Default false"));
+    addUserSettingLast(checkBoxFalse);
+    auto *checkBoxTrue = new CheckBoxItem(
+            "checkbox_default_true",
+            tr("Default true"),
+            true);
+    addUserSettingLast(checkBoxTrue);
 }
 
-void Settings::loadSetting() {
+void Settings::readUserSettings() {
     for (auto const &it : _items) {
-        auto savedValue = value(it->key());
+        auto savedValue = value("User/" + it->key());
         if (savedValue.isNull()) continue;
         it->setValue(savedValue.toString());
     }
@@ -74,7 +83,7 @@ inline QString Settings::geometryKey() {
 }
 
 inline QString Settings::recentFilesKey() {
-    return QString("recent");
+    return QString("Recent");
 }
 
 inline QString Settings::fileKey() {
@@ -90,9 +99,11 @@ Settings::~Settings() {
 }
 
 void Settings::saveUserSettings() {
+    beginGroup("User");
     for (auto const &it : _items) {
         setValue(it->key(), it->value());
     }
+    endGroup();
 }
 
 void Settings::addUserSettingFirst(UserSettingItem *pItem) {
@@ -104,15 +115,17 @@ void Settings::addUserSettingLast(UserSettingItem *pItem) {
 }
 
 void Settings::initDefaults() {
+    beginGroup("User");
     for (auto const &it : _items) {
         if (value(it->key()).isNull()) {
             setValue(it->key(), it->defaultValue());
         }
     }
+    endGroup();
 }
 
 QString Settings::style() {
-    return value("theme", "").toString();
+    return value("User/theme", "").toString();
 }
 
 

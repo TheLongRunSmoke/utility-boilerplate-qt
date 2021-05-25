@@ -69,7 +69,7 @@ private:
 
     static inline QString fileKey();
 
-    void loadSetting();
+    void readUserSettings();
 };
 
 #endif //SETTINGS_H

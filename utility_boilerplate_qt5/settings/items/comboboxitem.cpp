@@ -33,6 +33,7 @@ QWidget *ComboBoxItem::view(QWidget *parent) {
     label->setBuddy(_comboBox);
     layout->addWidget(label);
     layout->addWidget(_comboBox);
+    layout->addStretch();
     _view->setLayout(layout);
     return _view;
 }
@@ -45,7 +46,7 @@ QString ComboBoxItem::value() {
 
 QString ComboBoxItem::defaultValue() {
     if (_defaultValue != nullptr) return _defaultValue;
-    if (_elements.isEmpty()) return QString("default");
+    if (_elements.isEmpty()) return QString("");
     return _elements.first();
 }
 
