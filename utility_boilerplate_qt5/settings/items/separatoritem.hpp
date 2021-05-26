@@ -7,7 +7,7 @@
 class SeparatorItem : public UserSettingItem {
 
 public:
-    SeparatorItem();
+    SeparatorItem() : UserSettingItem(nullptr){};
 
     ~SeparatorItem() override;
 

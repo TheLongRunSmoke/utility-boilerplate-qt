@@ -4,6 +4,7 @@
 #include "items/comboboxitem.hpp"
 #include "items/checkboxitem.hpp"
 #include "items/separatoritem.hpp"
+#include "items/textitem.hpp"
 #include <debug_new>
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
@@ -12,27 +13,37 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 }
 
 void Settings::createUserSettings() {
-    auto *item = new ComboBoxItem(
+    auto* item = new ComboBoxItem(
             "theme",
             tr("Theme"),
             QStyleFactory::keys(),
             QApplication::style()->objectName());
     addUserSettingFirst(item);
     addUserSettingLast(new SeparatorItem());
-    auto *checkBoxFalse = new CheckBoxItem(
+    auto* checkBoxFalse = new CheckBoxItem(
             "checkbox_default_false",
             tr("Default false"));
     addUserSettingLast(checkBoxFalse);
-    auto *checkBoxTrue = new CheckBoxItem(
+    auto* checkBoxTrue = new CheckBoxItem(
             "checkbox_default_true",
             tr("Default true"),
             true);
     addUserSettingLast(checkBoxTrue);
+    addUserSettingLast(new SeparatorItem());
+    auto* textItem = new TextItem(
+            "text_no_default",
+            tr("Default empty"));
+    addUserSettingLast(textItem);
+    auto* textItemDef = new TextItem(
+            "text_has_default",
+            tr("Has default text"),
+            "some text");
+    addUserSettingLast(textItemDef);
 }
 
 void Settings::readUserSettings() {
-    for (auto const &it : _items) {
-        if (it->key().isEmpty()) continue;
+    for (auto const& it : _items) {
+        if (it->isDecoration()) continue;
         auto savedValue = value("User/" + it->key());
         if (savedValue.isNull()) continue;
         it->setValue(savedValue.toString());
@@ -43,7 +54,7 @@ QByteArray Settings::geometry() {
     return value(geometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setGeometry(const QByteArray &geometry) {
+void Settings::setGeometry(const QByteArray& geometry) {
     setValue(geometryKey(), geometry);
 }
 
@@ -64,7 +75,7 @@ QStringList Settings::recentFiles() {
     return result;
 }
 
-void Settings::putRecentFile(const QString &path) {
+void Settings::putRecentFile(const QString& path) {
     QStringList files = recentFiles();
     if (files.contains(path)) return;
     files.insert(0, path);
@@ -103,25 +114,25 @@ Settings::~Settings() {
 
 void Settings::saveUserSettings() {
     beginGroup("User");
-    for (auto const &it : _items) {
-        if (it->key().isEmpty()) continue;
+    for (auto const& it : _items) {
+        if (it->isDecoration()) continue;
         setValue(it->key(), it->value());
     }
     endGroup();
 }
 
-void Settings::addUserSettingFirst(UserSettingItem *pItem) {
+void Settings::addUserSettingFirst(UserSettingItem* pItem) {
     _items.push_front(std::unique_ptr<UserSettingItem>(pItem));
 }
 
-void Settings::addUserSettingLast(UserSettingItem *pItem) {
+void Settings::addUserSettingLast(UserSettingItem* pItem) {
     _items.push_back(std::unique_ptr<UserSettingItem>(pItem));
 }
 
 void Settings::initDefaults() {
     beginGroup("User");
-    for (auto const &it : _items) {
-        if (it->key().isEmpty()) continue;
+    for (auto const& it : _items) {
+        if (it->isDecoration()) continue;
         if (value(it->key()).isNull()) {
             setValue(it->key(), it->defaultValue());
         }

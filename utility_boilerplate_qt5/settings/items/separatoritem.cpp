@@ -2,10 +2,6 @@
 #include <debug_new>
 #include <QFrame>
 
-SeparatorItem::SeparatorItem() : UserSettingItem("") {
-
-}
-
 SeparatorItem::~SeparatorItem() {
     delete _view;
 }

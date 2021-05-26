@@ -21,7 +21,7 @@ public:
      *
      * @return pointer on QWidget representation.
      */
-    virtual QWidget *view(QWidget *parent) = 0;
+    virtual QWidget* view(QWidget* parent) = 0;
 
     /**
      * Actual selected value.
@@ -30,12 +30,22 @@ public:
 
     virtual void setValue(QString value) = 0;
 
+    virtual QString defaultValue() = 0;
+
     /**
      * Storage key.
      */
     QString key() { return _key; }
 
-    virtual QString defaultValue() = 0;
+    /**
+     * If key not set or empty, object do not hold any value and must not be saved.
+     * @return
+     */
+    bool isDecoration() {
+        if (_key == nullptr) return true;
+        if (_key.isEmpty()) return true;
+        return false;
+    }
 
 protected:
 
