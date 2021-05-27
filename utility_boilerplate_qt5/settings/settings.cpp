@@ -5,6 +5,7 @@
 #include "items/checkboxitem.hpp"
 #include "items/separatoritem.hpp"
 #include "items/textitem.hpp"
+#include "items/spinboxitem.hpp"
 #include <debug_new>
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
@@ -39,6 +40,18 @@ void Settings::createUserSettings() {
             tr("Has default text"),
             "some text");
     addUserSettingLast(textItemDef);
+    addUserSettingLast(new SeparatorItem());
+    auto* intSpinBoxDefault = new SpinboxItem(
+            "spinbox_def",
+            tr("Spinbox defaults"));
+    addUserSettingLast(intSpinBoxDefault);
+    auto* intSpinBox = new SpinboxItem(
+            "spinbox",
+            tr("Spinbox"),
+            -5,
+            5,
+            -1);
+    addUserSettingLast(intSpinBox);
 }
 
 void Settings::readUserSettings() {
