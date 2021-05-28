@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
-project(utility_boilerplate_qt)
+
+set(PROJECT_NAME utility_boilerplate_qt)
+
+project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,7 +17,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-include(${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5/utils.cmake)
+include(${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5/cmake/utils.cmake)
 
 # If build type not set, let's assume it's a release.
 if (NOT CMAKE_BUILD_TYPE)
@@ -36,9 +39,11 @@ file(GLOB SOURCES
         *.cpp
         *.hpp)
 
-add_executable(utility_boilerplate_qt ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(utility_boilerplate_qt
+target_link_libraries(${PROJECT_NAME}
         Qt5::Core
         Qt5::Widgets
         utility_boilerplate_qt5)
+
+add_subdirectory(tests)

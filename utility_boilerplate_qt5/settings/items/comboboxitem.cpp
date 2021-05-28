@@ -4,17 +4,17 @@
 #include <debug_new>
 #include <utility>
 
-ComboBoxItem::ComboBoxItem(QString key, QString name, QStringList elements, const QString &defaultValue)
+ComboBoxItem::ComboBoxItem(QString key, QString name, QStringList elements, const QString& defaultValue)
         : UserSettingItem(std::move(key)),
           _name{std::move(name)},
           _elements{std::move(elements)} {
     if (_elements.contains(defaultValue, Qt::CaseInsensitive)) _defaultValue = defaultValue;
 }
 
-QWidget *ComboBoxItem::view(QWidget *parent) {
+QWidget* ComboBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _comboBox = new QComboBox(_view);
     _comboBox->addItems(_elements);
     if (_comboBox->count() > 0) {
@@ -26,7 +26,7 @@ QWidget *ComboBoxItem::view(QWidget *parent) {
     if (_value != nullptr) {
         _comboBox->setCurrentIndex(_elements.indexOf(QRegExp(_value, Qt::CaseInsensitive)));
     }
-    auto *label = new QLabel(_view);
+    auto* label = new QLabel(_view);
     label->setTextFormat(Qt::TextFormat::PlainText);
     label->setText(_name);
     label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
@@ -39,7 +39,10 @@ QWidget *ComboBoxItem::view(QWidget *parent) {
 }
 
 QString ComboBoxItem::value() {
-    if (!_comboBox) return defaultValue();
+    if (!_comboBox) {
+        if (_value == nullptr) return defaultValue();
+        return _value;
+    }
     if (_comboBox->count() == 0) return defaultValue();
     return _elements.at(_comboBox->currentIndex());
 }

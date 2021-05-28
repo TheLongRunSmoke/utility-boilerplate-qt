@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
-project(utility_boilerplate_qt5)
+
+set(UB_PROJECT_NAME utility_boilerplate_qt5)
+
+project(${UB_PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,15 +15,17 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-include(utils.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time.
 file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         utility_boilerplate_qt5.qrc
-        *.cpp
         *.hpp
-        settings/*.*
-        settings/items/*.*
+        *.cpp
+        settings/*.hpp
+        settings/*.cpp
+        settings/items/*.hpp
+        settings/items/*.cpp
         nvwa/include/debug_new)
 
 # If build type not set, let's assume it's a release.
@@ -34,24 +39,27 @@ to_lower_case(${CMAKE_BUILD_TYPE} BUILD_TYPE_LOWER_CASE)
 # For debug build add nvwa library.
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     file(GLOB NVWA_SOURCE
-            nvwa/*.*)
+            nvwa/*.h
+            nvwa/*.cpp)
     list(APPEND UTILITY_BOILERPLATE_QT5_SOURCES
             ${NVWA_SOURCE})
 endif ()
 
-add_library(utility_boilerplate_qt5 STATIC
+add_library(${UB_PROJECT_NAME} STATIC
         ${UTILITY_BOILERPLATE_QT5_SOURCES})
 
 # Set different output directories for different build types, to prevent any chance of heterotrophic build.
 # Use LIBRARY_OUTPUT_DIRECTORY if you want to link dynamically.
-set_target_properties(utility_boilerplate_qt5 PROPERTIES
+set_target_properties(${UB_PROJECT_NAME} PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY
         ${PROJECT_BINARY_DIR}/${BUILD_TYPE_LOWER_CASE})
 
 # Include nvwa header to use it in angle brackets.
 include_directories(nvwa/include)
-target_include_directories(utility_boilerplate_qt5 INTERFACE nvwa/include)
+target_include_directories(${UB_PROJECT_NAME} INTERFACE nvwa/include)
 
-target_link_libraries(utility_boilerplate_qt5
+target_link_libraries(${UB_PROJECT_NAME}
         Qt5::Core
         Qt5::Widgets)
+
+add_subdirectory(tests)
