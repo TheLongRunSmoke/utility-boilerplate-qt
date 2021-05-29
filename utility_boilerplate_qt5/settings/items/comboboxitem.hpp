@@ -13,11 +13,11 @@ public:
     ComboBoxItem(QString key,
                  QString name,
                  QStringList elements,
-                 const QString &defaultValue = nullptr);
+                 const QString& defaultValue = nullptr);
 
     ~ComboBoxItem() override;
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override;
 
@@ -26,8 +26,8 @@ public:
     QString defaultValue() override;
 
 protected:
-    QWidget *_view = nullptr;
-    QComboBox *_comboBox = nullptr;
+    QWidget* _view = nullptr;
+    QComboBox* _comboBox = nullptr;
     QString _name = nullptr;
     QStringList _elements = QStringList();
     QString _value = nullptr;

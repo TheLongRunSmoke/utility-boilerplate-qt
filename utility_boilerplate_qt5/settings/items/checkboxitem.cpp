@@ -16,17 +16,17 @@ CheckBoxItem::~CheckBoxItem() {
     delete _view;
 }
 
-QWidget *CheckBoxItem::view(QWidget *parent) {
+QWidget* CheckBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _checkBox = new QCheckBox(_view);
     _checkBox->setCheckState(boolToState(_defaultValue));
     if (_value != nullptr) {
         _checkBox->setCheckState(valueToState(_value));
     }
     layout->addWidget(_checkBox);
-    auto *label = new QLabel(_view);
+    auto* label = new QLabel(_view);
     label->adjustSize();
     label->setTextFormat(Qt::TextFormat::PlainText);
     label->setText(_name);
@@ -62,7 +62,7 @@ QString CheckBoxItem::stateToValue(Qt::CheckState state) {
     return "";
 }
 
-Qt::CheckState CheckBoxItem::valueToState(const QString &value) {
+Qt::CheckState CheckBoxItem::valueToState(const QString& value) {
     if (value == QString("true")) return Qt::Checked;
     return Qt::Unchecked;
 }

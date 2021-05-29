@@ -12,10 +12,10 @@ SpinboxItem::SpinboxItem(
         : UserSettingItem(std::move(key)),
           _name{std::move(name)},
           _min{min},
-          _max{max}{
+          _max{max} {
     if (defaultValue < _min || defaultValue > _max) {
         _defaultValue = intToValue(0);
-    } else{
+    } else {
         _defaultValue = intToValue(defaultValue);
     }
 }

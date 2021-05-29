@@ -7,11 +7,11 @@
 class SeparatorItem : public UserSettingItem {
 
 public:
-    SeparatorItem() : UserSettingItem(nullptr){};
+    SeparatorItem() : UserSettingItem(nullptr) {};
 
     ~SeparatorItem() override;
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override { return ""; };
 
@@ -20,7 +20,7 @@ public:
     QString defaultValue() override { return ""; };
 
 private:
-    QWidget *_view = nullptr;
+    QWidget* _view = nullptr;
 
 };
 

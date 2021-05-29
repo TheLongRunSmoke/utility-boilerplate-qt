@@ -10,12 +10,14 @@ Q_OBJECT
 
 public:
     explicit SettingsDialog(QWidget* parent = Q_NULLPTR);
+
     ~SettingsDialog();
 
     void accept() override;
 
-    public slots:
-        void apply();
+public slots:
+
+    void apply();
 
 private:
     Settings* _settings;

@@ -13,7 +13,7 @@ public:
 
     ~CheckBoxItem() override;
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override;
 
@@ -22,8 +22,8 @@ public:
     QString defaultValue() override;
 
 protected:
-    QWidget *_view = nullptr;
-    QCheckBox *_checkBox = nullptr;
+    QWidget* _view = nullptr;
+    QCheckBox* _checkBox = nullptr;
     QString _name = nullptr;
     QString _value = nullptr;
     bool _defaultValue = false;
@@ -34,7 +34,7 @@ private:
 
     static QString stateToValue(Qt::CheckState state);
 
-    static Qt::CheckState valueToState(const QString &value);
+    static Qt::CheckState valueToState(const QString& value);
 
 };
 

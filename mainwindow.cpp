@@ -7,13 +7,13 @@
 #include "mainwindow.hpp"
 #include <debug_new>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
         : UtilityMainWindow(parent) {
     textEditor = new TextEditor();
     getLayout()->addWidget(textEditor);
 }
 
-void MainWindow::loadFile(const QString &fileName) {
+void MainWindow::loadFile(const QString& fileName) {
     UtilityMainWindow::loadFile(fileName);
     QFile file(fileName);
     file.open(getFileReadMode());
@@ -23,7 +23,7 @@ void MainWindow::loadFile(const QString &fileName) {
     statusBar()->showMessage(tr("File loaded"), 2000);
 }
 
-bool MainWindow::saveFile(const QString &fileName) {
+bool MainWindow::saveFile(const QString& fileName) {
     QString errorMessage;
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
     QSaveFile file(fileName);

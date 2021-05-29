@@ -1,7 +1,7 @@
 #include "texteditor.hpp"
 #include <debug_new>
 
-TextEditor::TextEditor(QWidget *parent)
+TextEditor::TextEditor(QWidget* parent)
         : QWidget(parent) {
     ui.setupUi(this);
 }
@@ -9,7 +9,7 @@ TextEditor::TextEditor(QWidget *parent)
 TextEditor::~TextEditor() {
 }
 
-void TextEditor::setText(const QString &text) {
+void TextEditor::setText(const QString& text) {
     ui.textEdit->setPlainText(text);
 }
 

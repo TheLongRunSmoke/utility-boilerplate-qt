@@ -24,13 +24,13 @@ public:
 
     QByteArray geometry();
 
-    void setGeometry(const QByteArray &geometry);
+    void setGeometry(const QByteArray& geometry);
 
     bool hasRecentFiles();
 
     QStringList recentFiles();
 
-    void putRecentFile(const QString &path);
+    void putRecentFile(const QString& path);
 
     user_settings_terator_pair_t items();
 
@@ -52,12 +52,12 @@ protected:
     /**
      * Add user setting, that will be shown first in settings window.
      */
-    void addUserSettingFirst(UserSettingItem *pItem);
+    void addUserSettingFirst(UserSettingItem* pItem);
 
     /**
      * Add user setting, that will be shown last in settings window.
      */
-    void addUserSettingLast(UserSettingItem *pItem);
+    void addUserSettingLast(UserSettingItem* pItem);
 
 private:
 

@@ -1,4 +1,4 @@
-
+# Prepare project name.
 set(TEST_SUIT tests)
 project(${TEST_SUIT})
 
@@ -32,4 +32,5 @@ target_link_libraries(${TEST_SUIT}
         gtest
         gtest_main)
 
+# Make it discoverable for CTest.
 gtest_discover_tests(${TEST_SUIT})

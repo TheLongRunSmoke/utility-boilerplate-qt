@@ -11,9 +11,9 @@ class UtilityMainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit UtilityMainWindow(QWidget *parent = Q_NULLPTR);
+    explicit UtilityMainWindow(QWidget* parent = Q_NULLPTR);
 
-    virtual void loadFile(const QString &fileName);
+    virtual void loadFile(const QString& fileName);
 
     /**
      * Just random number to use as object name.
@@ -23,9 +23,9 @@ public:
     static QString objectName();
 
 protected:
-    QGridLayout *getLayout();
+    QGridLayout* getLayout();
 
-    void closeEvent(QCloseEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
 
     /**
      * Set current file filename for window.
@@ -34,15 +34,15 @@ protected:
      *
      * @param filePath file path.
      */
-    void setCurrentFile(const QString &filePath);
+    void setCurrentFile(const QString& filePath);
 
     void createActions();
 
-    virtual void createFileActions(QMenu *menu, QToolBar *toolbar);
+    virtual void createFileActions(QMenu* menu, QToolBar* toolbar);
 
-    virtual void createEditActions(QMenu *menu, QToolBar *toolbar);
+    virtual void createEditActions(QMenu* menu, QToolBar* toolbar);
 
-    virtual void createHelpActions(QMenu *menu);
+    virtual void createHelpActions(QMenu* menu);
 
     virtual QString defaultFileName();
 
@@ -52,33 +52,33 @@ protected:
 
     virtual QIODevice::OpenMode getFileWriteMode();
 
-    virtual bool isFileReadable(const QString &filename);
+    virtual bool isFileReadable(const QString& filename);
 
-    virtual bool isFileWritable(const QString &filename);
+    virtual bool isFileWritable(const QString& filename);
 
     virtual void clearDocument() = 0;
 
     virtual bool isDocumentModified() = 0;
 
-    virtual bool saveFile(const QString &fileName) = 0;
+    virtual bool saveFile(const QString& fileName) = 0;
 
     template<typename FuncReference>
-    QAction *addAction(
-            const QString &name,
-            const QString &tip,
+    QAction* addAction(
+            const QString& name,
+            const QString& tip,
             FuncReference method,
             QKeySequence::StandardKey keySequence,
-            const QIcon &icon = QIcon(),
-            QMenu *menu = nullptr,
-            QToolBar *toolbar = nullptr);
+            const QIcon& icon = QIcon(),
+            QMenu* menu = nullptr,
+            QToolBar* toolbar = nullptr);
 
     template<typename FuncReference>
-    QAction *addAction(
-            const QString &name,
-            const QString &tip,
+    QAction* addAction(
+            const QString& name,
+            const QString& tip,
             FuncReference method,
-            QMenu *menu = nullptr,
-            QToolBar *toolbar = nullptr);
+            QMenu* menu = nullptr,
+            QToolBar* toolbar = nullptr);
 
     template<typename FuncReference>
     void addActionToPosition(
@@ -88,8 +88,8 @@ protected:
             QKeySequence::StandardKey keySequence,
             int position,
             FuncReference method,
-            QMenu *menu,
-            QToolBar *toolbar);
+            QMenu* menu,
+            QToolBar* toolbar);
 
     /**
      * Add separator in to menu and/or toolbar.
@@ -98,8 +98,8 @@ protected:
      * @param toolBar toolbar pointer, can be nullptr.
      */
     static void addSeparator(
-            QMenu *menu,
-            QToolBar *toolBar = nullptr);
+            QMenu* menu,
+            QToolBar* toolBar = nullptr);
 
 protected slots:
 
@@ -129,9 +129,9 @@ protected slots:
 
 #ifndef QT_NO_SESSIONMANAGER
 
-    void commitData(QSessionManager &);
+    void commitData(QSessionManager&);
 
-    bool event(QEvent *event) override;
+    bool event(QEvent* event) override;
 
 #endif
 
@@ -141,9 +141,9 @@ private:
      */
     QString currentFile;
 
-    QGridLayout *mainLayout;
-    QToolBar *fileToolBar{};
-    QToolBar *editToolBar{};
+    QGridLayout* mainLayout;
+    QToolBar* fileToolBar{};
+    QToolBar* editToolBar{};
 
     void createStatusBar();
 
@@ -166,9 +166,9 @@ private:
      */
     bool isSaved();
 
-    QMenu *recentFilesSubmenu;
+    QMenu* recentFilesSubmenu;
 
-    bool isFileAccessibleLike(const QString &filename, QIODevice::OpenMode mode);
+    bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
     static void showSettings();
 };

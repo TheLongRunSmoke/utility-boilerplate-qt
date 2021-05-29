@@ -16,7 +16,7 @@
  * @return true entity is whitelisted and hide from trace.
  * @return false entity is shown in trace as normal.
  */
-extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, void **stacktrace) {
+extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, void** stacktrace) {
     // If file name empty, it is leak not in project...or you forget to include debug_new header somewhere.
     if (file == nullptr) return true;
     auto filename = std::string(file);
@@ -26,9 +26,9 @@ extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, 
             {"settingsdialog.cpp", std::list<int>{51}}
     };
     // Iterate through whitelist and return true if coincidence found.
-    for (auto const &it: whitelist) {
+    for (auto const& it: whitelist) {
         if (filename.find(it.first) == std::string::npos) continue;
-        for (auto const &row : it.second) {
+        for (auto const& row : it.second) {
             if (line == row) return true;
         }
     }
@@ -37,13 +37,13 @@ extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, 
 }
 #endif
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 #ifndef NDEBUG
     // Prepare NVWA leak detection.
     nvwa::new_progname = argv[0];
     nvwa::leak_whitelist_callback = leak_whitelist_callback;
     // Let's create debug memory leak. You can see it in trace.
-    int *leak = new int(0);
+    int* leak = new int(0);
 #endif
     // Load app resources.
     Q_INIT_RESOURCE(utility_boilerplate_qt);
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     // Create normal Qt application class.
     QApplication app(argc, argv);
     // Init default settings.
-    Settings *settings = new Settings();
+    Settings* settings = new Settings();
     settings->initDefaults();
     // Set style from settings.
     QApplication::setStyle(settings->style());
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     try {
         // Run application.
         result = QApplication::exec();
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
         // Catch exception if it make its way down here.
         qFatal("Error %s", e.what());
     }

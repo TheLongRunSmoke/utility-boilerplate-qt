@@ -17,11 +17,11 @@
 #include "helpers.hpp"
 #include <debug_new>
 
-UtilityMainWindow::UtilityMainWindow(QWidget *parent)
+UtilityMainWindow::UtilityMainWindow(QWidget* parent)
         : QMainWindow(parent) {
     // Set object name, to easily identified this window.
     setObjectName(UtilityMainWindow::objectName());
-    auto *mainFrame = new QFrame(this);
+    auto* mainFrame = new QFrame(this);
     setCentralWidget(mainFrame);
     mainLayout = new QGridLayout(mainFrame);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -39,7 +39,7 @@ UtilityMainWindow::UtilityMainWindow(QWidget *parent)
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
-bool UtilityMainWindow::event(QEvent *event) {
+bool UtilityMainWindow::event(QEvent* event) {
     if (event->type() == SettingsChangedEvent::type()) {
         Settings settings;
         QApplication::setStyle(settings.style());
@@ -49,17 +49,17 @@ bool UtilityMainWindow::event(QEvent *event) {
     return QMainWindow::event(event);
 }
 
-void UtilityMainWindow::loadFile(const QString &fileName) {
+void UtilityMainWindow::loadFile(const QString& fileName) {
     if (!isFileReadable(fileName)) return;
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
 }
 
-QGridLayout *UtilityMainWindow::getLayout() {
+QGridLayout* UtilityMainWindow::getLayout() {
     return mainLayout;
 }
 
-void UtilityMainWindow::setCurrentFile(const QString &filePath) {
+void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     currentFile = filePath;
     QString shownName = currentFile;
     if (shownName.isEmpty())
@@ -72,13 +72,13 @@ void UtilityMainWindow::setCurrentFile(const QString &filePath) {
  * Initialize menus and toolbars.
  */
 void UtilityMainWindow::createActions() {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     fileToolBar = addToolBar(tr("File"));
     createFileActions(fileMenu, fileToolBar);
-    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
     editToolBar = addToolBar(tr("Edit"));
     createEditActions(editMenu, editToolBar);
-    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
 }
 
@@ -88,7 +88,7 @@ void UtilityMainWindow::createActions() {
  * @param menu
  * @param toolbar
  */
-void UtilityMainWindow::createFileActions(QMenu *menu, QToolBar *toolbar) {
+void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
     connect(menu, &QMenu::aboutToShow, this, &UtilityMainWindow::checkRecentFilesAvailability);
     addAction(
             tr("&New"),
@@ -130,7 +130,7 @@ void UtilityMainWindow::createFileActions(QMenu *menu, QToolBar *toolbar) {
             menu);
 }
 
-void UtilityMainWindow::createEditActions(QMenu *menu, QToolBar *toolbar) {
+void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 
 #ifndef QT_NO_CLIPBOARD
 
@@ -170,7 +170,7 @@ void UtilityMainWindow::createEditActions(QMenu *menu, QToolBar *toolbar) {
 
 }
 
-void UtilityMainWindow::createHelpActions(QMenu *menu) {
+void UtilityMainWindow::createHelpActions(QMenu* menu) {
     addAction(
             tr("&About"),
             tr("About application."),
@@ -188,7 +188,7 @@ void UtilityMainWindow::updateRecentFiles() {
     recentFilesSubmenu->clear();
     for (int i = 0; i < recentFiles.size(); ++i) {
         const QString fileName = QFileInfo(recentFiles.at(i)).fileName();
-        auto *action = new QAction(
+        auto* action = new QAction(
                 tr("&%1 %2").arg(i + 1).arg(fileName),
                 this);
         action->setData(recentFiles.at(i));
@@ -213,7 +213,7 @@ QIODevice::OpenMode UtilityMainWindow::getFileWriteMode() {
     return QFile::WriteOnly;
 }
 
-bool UtilityMainWindow::isFileAccessibleLike(const QString &filename, const QIODevice::OpenMode mode) {
+bool UtilityMainWindow::isFileAccessibleLike(const QString& filename, const QIODevice::OpenMode mode) {
     QFile file(filename);
     if (!file.open(mode)) {
         QMessageBox::warning(this, tr("Error"),
@@ -224,11 +224,11 @@ bool UtilityMainWindow::isFileAccessibleLike(const QString &filename, const QIOD
     return true;
 }
 
-bool UtilityMainWindow::isFileReadable(const QString &filename) {
+bool UtilityMainWindow::isFileReadable(const QString& filename) {
     return isFileAccessibleLike(filename, getFileReadMode());
 }
 
-bool UtilityMainWindow::isFileWritable(const QString &filename) {
+bool UtilityMainWindow::isFileWritable(const QString& filename) {
     return isFileAccessibleLike(filename, getFileWriteMode());
 }
 
@@ -253,7 +253,7 @@ void UtilityMainWindow::open() {
 
 void UtilityMainWindow::openRecentFile() {
     if (!isSaved()) return;
-    if (const auto *action = qobject_cast<const QAction *>(sender()))
+    if (const auto* action = qobject_cast<const QAction*>(sender()))
         loadFile(action->data().toString());
 }
 
@@ -381,7 +381,7 @@ void UtilityMainWindow::writeSettings() {
 
 #ifndef QT_NO_SESSIONMANAGER
 
-void UtilityMainWindow::commitData(QSessionManager &manager) {
+void UtilityMainWindow::commitData(QSessionManager& manager) {
     if (manager.allowsInteraction()) {
         if (!isSaved())
             manager.cancel();
@@ -412,7 +412,7 @@ bool UtilityMainWindow::isSaved() {
     return true;
 }
 
-void UtilityMainWindow::closeEvent(QCloseEvent *event) {
+void UtilityMainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     if (isSaved()) {
         event->accept();
@@ -427,11 +427,11 @@ void UtilityMainWindow::createStatusBar() {
 }
 
 template<typename FuncReference>
-QAction *UtilityMainWindow::addAction(const QString &name, const QString &tip,
+QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip,
                                       const FuncReference method, const QKeySequence::StandardKey keySequence,
-                                      const QIcon &icon, QMenu *menu, QToolBar *toolbar) {
+                                      const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
     // Create action with or without icon.
-    auto *action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
+    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
     action->setStatusTip(tip);
     // Add hotkey if specified.
     if (keySequence != QKeySequence::StandardKey::UnknownKey)
@@ -444,15 +444,15 @@ QAction *UtilityMainWindow::addAction(const QString &name, const QString &tip,
 }
 
 template<typename FuncReference>
-QAction *UtilityMainWindow::addAction(const QString &name, const QString &tip, FuncReference method, QMenu *menu,
-                                      QToolBar *toolbar) {
+QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method, QMenu* menu,
+                                      QToolBar* toolbar) {
     return addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
 }
 
 template<typename FuncReference>
 void UtilityMainWindow::addActionToPosition(const QIcon icon, const QString name, const QString tip,
                                             const QKeySequence::StandardKey keySequence, const int position,
-                                            const FuncReference method, QMenu *menu, QToolBar *toolbar) {
+                                            const FuncReference method, QMenu* menu, QToolBar* toolbar) {
 
 }
 
@@ -460,7 +460,7 @@ QString UtilityMainWindow::defaultFileName() {
     return "untitled";
 }
 
-void UtilityMainWindow::addSeparator(QMenu *menu, QToolBar *toolBar) {
+void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
     if (menu != nullptr)
         menu->addSeparator();
     if (toolBar != nullptr)
