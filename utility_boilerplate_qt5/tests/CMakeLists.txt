@@ -16,3 +16,5 @@ add_executable(${UB_TEST_SUIT}
 
 target_link_libraries(${UB_TEST_SUIT} utility_boilerplate_qt5)
 target_link_libraries(${UB_TEST_SUIT} gtest gtest_main)
+
+gtest_discover_tests(${UB_TEST_SUIT})

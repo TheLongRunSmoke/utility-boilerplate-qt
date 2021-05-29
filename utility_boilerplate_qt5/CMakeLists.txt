@@ -62,4 +62,5 @@ target_link_libraries(${UB_PROJECT_NAME}
         Qt5::Core
         Qt5::Widgets)
 
+include(CTest)
 add_subdirectory(tests)

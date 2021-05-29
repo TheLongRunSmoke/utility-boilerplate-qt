@@ -46,4 +46,6 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         utility_boilerplate_qt5)
 
+# Add tests package.
+include(CTest)
 add_subdirectory(tests)

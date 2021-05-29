@@ -18,3 +18,4 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # Include library to build environment and enable test support.
 FetchContent_MakeAvailable(googletest)
 enable_testing()
+include(GoogleTest)
