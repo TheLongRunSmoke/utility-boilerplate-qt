@@ -8,58 +8,47 @@ SpinboxItem::SpinboxItem(
         QString name,
         int min,
         int max,
-        int defaultValue)
-        : UserSettingItem(std::move(key)),
-          _name{std::move(name)},
+        int defaultValue,
+        QString toolTip)
+        : SimpleSettingItem(
+        std::move(key),
+        std::move(name),
+        std::move(toolTip)),
           _min{min},
           _max{max} {
-    if (defaultValue < _min || defaultValue > _max) {
-        _defaultValue = intToValue(0);
-    } else {
-        _defaultValue = intToValue(defaultValue);
-    }
-}
-
-SpinboxItem::~SpinboxItem() {
-    delete _spinBox;
-    delete _view;
+    _defaultValue = intToValue(validateValue(defaultValue, _min, _max));
 }
 
 QWidget* SpinboxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
     auto* layout = new QHBoxLayout;
-    _spinBox = new QSpinBox(_view);
-    _spinBox->setRange(_min, _max);
+    _field = new QSpinBox(_view);
+    _field->setRange(_min, _max);
     if (_defaultValue != nullptr) {
-        _spinBox->setValue(valueToInt(defaultValue()));
+        _field->setValue(valueToInt(defaultValue()));
     }
     if (_value != nullptr) {
-        _spinBox->setValue(valueToInt(_value));
+        _field->setValue(valueToInt(_value));
     }
-    auto* label = new QLabel(_view);
-    label->setTextFormat(Qt::TextFormat::PlainText);
-    label->setText(_name);
-    label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    label->setBuddy(_spinBox);
-    layout->addWidget(label);
-    layout->addWidget(_spinBox);
+    layout->addWidget(createLabel());
+    layout->addWidget(_field);
     layout->addStretch();
     _view->setLayout(layout);
     return _view;
 }
 
 QString SpinboxItem::value() {
-    if (!_spinBox) return _defaultValue;
-    return intToValue(_spinBox->value());
+    if (!_field) return (_value != nullptr) ? _value : _defaultValue;
+    return intToValue(_field->value());
 }
 
 void SpinboxItem::setValue(QString value) {
-    _value = value;
-    if (_value == nullptr) _value = intToValue(0);
-    if (valueToInt(_value) < _min || valueToInt(_value) > _max) _value = intToValue(0);
-    if (!_spinBox) return;
-    _spinBox->setValue(valueToInt(_value));
+    if (value == nullptr) _value = intToValue(0);
+    int intValue = validateValue(valueToInt(value), _min, _max);
+    _value = intToValue(intValue);
+    if (!_field) return;
+    _field->setValue(valueToInt(_value));
 }
 
 QString SpinboxItem::defaultValue() {
@@ -78,4 +67,10 @@ int SpinboxItem::valueToInt(const QString& value) {
     int result = value.toInt(&isOk, 10);
     if (!isOk) return 0;
     return result;
+}
+
+int SpinboxItem::validateValue(int value, int min, int max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
 }

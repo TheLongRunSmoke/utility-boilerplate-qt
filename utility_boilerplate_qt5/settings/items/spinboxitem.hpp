@@ -1,18 +1,17 @@
 #ifndef UTILITY_BOILERPLATE_QT_SPINBOXITEM_HPP
 #define UTILITY_BOILERPLATE_QT_SPINBOXITEM_HPP
 
-#include "usersettingitem.hpp"
+#include "abstract/simplesettingitem.hpp"
 #include <QSpinBox>
 
-class SpinboxItem : public UserSettingItem {
+class SpinboxItem : public SimpleSettingItem<QSpinBox> {
 public:
     SpinboxItem(QString key,
                 QString name,
                 int min = 0,
                 int max = 10,
-                int defaultValue = 0);
-
-    ~SpinboxItem() override;
+                int defaultValue = 0,
+                QString toolTip = nullptr);
 
     QWidget* view(QWidget* parent) override;
 
@@ -23,9 +22,6 @@ public:
     QString defaultValue() override;
 
 private:
-    QWidget* _view = nullptr;
-    QSpinBox* _spinBox = nullptr;
-    QString _name = nullptr;
     QString _value = nullptr;
     QString _defaultValue = nullptr;
     int _min = 0;
@@ -34,6 +30,8 @@ private:
     static QString intToValue(int integer);
 
     static int valueToInt(const QString& value);
+
+    static int validateValue(int value, int min, int max);
 };
 
 

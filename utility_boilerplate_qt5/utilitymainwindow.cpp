@@ -472,6 +472,6 @@ void UtilityMainWindow::showSettings() {
 }
 
 QString UtilityMainWindow::objectName() {
-    return QString(WINDOW_ID);
+    return QString::number(1000, 10);
 }
 

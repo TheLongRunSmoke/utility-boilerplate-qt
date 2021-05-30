@@ -1,17 +1,16 @@
 #ifndef UTILITY_BOILERPLATE_QT_CHECKBOXITEM_HPP
 #define UTILITY_BOILERPLATE_QT_CHECKBOXITEM_HPP
 
-#include "usersettingitem.hpp"
+#include "abstract/simplesettingitem.hpp"
 #include "QCheckBox"
 
-class CheckBoxItem : public UserSettingItem {
+class CheckBoxItem : public SimpleSettingItem<QCheckBox> {
 
 public:
     CheckBoxItem(QString key,
                  QString name,
-                 bool defaultValue = false);
-
-    ~CheckBoxItem() override;
+                 bool defaultValue = false,
+                 QString toolTip = nullptr);
 
     QWidget* view(QWidget* parent) override;
 
@@ -22,9 +21,6 @@ public:
     QString defaultValue() override;
 
 protected:
-    QWidget* _view = nullptr;
-    QCheckBox* _checkBox = nullptr;
-    QString _name = nullptr;
     QString _value = nullptr;
     bool _defaultValue = false;
 

@@ -2,11 +2,17 @@
 
 #include <QLabel>
 #include <debug_new>
-#include <utility>
 
-ComboBoxItem::ComboBoxItem(QString key, QString name, QStringList elements, const QString& defaultValue)
-        : UserSettingItem(std::move(key)),
-          _name{std::move(name)},
+ComboBoxItem::ComboBoxItem(
+        QString key,
+        QString name,
+        QStringList elements,
+        const QString& defaultValue,
+        QString toolTip)
+        : SimpleSettingItem(
+        std::move(key),
+        std::move(name),
+        std::move(toolTip)),
           _elements{std::move(elements)} {
     if (_elements.contains(defaultValue, Qt::CaseInsensitive)) _defaultValue = defaultValue;
 }
@@ -15,36 +21,28 @@ QWidget* ComboBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
     auto* layout = new QHBoxLayout;
-    _comboBox = new QComboBox(_view);
-    _comboBox->addItems(_elements);
-    if (_comboBox->count() > 0) {
-        _comboBox->setCurrentIndex(0);
+    _field = new QComboBox(_view);
+    _field->addItems(_elements);
+    if (_field->count() > 0) {
+        _field->setCurrentIndex(0);
     }
     if (_defaultValue != nullptr) {
-        _comboBox->setCurrentIndex(_elements.indexOf(QRegExp(_defaultValue, Qt::CaseInsensitive)));
+        _field->setCurrentIndex(_elements.indexOf(QRegExp(_defaultValue, Qt::CaseInsensitive)));
     }
     if (_value != nullptr) {
-        _comboBox->setCurrentIndex(_elements.indexOf(QRegExp(_value, Qt::CaseInsensitive)));
+        _field->setCurrentIndex(_elements.indexOf(QRegExp(_value, Qt::CaseInsensitive)));
     }
-    auto* label = new QLabel(_view);
-    label->setTextFormat(Qt::TextFormat::PlainText);
-    label->setText(_name);
-    label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    label->setBuddy(_comboBox);
-    layout->addWidget(label);
-    layout->addWidget(_comboBox);
+    layout->addWidget(createLabel());
+    layout->addWidget(_field);
     layout->addStretch();
     _view->setLayout(layout);
     return _view;
 }
 
 QString ComboBoxItem::value() {
-    if (!_comboBox) {
-        if (_value == nullptr) return defaultValue();
-        return _value;
-    }
-    if (_comboBox->count() == 0) return defaultValue();
-    return _elements.at(_comboBox->currentIndex());
+    if (!_field) return (_value != nullptr) ? _value : defaultValue();
+    if (_field->count() == 0) return defaultValue();
+    return _elements.at(_field->currentIndex());
 }
 
 QString ComboBoxItem::defaultValue() {
@@ -56,11 +54,6 @@ QString ComboBoxItem::defaultValue() {
 void ComboBoxItem::setValue(QString value) {
     if (!_elements.contains(value, Qt::CaseInsensitive)) return;
     _value = value;
-    if (!_comboBox) return;
-    _comboBox->setCurrentIndex(_elements.indexOf(_value));
-}
-
-ComboBoxItem::~ComboBoxItem() {
-    delete _comboBox;
-    delete _view;
+    if (!_field) return;
+    _field->setCurrentIndex(_elements.indexOf(QRegExp(_value, Qt::CaseInsensitive)));
 }

@@ -1,21 +1,20 @@
 #ifndef UTILITY_BOILERPLATE_QT_COMBOBOXITEM_HPP
 #define UTILITY_BOILERPLATE_QT_COMBOBOXITEM_HPP
 
-#include "usersettingitem.hpp"
+#include "abstract/simplesettingitem.hpp"
 #include <QComboBox>
 
 /**
  * User setting with basic combobox control.
  */
-class ComboBoxItem : public UserSettingItem {
+class ComboBoxItem : public SimpleSettingItem<QComboBox> {
 
 public:
     ComboBoxItem(QString key,
                  QString name,
                  QStringList elements,
-                 const QString& defaultValue = nullptr);
-
-    ~ComboBoxItem() override;
+                 const QString& defaultValue = nullptr,
+                 QString toolTip = nullptr);
 
     QWidget* view(QWidget* parent) override;
 
@@ -26,9 +25,6 @@ public:
     QString defaultValue() override;
 
 protected:
-    QWidget* _view = nullptr;
-    QComboBox* _comboBox = nullptr;
-    QString _name = nullptr;
     QStringList _elements = QStringList();
     QString _value = nullptr;
     QString _defaultValue = nullptr;

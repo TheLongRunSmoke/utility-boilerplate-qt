@@ -2,12 +2,12 @@
 #define UTILITY_BOILERPLATE_QT_SEPARATORITEM_HPP
 
 #include <QWidget>
-#include "usersettingitem.hpp"
+#include "abstract/settingitem.hpp"
 
-class SeparatorItem : public UserSettingItem {
+class SeparatorItem : public SettingItem {
 
 public:
-    SeparatorItem() : UserSettingItem(nullptr) {};
+    SeparatorItem() : SettingItem(nullptr) {};
 
     ~SeparatorItem() override;
 

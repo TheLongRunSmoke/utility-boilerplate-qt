@@ -16,10 +16,8 @@ public:
     virtual void loadFile(const QString& fileName);
 
     /**
-     * Just random number to use as object name.
+     * Just return number to use as object name.
      */
-    static const int WINDOW_ID = 1000;
-
     static QString objectName();
 
 protected:

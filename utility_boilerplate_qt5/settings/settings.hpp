@@ -4,12 +4,12 @@
 #include <QSettings>
 #include <QApplication>
 #include <memory>
-#include "items/usersettingitem.hpp"
+#include "items/abstract/settingitem.hpp"
 #include "items/comboboxitem.hpp"
 
 class Settings : public QSettings {
 
-    using user_settings_t = std::unique_ptr<UserSettingItem>;
+    using user_settings_t = std::unique_ptr<SettingItem>;
 
     using user_settings_terator_pair_t =
     std::pair<
@@ -52,12 +52,12 @@ protected:
     /**
      * Add user setting, that will be shown first in settings window.
      */
-    void addUserSettingFirst(UserSettingItem* pItem);
+    void addUserSettingFirst(SettingItem* pItem);
 
     /**
      * Add user setting, that will be shown last in settings window.
      */
-    void addUserSettingLast(UserSettingItem* pItem);
+    void addUserSettingLast(SettingItem* pItem);
 
 private:
 

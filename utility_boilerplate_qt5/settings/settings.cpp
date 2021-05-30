@@ -18,7 +18,8 @@ void Settings::createUserSettings() {
             "theme",
             tr("Theme"),
             QStyleFactory::keys(),
-            QApplication::style()->objectName());
+            QApplication::style()->objectName(),
+            "asdasdasdasdasdas");
     addUserSettingFirst(item);
     addUserSettingLast(new SeparatorItem());
     auto* checkBoxFalse = new CheckBoxItem(
@@ -134,12 +135,12 @@ void Settings::saveUserSettings() {
     endGroup();
 }
 
-void Settings::addUserSettingFirst(UserSettingItem* pItem) {
-    _items.push_front(std::unique_ptr<UserSettingItem>(pItem));
+void Settings::addUserSettingFirst(SettingItem* pItem) {
+    _items.push_front(std::unique_ptr<SettingItem>(pItem));
 }
 
-void Settings::addUserSettingLast(UserSettingItem* pItem) {
-    _items.push_back(std::unique_ptr<UserSettingItem>(pItem));
+void Settings::addUserSettingLast(SettingItem* pItem) {
+    _items.push_back(std::unique_ptr<SettingItem>(pItem));
 }
 
 void Settings::initDefaults() {

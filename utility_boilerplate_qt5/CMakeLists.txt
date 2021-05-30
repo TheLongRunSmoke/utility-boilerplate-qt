@@ -26,6 +26,7 @@ file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         settings/*.cpp
         settings/items/*.hpp
         settings/items/*.cpp
+        settings/items/abstract/*.hpp
         nvwa/include/debug_new)
 
 # If build type not set, let's assume it's a release.

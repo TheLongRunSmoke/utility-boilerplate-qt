@@ -1,16 +1,15 @@
 #ifndef UTILITY_BOILERPLATE_QT_TEXTITEM_HPP
 #define UTILITY_BOILERPLATE_QT_TEXTITEM_HPP
 
-#include "usersettingitem.hpp"
+#include "abstract/simplesettingitem.hpp"
 #include <QLineEdit>
 
-class TextItem : public UserSettingItem {
+class TextItem : public SimpleSettingItem<QLineEdit> {
 public:
     TextItem(QString key,
              QString name,
-             QString defaultValue = "");
-
-    ~TextItem() override;
+             QString defaultValue = "",
+             QString toolTip = nullptr);
 
     QWidget* view(QWidget* parent) override;
 
@@ -21,9 +20,6 @@ public:
     QString defaultValue() override;
 
 private:
-    QWidget* _view = nullptr;
-    QLineEdit* _lineEdit = nullptr;
-    QString _name = nullptr;
     QString _value = "";
     QString _defaultValue = nullptr;
 };

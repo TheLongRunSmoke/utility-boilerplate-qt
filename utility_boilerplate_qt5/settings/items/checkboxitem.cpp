@@ -2,50 +2,44 @@
 #include <QLabel>
 #include <debug_new>
 #include <utility>
+#include <QComboBox>
 
 CheckBoxItem::CheckBoxItem(
         QString key,
         QString name,
-        bool defaultValue)
-        : UserSettingItem(std::move(key)),
-          _name(std::move(name)),
+        bool defaultValue,
+        QString toolTip)
+        : SimpleSettingItem(
+        std::move(key),
+        std::move(name),
+        std::move(toolTip)),
           _defaultValue(defaultValue) {}
-
-CheckBoxItem::~CheckBoxItem() {
-    delete _checkBox;
-    delete _view;
-}
 
 QWidget* CheckBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
     auto* layout = new QHBoxLayout;
-    _checkBox = new QCheckBox(_view);
-    _checkBox->setCheckState(boolToState(_defaultValue));
+    _field = new QCheckBox(_view);
+    _field->setCheckState(boolToState(_defaultValue));
     if (_value != nullptr) {
-        _checkBox->setCheckState(valueToState(_value));
+        _field->setCheckState(valueToState(_value));
     }
-    layout->addWidget(_checkBox);
-    auto* label = new QLabel(_view);
-    label->adjustSize();
-    label->setTextFormat(Qt::TextFormat::PlainText);
-    label->setText(_name);
-    label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    label->setBuddy(_checkBox);
-    layout->addWidget(label);
+    layout->addWidget(_field);
+    layout->addWidget(createLabel());
     layout->addStretch();
     _view->setLayout(layout);
     return _view;
 }
 
 QString CheckBoxItem::value() {
-    return stateToValue(_checkBox->checkState());
+    if (!_field) return (_value != nullptr) ? _value : stateToValue(boolToState(_defaultValue));
+    return stateToValue(_field->checkState());
 }
 
 void CheckBoxItem::setValue(QString value) {
     _value = value;
-    if (!_checkBox) return;
-    _checkBox->setCheckState(valueToState(_value));
+    if (!_field) return;
+    _field->setCheckState(valueToState(_value));
 }
 
 QString CheckBoxItem::defaultValue() {

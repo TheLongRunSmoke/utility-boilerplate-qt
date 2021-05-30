@@ -1,20 +1,25 @@
-#ifndef UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
-#define UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
+#ifndef UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
+#define UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
 
 #include <QString>
 #include <QLayout>
 
 /**
- * Abstract class for setting item.
+ * Abstract class for user defined setting item.
+ *
+ * Heirs of this class can be added in settings dialog.
  */
-class UserSettingItem {
+class SettingItem {
 
 public:
-    explicit UserSettingItem(
+
+    SettingItem() = delete;
+
+    explicit SettingItem(
             QString key
     ) : _key{std::move(key)} {};
 
-    virtual ~UserSettingItem() = default;
+    virtual ~SettingItem() = default;
 
     /**
      * View for settings dialog.
@@ -38,7 +43,7 @@ public:
     QString key() { return _key; }
 
     /**
-     * If key not set or empty, object do not hold any value and must not be saved.
+     * If key not set or empty, object do not hold any value that can be saved or restored.
      * @return
      */
     bool isDecoration() {
@@ -55,4 +60,4 @@ protected:
     QString _key = nullptr;
 };
 
-#endif //UTILITY_BOILERPLATE_QT_USERSETTINGITEM_HPP
+#endif //UTILITY_BOILERPLATE_QT_SETTINGITEM_HPP
