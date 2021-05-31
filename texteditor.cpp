@@ -36,5 +36,3 @@ void TextEditor::copy() {
 void TextEditor::paste() {
     ui.textEdit->paste();
 }
-
-

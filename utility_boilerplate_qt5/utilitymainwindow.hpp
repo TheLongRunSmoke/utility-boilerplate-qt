@@ -89,8 +89,6 @@ protected:
             QMenu* menu = nullptr,
             QToolBar* toolbar = nullptr);
 
-    void registerToolbar(QToolBar* pToolBar);
-
     /**
      * Add separator in to menu and/or toolbar.
      *
@@ -143,10 +141,8 @@ private:
     QString currentFile;
 
     QGridLayout* mainLayout;
-    QToolBar* fileToolBar{};
-    QToolBar* editToolBar{};
 
-    QList<QToolBar*> _toolbars = QList<QToolBar*>();
+    QMenu* recentFilesSubmenu;
 
     void createStatusBar();
 
@@ -169,13 +165,9 @@ private:
      */
     bool isSaved();
 
-    QMenu* recentFilesSubmenu;
-
     bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
     static void showSettings();
-
-    void restoreToolbarsGeometry();
 };
 
 #endif // UMAINWINDOW_H

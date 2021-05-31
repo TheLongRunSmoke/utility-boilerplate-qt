@@ -26,10 +26,6 @@ public:
 
     void setWindowGeometry(const QByteArray& geometry);
 
-    QList<QByteArray> toolbarGeometry();
-
-    void setToolbarGeometry(const QList<QByteArray>& geometry);
-
     bool hasRecentFiles();
 
     QStringList recentFiles();

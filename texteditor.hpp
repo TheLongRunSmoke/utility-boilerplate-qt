@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TEXTEDITOR_H
+#define TEXTEDITOR_H
 
 #include <QWidget>
 #include "ui_texteditor.h"
@@ -28,3 +29,6 @@ public:
 private:
     Ui::TextEditor ui;
 };
+
+#endif // TEXTEDITOR_H
+

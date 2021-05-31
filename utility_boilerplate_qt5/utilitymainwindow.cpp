@@ -72,12 +72,12 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
  * Initialize menus and toolbars.
  */
 void UtilityMainWindow::createActions() {
-    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
-    fileToolBar = addToolBar(tr("File"));
+    auto* fileMenu = menuBar()->addMenu(tr("&File"));
+    auto* fileToolBar = addToolBar(tr("File"));
     fileToolBar->setObjectName("file_toolbar");
     createFileActions(fileMenu, fileToolBar);
-    QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
-    editToolBar = addToolBar(tr("Edit"));
+    auto* editMenu = menuBar()->addMenu(tr("&Edit"));
+    auto* editToolBar = addToolBar(tr("Edit"));
     editToolBar->setObjectName("edit_toolbar");
     createEditActions(editMenu, editToolBar);
     QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
