@@ -6,9 +6,6 @@ TextEditor::TextEditor(QWidget* parent)
     ui.setupUi(this);
 }
 
-TextEditor::~TextEditor() {
-}
-
 void TextEditor::setText(const QString& text) {
     ui.textEdit->setPlainText(text);
 }

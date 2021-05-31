@@ -1,7 +1,5 @@
 #include "checkboxitem.hpp"
-#include <QLabel>
 #include <debug_new>
-#include <utility>
 #include <QComboBox>
 
 CheckBoxItem::CheckBoxItem(

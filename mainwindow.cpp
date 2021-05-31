@@ -5,6 +5,7 @@
 #include <QSaveFile>
 #include <QMessageBox>
 #include "mainwindow.hpp"
+#include "texteditorsettings.hpp"
 #include <debug_new>
 
 MainWindow::MainWindow(QWidget* parent)
@@ -87,4 +88,8 @@ void MainWindow::copy() {
  */
 void MainWindow::paste() {
     textEditor->paste();
+}
+
+void MainWindow::showSettings() {
+    SettingsDialog(new TextEditorSettings()).exec();
 }

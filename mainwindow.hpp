@@ -32,6 +32,8 @@ protected:
 
     bool saveFile(const QString& fileName) override;
 
+    void showSettings() override;
+
 protected slots:
 
     void cut() override;

@@ -9,7 +9,7 @@ class SettingsDialog : public QDialog {
 Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget* parent = Q_NULLPTR);
+    SettingsDialog(Settings* settings, QWidget* parent = Q_NULLPTR);
 
     ~SettingsDialog();
 

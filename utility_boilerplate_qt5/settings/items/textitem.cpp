@@ -1,7 +1,5 @@
 #include "textitem.hpp"
 
-#include <utility>
-#include <QLabel>
 #include <debug_new>
 
 TextItem::TextItem(

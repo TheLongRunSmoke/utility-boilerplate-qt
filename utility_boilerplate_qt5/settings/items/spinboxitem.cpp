@@ -1,7 +1,5 @@
 #include "spinboxitem.hpp"
-#include <QLabel>
 #include <debug_new>
-#include <utility>
 
 SpinboxItem::SpinboxItem(
         QString key,

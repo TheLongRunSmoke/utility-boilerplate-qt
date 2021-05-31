@@ -1,7 +1,7 @@
-#include <QtWidgets/QApplication>
+#include <QApplication>
+#include <QTranslator>
 #include "utility_boilerplate_qt5/helpers.hpp"
 #include "mainwindow.hpp"
-#include "utility_boilerplate_qt5/settings/settings.hpp"
 #include <debug_new>
 #include <sstream>
 
@@ -23,7 +23,7 @@ extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, 
     // Let's whitelist something.
     // I used QEvent, it's object deleted outside of origin file and will be detected.
     auto whitelist = std::map<std::string, std::list<int>>{
-            {"settingsdialog.cpp", std::list<int>{51}}
+            {"settingsdialog.cpp", std::list<int>{54}}
     };
     // Iterate through whitelist and return true if coincidence found.
     for (auto const& it: whitelist) {
@@ -60,6 +60,11 @@ int main(int argc, char* argv[]) {
     // Set style from settings.
     QApplication::setStyle(settings->style());
     delete settings;
+    // Init lang.
+    QTranslator translator;
+    translator.load(QLocale::system(), QStringLiteral("qtbase_"));
+    translator.load(QLocale(), QLatin1String("app"));
+    QApplication::installTranslator(&translator);
     // Parse command line arguments.
     QStringList arguments = UBHelpers::parseFirstArgumentAsFile(app);
     // Create main window.

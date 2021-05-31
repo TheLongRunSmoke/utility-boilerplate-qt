@@ -1,9 +1,6 @@
 #include <QCoreApplication>
 #include <QStyleFactory>
 #include "settings.hpp"
-#include "items/comboboxitem.hpp"
-#include "items/checkboxitem.hpp"
-#include "items/separatoritem.hpp"
 #include "items/textitem.hpp"
 #include "items/spinboxitem.hpp"
 #include <debug_new>
@@ -20,46 +17,14 @@ void Settings::createUserSettings() {
             QStyleFactory::keys(),
             QApplication::style()->objectName(),
             tr("Application theme"));
-    addUserSettingFirst(theme);
+    addUserSetting(theme);
     auto* recentFilesLimit = new SpinboxItem(
             "recent_files_limit",
             tr("Recent files limit"),
             0,
             10,
             5);
-    addUserSettingLast(recentFilesLimit);
-    addUserSettingLast(new SeparatorItem());
-    auto* checkBoxFalse = new CheckBoxItem(
-            "checkbox_default_false",
-            tr("Default false"));
-    addUserSettingLast(checkBoxFalse);
-    auto* checkBoxTrue = new CheckBoxItem(
-            "checkbox_default_true",
-            tr("Default true"),
-            true);
-    addUserSettingLast(checkBoxTrue);
-    addUserSettingLast(new SeparatorItem());
-    auto* textItem = new TextItem(
-            "text_no_default",
-            tr("Default empty"));
-    addUserSettingLast(textItem);
-    auto* textItemDef = new TextItem(
-            "text_has_default",
-            tr("Has default text"),
-            "some text");
-    addUserSettingLast(textItemDef);
-    addUserSettingLast(new SeparatorItem());
-    auto* intSpinBoxDefault = new SpinboxItem(
-            "spinbox_def",
-            tr("Spinbox defaults"));
-    addUserSettingLast(intSpinBoxDefault);
-    auto* intSpinBox = new SpinboxItem(
-            "spinbox",
-            tr("Spinbox"),
-            -5,
-            5,
-            -1);
-    addUserSettingLast(intSpinBox);
+    addUserSetting(recentFilesLimit);
 }
 
 void Settings::readUserSettings() {
@@ -130,7 +95,7 @@ inline QString Settings::windowStateKey() {
 }
 
 inline QString Settings::recentFilesKey() {
-    return QString("recent");
+    return QString("RecentFiles");
 }
 
 inline QString Settings::fileKey() {
@@ -158,7 +123,7 @@ void Settings::addUserSettingFirst(SettingItem* pItem) {
     _items.push_front(std::unique_ptr<SettingItem>(pItem));
 }
 
-void Settings::addUserSettingLast(SettingItem* pItem) {
+void Settings::addUserSetting(SettingItem* pItem) {
     _items.push_back(std::unique_ptr<SettingItem>(pItem));
 }
 

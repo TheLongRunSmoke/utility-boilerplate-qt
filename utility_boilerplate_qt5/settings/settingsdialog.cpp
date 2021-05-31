@@ -6,8 +6,11 @@
 #include "../utilitymainwindow.hpp"
 #include <debug_new>
 
-SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent) {
-    _settings = new Settings();
+SettingsDialog::SettingsDialog(
+        Settings* settings,
+        QWidget* parent)
+        : QDialog(parent),
+          _settings{settings} {
     auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     // Collect user setting controls to layout.

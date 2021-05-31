@@ -11,10 +11,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "utilitymainwindow.hpp"
-#include "settings/settings.hpp"
-#include "settings/settingsdialog.hpp"
 #include "settings/settingschangedevent.hpp"
-#include "helpers.hpp"
 #include <debug_new>
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent)
@@ -294,10 +291,15 @@ void UtilityMainWindow::exit() {
 }
 
 void UtilityMainWindow::about() {
-    QMessageBox::about(this, tr("About Application"),
-                       tr("The <b>Application</b> example demonstrates how to "
-                          "write modern GUI applications using Qt, with a menu bar, "
-                          "toolbars, and a status bar."));
+    QMessageBox about;
+    about.setTextFormat(Qt::RichText);
+    about.setStandardButtons(QMessageBox::Ok);
+    about.setWindowTitle(tr("About Utility Boilerplate Qt"));
+    about.setText(tr("This is example shows how to crate simple utility application "
+                     "using Utility Boilerplate Qt5. For details see\n"
+                     "<a href='https://github.com/TheLongRunSmoke/utility-boilerplate-qt'>"
+                     "https://github.com/TheLongRunSmoke/utility-boilerplate-qt</a>"));
+    about.exec();
 }
 
 /**
@@ -491,7 +493,7 @@ void UtilityMainWindow::addSeparator(QMenu* menu, QToolBar* toolBar) {
 }
 
 void UtilityMainWindow::showSettings() {
-    SettingsDialog().exec();
+    SettingsDialog(new Settings()).exec();
 }
 
 QString UtilityMainWindow::objectName() {

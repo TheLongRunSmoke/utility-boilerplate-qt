@@ -1,6 +1,5 @@
 #include "comboboxitem.hpp"
 
-#include <QLabel>
 #include <debug_new>
 
 ComboBoxItem::ComboBoxItem(

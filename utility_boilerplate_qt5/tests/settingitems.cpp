@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "test.hpp"
-#include <QStringList>
 #include <settings/items/checkboxitem.hpp>
 #include <settings/items/comboboxitem.hpp>
 #include <settings/items/separatoritem.hpp>

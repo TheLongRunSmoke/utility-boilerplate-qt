@@ -56,14 +56,14 @@ protected:
     void createUserSettings();
 
     /**
+     * Add user setting, that will be shown last in settings window.
+     */
+    void addUserSetting(SettingItem* pItem);
+
+    /**
      * Add user setting, that will be shown first in settings window.
      */
     void addUserSettingFirst(SettingItem* pItem);
-
-    /**
-     * Add user setting, that will be shown last in settings window.
-     */
-    void addUserSettingLast(SettingItem* pItem);
 
 private:
 

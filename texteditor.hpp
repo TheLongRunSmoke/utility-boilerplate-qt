@@ -10,8 +10,6 @@ Q_OBJECT
 public:
     explicit TextEditor(QWidget* parent = Q_NULLPTR);
 
-    ~TextEditor() override;
-
     void setText(const QString& text);
 
     QString getText();

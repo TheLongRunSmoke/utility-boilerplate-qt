@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QStatusBar>
 #include <QSessionManager>
+#include "settings/settingsdialog.hpp"
 
 class UtilityMainWindow : public QMainWindow {
 
@@ -59,6 +60,10 @@ protected:
     virtual bool isDocumentModified() = 0;
 
     virtual bool saveFile(const QString& fileName) = 0;
+
+    virtual void about();
+
+    virtual void showSettings();
 
     template<typename FuncReference>
     QAction* addAction(
@@ -118,8 +123,6 @@ protected slots:
 
     void exit();
 
-    void about();
-
     virtual void cut();
 
     virtual void copy();
@@ -167,7 +170,6 @@ private:
 
     bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
-    static void showSettings();
 };
 
 #endif // UMAINWINDOW_H
