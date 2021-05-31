@@ -22,9 +22,13 @@ public:
 
     ~Settings() override;
 
-    QByteArray geometry();
+    QByteArray windowGeometry();
 
-    void setGeometry(const QByteArray& geometry);
+    void setWindowGeometry(const QByteArray& geometry);
+
+    QList<QByteArray> toolbarGeometry();
+
+    void setToolbarGeometry(const QList<QByteArray>& geometry);
 
     bool hasRecentFiles();
 
@@ -42,6 +46,12 @@ public:
     void saveUserSettings();
 
     QString style();
+
+    int recentFilesLimit();
+
+    QByteArray windowState();
+
+    void setWindowState(const QByteArray& state);
 
 protected:
 
@@ -63,7 +73,9 @@ private:
 
     static QString path();
 
-    inline static QString geometryKey();
+    inline static QString windowGeometryKey();
+
+    inline static QString windowStateKey();
 
     inline static QString recentFilesKey();
 

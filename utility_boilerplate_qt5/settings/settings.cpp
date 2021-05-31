@@ -14,13 +14,20 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 }
 
 void Settings::createUserSettings() {
-    auto* item = new ComboBoxItem(
+    auto* theme = new ComboBoxItem(
             "theme",
             tr("Theme"),
             QStyleFactory::keys(),
             QApplication::style()->objectName(),
-            "asdasdasdasdasdas");
-    addUserSettingFirst(item);
+            tr("Application theme"));
+    addUserSettingFirst(theme);
+    auto* recentFilesLimit = new SpinboxItem(
+            "recent_files_limit",
+            tr("Recent files limit"),
+            0,
+            10,
+            5);
+    addUserSettingLast(recentFilesLimit);
     addUserSettingLast(new SeparatorItem());
     auto* checkBoxFalse = new CheckBoxItem(
             "checkbox_default_false",
@@ -64,12 +71,20 @@ void Settings::readUserSettings() {
     }
 }
 
-QByteArray Settings::geometry() {
-    return value(geometryKey(), QByteArray()).toByteArray();
+QByteArray Settings::windowGeometry() {
+    return value(windowGeometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setGeometry(const QByteArray& geometry) {
-    setValue(geometryKey(), geometry);
+void Settings::setWindowGeometry(const QByteArray& geometry) {
+    setValue(windowGeometryKey(), geometry);
+}
+
+QByteArray Settings::windowState() {
+    return value(windowStateKey(), QByteArray()).toByteArray();
+}
+
+void Settings::setWindowState(const QByteArray& state) {
+    setValue(windowStateKey(), state);
 }
 
 bool Settings::hasRecentFiles() {
@@ -93,7 +108,7 @@ void Settings::putRecentFile(const QString& path) {
     QStringList files = recentFiles();
     if (files.contains(path)) return;
     files.insert(0, path);
-    const int count = std::min(files.size(), 5);
+    const int count = std::min(files.size(), recentFilesLimit());
     beginWriteArray(recentFilesKey());
     for (int i = 0; i < count; ++i) {
         setArrayIndex(i);
@@ -106,12 +121,16 @@ QString Settings::path() {
     return QCoreApplication::applicationDirPath() + "/settings.ini";
 }
 
-inline QString Settings::geometryKey() {
-    return QString("geometry");
+inline QString Settings::windowGeometryKey() {
+    return QString("window_geometry");
+}
+
+inline QString Settings::windowStateKey() {
+    return QString("window_state");
 }
 
 inline QString Settings::recentFilesKey() {
-    return QString("Recent");
+    return QString("recent");
 }
 
 inline QString Settings::fileKey() {
@@ -158,4 +177,6 @@ QString Settings::style() {
     return value("User/theme", "").toString();
 }
 
-
+int Settings::recentFilesLimit() {
+    return value("User/recent_files_limit").toInt();
+}

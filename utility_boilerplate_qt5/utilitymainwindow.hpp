@@ -79,15 +79,17 @@ protected:
             QToolBar* toolbar = nullptr);
 
     template<typename FuncReference>
-    void addActionToPosition(
-            QIcon icon,
-            QString name,
-            QString tip,
-            QKeySequence::StandardKey keySequence,
+    QAction* addActionToPosition(
             int position,
+            const QString& name,
+            const QString& tip,
             FuncReference method,
-            QMenu* menu,
-            QToolBar* toolbar);
+            QKeySequence::StandardKey keySequence,
+            const QIcon& icon = QIcon(),
+            QMenu* menu = nullptr,
+            QToolBar* toolbar = nullptr);
+
+    void registerToolbar(QToolBar* pToolBar);
 
     /**
      * Add separator in to menu and/or toolbar.
@@ -98,6 +100,7 @@ protected:
     static void addSeparator(
             QMenu* menu,
             QToolBar* toolBar = nullptr);
+
 
 protected slots:
 
@@ -143,6 +146,8 @@ private:
     QToolBar* fileToolBar{};
     QToolBar* editToolBar{};
 
+    QList<QToolBar*> _toolbars = QList<QToolBar*>();
+
     void createStatusBar();
 
     void validateGeometry();
@@ -151,9 +156,9 @@ private:
 
     void resetWindowGeometry();
 
-    void readSettings();
+    void restoreState();
 
-    void writeSettings();
+    void saveState();
 
     /**
      * Check that working file saved interactively.
@@ -169,6 +174,8 @@ private:
     bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
     static void showSettings();
+
+    void restoreToolbarsGeometry();
 };
 
 #endif // UMAINWINDOW_H

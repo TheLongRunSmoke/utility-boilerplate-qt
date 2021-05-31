@@ -27,7 +27,7 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     createActions();
     createStatusBar();
-    readSettings();
+    restoreState();
 
 #ifndef QT_NO_SESSIONMANAGER
     QGuiApplication::setFallbackSessionManagementEnabled(false);
@@ -74,9 +74,11 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
 void UtilityMainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     fileToolBar = addToolBar(tr("File"));
+    fileToolBar->setObjectName("file_toolbar");
     createFileActions(fileMenu, fileToolBar);
     QMenu* editMenu = menuBar()->addMenu(tr("&Edit"));
     editToolBar = addToolBar(tr("Edit"));
+    editToolBar->setObjectName("edit_toolbar");
     createEditActions(editMenu, editToolBar);
     QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
@@ -363,20 +365,24 @@ void UtilityMainWindow::resetWindowGeometry() {
 /**
  * Read and apply setting.
  */
-void UtilityMainWindow::readSettings() {
+void UtilityMainWindow::restoreState() {
     Settings settings;
-    const QByteArray geometry = settings.geometry();
-    if (geometry.isEmpty()) {
+    const QByteArray windowGeometry = settings.windowGeometry();
+    if (windowGeometry.isEmpty()) {
         resetWindowGeometry();
     } else {
-        restoreGeometry(geometry);
+        restoreGeometry(windowGeometry);
         validateGeometry();
     }
+    const QByteArray windowState = settings.windowState();
+    if (windowState.isEmpty()) return;
+    QMainWindow::restoreState(windowState, 0);
 }
 
-void UtilityMainWindow::writeSettings() {
+void UtilityMainWindow::saveState() {
     Settings settings;
-    settings.setGeometry(saveGeometry());
+    settings.setWindowGeometry(saveGeometry());
+    settings.setWindowState(QMainWindow::saveState(0));
 }
 
 #ifndef QT_NO_SESSIONMANAGER
@@ -413,7 +419,7 @@ bool UtilityMainWindow::isSaved() {
 }
 
 void UtilityMainWindow::closeEvent(QCloseEvent* event) {
-    writeSettings();
+    saveState();
     if (isSaved()) {
         event->accept();
     } else {
@@ -450,10 +456,27 @@ QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip, F
 }
 
 template<typename FuncReference>
-void UtilityMainWindow::addActionToPosition(const QIcon icon, const QString name, const QString tip,
-                                            const QKeySequence::StandardKey keySequence, const int position,
-                                            const FuncReference method, QMenu* menu, QToolBar* toolbar) {
-
+QAction*
+UtilityMainWindow::addActionToPosition(int position, const QString& name, const QString& tip, FuncReference method,
+                                       QKeySequence::StandardKey keySequence, const QIcon& icon, QMenu* menu,
+                                       QToolBar* toolbar) {
+    // Create action with or without icon.
+    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
+    action->setStatusTip(tip);
+    // Add hotkey if specified.
+    if (keySequence != QKeySequence::StandardKey::UnknownKey)
+        action->setShortcuts(keySequence);
+    // Connect to slot and add to menu and toolbar, if specified.
+    connect(action, &QAction::triggered, this, method, Qt::QueuedConnection);
+    if (menu != nullptr) {
+        auto* beforeAction = menu->actions().at(position);
+        menu->insertAction(beforeAction, action);
+    }
+    if (toolbar != nullptr) {
+        auto* beforeAction = toolbar->actions().at(position);
+        toolbar->insertAction(beforeAction, action);
+    }
+    return action;
 }
 
 QString UtilityMainWindow::defaultFileName() {
@@ -474,4 +497,3 @@ void UtilityMainWindow::showSettings() {
 QString UtilityMainWindow::objectName() {
     return QString::number(1000, 10);
 }
-
