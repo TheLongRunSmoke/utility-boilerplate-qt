@@ -4,6 +4,7 @@
 #include "mainwindow.hpp"
 #include "texteditorsettings.hpp"
 #include <debug_new>
+#include <QtDebug>
 
 #ifndef NDEBUG
 /**
@@ -49,12 +50,25 @@ void readSettings() {
     delete settings;
 }
 
-void loadTranslation(QTranslator* translator) {
+/**
+ * Load translation for current system language.
+ *
+ * @param translator
+ */
+void loadTranslation(QTranslator* translator, QApplication* app) {
     QLocale locale;
-    translator->load(locale, "qtbase", "_", ":/i18n");
-    translator->load(locale, "app", "_", "i18n");
-    translator->load(locale, "ub5", "_", "i18n");
-    QApplication::installTranslator(translator);
+    QLatin1String filename("appcomp");
+    QLatin1String prefix("_");
+    QLatin1String i18nDir("i18n");
+    // Search app translation in local directory.
+    bool isLoaded = translator->load(locale, filename, prefix, i18nDir);
+    if (isLoaded) {
+        qInfo() << "Translation for" << QLocale::system().name() << "load successfully";
+    } else {
+        qWarning() << "Can't load translation for" << QLocale::system().name();
+    }
+    // Set translation.
+    app->installTranslator(translator);
 }
 
 int main(int argc, char* argv[]) {
@@ -76,7 +90,7 @@ int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     // Load translation.
     QTranslator translator;
-    loadTranslation(&translator);
+    loadTranslation(&translator, &app);
     // Load settings.
     readSettings();
     // Create main window.

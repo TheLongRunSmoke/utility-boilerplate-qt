@@ -6,8 +6,17 @@ English | [Русский](README.ru.MD)
 
 **Translations support**
 
-Use lupdate *.cpp -ts i18n/ts/app_ru.ts to collect strings to translate.
+How to assemble new translation, on ru_RU example.
 
-Use linguist i18n/ts/app_ru.ts to load it in to translation tool.
+Use lupdate *.cpp -ts i18n/ru/app_ru.ts to collect strings to translate.
 
-Use lrelease i18n/ts/app_ru.ts to convert translation in to qm file, that qt can load as translation.
+Use linguist i18n/ru/app_ru.ts to load it in to translation tool.
+
+Next you need to collect complete translation file unsung lconvert.
+
+cd i18n/
+
+lconvert -i ru/app_ru.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
+
+Convert translation file to qm file, that Qt can load, with lrelease.
+lrelease ru/appcomp_ru.ts ru/appcomp_ru.qm

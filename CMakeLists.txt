@@ -46,6 +46,18 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
         utility_boilerplate_qt5)
 
+# Collect translations.
+file(GLOB_RECURSE I18N_QM
+        *.qm)
+
+# Copy translation to binaries folder.
+foreach (FILE_PATH ${I18N_QM})
+    get_filename_component(FILE_NAME ${FILE_PATH} NAME)
+    configure_file(${FILE_PATH}
+            ${PROJECT_BINARY_DIR}/i18n/${FILE_NAME}
+            COPYONLY)
+endforeach ()
+
 # Add tests package.
 include(CTest)
 add_subdirectory(tests)
