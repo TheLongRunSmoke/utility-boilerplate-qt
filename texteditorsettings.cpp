@@ -10,7 +10,6 @@ TextEditorSettings::TextEditorSettings() {
 }
 
 void TextEditorSettings::addTextEditorSettings() {
-    Settings::createUserSettings();
     addUserSetting(new SeparatorItem());
     auto* checkBoxFalse = new CheckBoxItem(
             "checkbox_default_false",

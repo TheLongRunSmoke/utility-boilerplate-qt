@@ -2,8 +2,8 @@
 #include <QTranslator>
 #include "utility_boilerplate_qt5/helpers.hpp"
 #include "mainwindow.hpp"
+#include "texteditorsettings.hpp"
 #include <debug_new>
-#include <sstream>
 
 #ifndef NDEBUG
 /**
@@ -37,6 +37,26 @@ extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, 
 }
 #endif
 
+/**
+ * Initialized and load application settings.
+ */
+void readSettings() {
+    Settings* settings = new TextEditorSettings();
+    // Init defaults if not set.
+    settings->initDefaults();
+    // Set style from settings.
+    QApplication::setStyle(settings->style());
+    delete settings;
+}
+
+void loadTranslation(QTranslator* translator) {
+    QLocale locale;
+    translator->load(locale, "qtbase", "_", ":/i18n");
+    translator->load(locale, "app", "_", "i18n");
+    translator->load(locale, "ub5", "_", "i18n");
+    QApplication::installTranslator(translator);
+}
+
 int main(int argc, char* argv[]) {
 #ifndef NDEBUG
     // Prepare NVWA leak detection.
@@ -54,26 +74,19 @@ int main(int argc, char* argv[]) {
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
     // Create normal Qt application class.
     QApplication app(argc, argv);
-    // Init default settings.
-    Settings* settings = new Settings();
-    settings->initDefaults();
-    // Set style from settings.
-    QApplication::setStyle(settings->style());
-    delete settings;
-    // Init lang.
+    // Load translation.
     QTranslator translator;
-    translator.load(QLocale::system(), QStringLiteral("qtbase_"));
-    translator.load(QLocale(), QLatin1String("app"));
-    QApplication::installTranslator(&translator);
-    // Parse command line arguments.
-    QStringList arguments = UBHelpers::parseFirstArgumentAsFile(app);
+    loadTranslation(&translator);
+    // Load settings.
+    readSettings();
     // Create main window.
     MainWindow mainWin;
-    // Open file if requested.
+    // Check command line arguments for file to open.
+    QStringList arguments = UBHelpers::parseFirstArgumentAsFile(app);
     if (!arguments.isEmpty()) {
         mainWin.loadFile(arguments.first());
     }
-    // Prepare window.
+    // Display window and run application.
     mainWin.show();
     int result;
     try {
