@@ -1,6 +1,5 @@
 # Prepare project name.
-set(TEST_SUIT tests)
-project(${TEST_SUIT})
+project(tests)
 
 # Get parent directory and include source of project under test.
 # You probably need to set variable with include directories in top-level project.
@@ -22,15 +21,15 @@ file(GLOB TEST_SOURCES
         *.hpp)
 
 # Create tests project and link with libraries.
-add_executable(${TEST_SUIT}
+add_executable(${PROJECT_NAME}
         ${TEST_SOURCES})
 
-target_link_libraries(${TEST_SUIT}
+target_link_libraries(${PROJECT_NAME}
         utility_boilerplate_qt5)
 
-target_link_libraries(${TEST_SUIT}
+target_link_libraries(${PROJECT_NAME}
         gtest
         gtest_main)
 
 # Make it discoverable for CTest.
-gtest_discover_tests(${TEST_SUIT})
+gtest_discover_tests(${PROJECT_NAME})

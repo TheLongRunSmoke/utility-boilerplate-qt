@@ -1,6 +1,5 @@
 # Prepare project name.
-set(UB_TEST_SUIT ub_qt5_tests)
-project(${UB_TEST_SUIT})
+project(ub_qt5_tests)
 
 # Get parent directory and include source of project under test.
 set(PARENT_SOURCE_DIR "")
@@ -17,13 +16,13 @@ file(GLOB UB_TEST_SOURCES
         *.hpp)
 
 # Create tests project and link with libraries.
-add_executable(${UB_TEST_SUIT}
+add_executable(${PROJECT_NAME}
         ${UB_TEST_SOURCES})
-target_link_libraries(${UB_TEST_SUIT}
+target_link_libraries(${PROJECT_NAME}
         utility_boilerplate_qt5)
-target_link_libraries(${UB_TEST_SUIT}
+target_link_libraries(${PROJECT_NAME}
         gtest
         gtest_main)
 
 # Make it discoverable for CTest.
-gtest_discover_tests(${UB_TEST_SUIT})
+gtest_discover_tests(${PROJECT_NAME})

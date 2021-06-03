@@ -4,19 +4,90 @@ English | [Русский](README.ru.MD)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-**Translations support**
+# What is it?
 
-How to assemble new translation, on ru_RU example.
+# How to build
 
-Use lupdate *.cpp -ts i18n/ru/app_ru.ts to collect strings to translate.
+Project build using cmake instead of Qt build system, and currently can't be load in Qt Creator. Pull request with
+appropriate *.pro files is welcome.
 
-Use linguist i18n/ru/app_ru.ts to load it in to translation tool.
+You need Qt 5.10 at least.
 
-Next you need to collect complete translation file unsung lconvert.
+## Requirements installation
 
-cd i18n/
+For details see [Qt Wiki](https://wiki.qt.io/Main).
 
-lconvert -i ru/app_ru.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
+### Windows
 
-Convert translation file to qm file, that Qt can load, with lrelease.
-lrelease ru/appcomp_ru.ts ru/appcomp_ru.qm
+Install Qt from [official site](https://www.qt.io/download).
+
+### Linux
+
+Examples for Ubuntu 20.04, for another version or distributive refer to [Qt Wiki](https://wiki.qt.io/Main).
+
+```shell
+sudo apt install build-essential qt5-default qttools5-dev-tools
+```
+
+## Build
+
+From source folder:
+
+```shell
+mkdir build
+cd build/
+cmake ../
+cmake --build .
+```
+
+# Example
+
+## Internationalization support
+
+This boilerplate code include Qt internationalization support.
+
+You need to create application translation files to make it work.
+
+Take a note, for now module `utility_boilerplate_qt5` support only 2 languages:
+
+1. English - in-built to sources
+2. Russian
+
+Pull requests with another language are welcome.
+
+### How to assemble new translation
+
+ru_RU as example, use your language code.
+
+1. Collect all strings inside `tr()` to TS file using `lupdate`.
+
+   ```shell
+   lupdate *.cpp -ts i18n/ru/app_ru.ts
+   ```
+
+2. Open it in translation tool and translate.
+
+   ```shell
+   linguist i18n/ru/app_ru.ts
+   ```
+
+3. Qt can load only one translation file at ones, so you need to collect complete translation file with `lconvert`.
+   Search for Qt `qtbase_<language code>.ts` in distribution package
+   or [repository](https://github.com/qt/qttranslations/tree/dev/translations) and place it in to `i18n/<language code>`
+   folder. Next merge TS files to one using `lconvert`.
+   ```shell
+   cd i18n/
+   lconvert -i ru/app_ru.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
+   ```
+
+4. At last convert TS file to QM file using `lrelease`. Build system automatically copy all QM files to appropriate
+   location, where binaries can find it.
+
+   ```shell
+   lrelease ru/appcomp_ru.ts ru/appcomp_ru.qm
+   ```
+
+5. To check that translation load correctly run application from command line and look
+   for `Translation for "<language code>" load successfully` message. If translation can't be load you
+   see `Can't load translation for "<language code>"` message. Qt do not offer more debug information for that.
+   

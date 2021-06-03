@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.14)
 
-set(UB_PROJECT_NAME utility_boilerplate_qt5)
-
-project(${UB_PROJECT_NAME})
+project(utility_boilerplate_qt5 VERSION 1.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -46,20 +44,20 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
             ${NVWA_SOURCE})
 endif ()
 
-add_library(${UB_PROJECT_NAME} STATIC
+add_library(${PROJECT_NAME} STATIC
         ${UTILITY_BOILERPLATE_QT5_SOURCES})
 
 # Set different output directories for different build types, to prevent any chance of heterotrophic build.
 # Use LIBRARY_OUTPUT_DIRECTORY if you want to link dynamically.
-set_target_properties(${UB_PROJECT_NAME} PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY
         ${PROJECT_BINARY_DIR}/${BUILD_TYPE_LOWER_CASE})
 
 # Include nvwa header to use it in angle brackets.
 include_directories(nvwa/include)
-target_include_directories(${UB_PROJECT_NAME} INTERFACE nvwa/include)
+target_include_directories(${PROJECT_NAME} INTERFACE nvwa/include)
 
-target_link_libraries(${UB_PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}
         Qt5::Core
         Qt5::Widgets)
 
