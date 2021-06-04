@@ -25,4 +25,9 @@ namespace ubTestSuit {
 
     };
 
+    template<typename T>
+    T* findQWidgetByClass(QWidget* widget) {
+        return widget->findChildren<T*>().first();
+    }
+
 }

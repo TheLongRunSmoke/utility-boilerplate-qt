@@ -4,7 +4,6 @@
 #include "mainwindow.hpp"
 #include "texteditorsettings.hpp"
 #include <debug_new>
-#include <QtDebug>
 
 #ifndef NDEBUG
 /**
@@ -50,33 +49,12 @@ void readSettings() {
     delete settings;
 }
 
-/**
- * Load translation for current system language.
- *
- * @param translator
- */
-void loadTranslation(QTranslator* translator, QApplication* app) {
-    QLocale locale;
-    QLatin1String filename("appcomp");
-    QLatin1String prefix("_");
-    QLatin1String i18nDir("i18n");
-    // Search app translation in local directory.
-    bool isLoaded = translator->load(locale, filename, prefix, i18nDir);
-    if (isLoaded) {
-        qInfo() << "Translation for" << QLocale::system().name() << "load successfully";
-    } else {
-        qWarning() << "Can't load translation for" << QLocale::system().name();
-    }
-    // Set translation.
-    app->installTranslator(translator);
-}
-
 int main(int argc, char* argv[]) {
 #ifndef NDEBUG
     // Prepare NVWA leak detection.
     nvwa::new_progname = argv[0];
     nvwa::leak_whitelist_callback = leak_whitelist_callback;
-    // Let's create debug memory leak. You can see it in trace.
+    // Let's create debug memory leak. You can see it in a trace.
     int* leak = new int(0);
 #endif
     // Load app resources.
@@ -88,9 +66,6 @@ int main(int argc, char* argv[]) {
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
     // Create normal Qt application class.
     QApplication app(argc, argv);
-    // Load translation.
-    QTranslator translator;
-    loadTranslation(&translator, &app);
     // Load settings.
     readSettings();
     // Create main window.

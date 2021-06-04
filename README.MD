@@ -8,9 +8,6 @@ English | [Русский](README.ru.MD)
 
 # How to build
 
-Project build using cmake instead of Qt build system, and currently can't be load in Qt Creator. Pull request with
-appropriate *.pro files is welcome.
-
 You need Qt 5.10 at least.
 
 ## Requirements installation
@@ -42,7 +39,7 @@ cmake --build .
 
 # Example
 
-## Internationalization support
+# Internationalization support
 
 This boilerplate code include Qt internationalization support.
 
@@ -55,7 +52,7 @@ Take a note, for now module `utility_boilerplate_qt5` support only 2 languages:
 
 Pull requests with another language are welcome.
 
-### How to assemble new translation
+## How to assemble new translation
 
 ru_RU as example, use your language code.
 
@@ -71,13 +68,13 @@ ru_RU as example, use your language code.
    linguist i18n/ru/app_ru.ts
    ```
 
-3. Qt can load only one translation file at ones, so you need to collect complete translation file with `lconvert`.
+3. Qt can load only one translation file at ones, so you need to collect a complete translation file with `lconvert`.
    Search for Qt `qtbase_<language code>.ts` in distribution package
    or [repository](https://github.com/qt/qttranslations/tree/dev/translations) and place it in to `i18n/<language code>`
    folder. Next merge TS files to one using `lconvert`.
    ```shell
    cd i18n/
-   lconvert -i ru/app_ru.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
+   lconvert -i ru/*.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
    ```
 
 4. At last convert TS file to QM file using `lrelease`. Build system automatically copy all QM files to appropriate

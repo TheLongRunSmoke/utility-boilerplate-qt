@@ -1,9 +1,17 @@
 #include <QCoreApplication>
 #include <QStyleFactory>
 #include "settings.hpp"
-#include "items/textitem.hpp"
+#include "items/comboboxitem.hpp"
+#include "items/comboboxitemwdata.hpp"
 #include "items/spinboxitem.hpp"
 #include <debug_new>
+#include <QDir>
+#include <QtDebug>
+
+const std::map<QString, QString> Settings::KNOWN_LANGUAGE = {
+        {"en", "English"},
+        {"ru", "Русский"}
+};
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
     createUserSettings();
@@ -11,6 +19,13 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 }
 
 void Settings::createUserSettings() {
+    auto* language = new ComboBoxItemWithData(
+            "language",
+            tr("Language"),
+            availableLanguages(),
+            systemLanguage()
+    );
+    addUserSetting(language);
     auto* theme = new ComboBoxItem(
             "theme",
             tr("Theme"),
@@ -23,14 +38,14 @@ void Settings::createUserSettings() {
             tr("Recent files limit"),
             0,
             10,
-            5);
+            recentFilesDefault());
     addUserSetting(recentFilesLimit);
 }
 
 void Settings::readUserSettings() {
     for (auto const& it : _items) {
         if (it->isDecoration()) continue;
-        auto savedValue = value("User/" + it->key());
+        auto savedValue = value(userSectionTag() + "/" + it->key());
         if (savedValue.isNull()) continue;
         it->setValue(savedValue.toString());
     }
@@ -111,7 +126,7 @@ Settings::~Settings() {
 }
 
 void Settings::saveUserSettings() {
-    beginGroup("User");
+    beginGroup(userSectionTag());
     for (auto const& it : _items) {
         if (it->isDecoration()) continue;
         setValue(it->key(), it->value());
@@ -128,7 +143,7 @@ void Settings::addUserSetting(SettingItem* pItem) {
 }
 
 void Settings::initDefaults() {
-    beginGroup("User");
+    beginGroup(userSectionTag());
     for (auto const& it : _items) {
         if (it->isDecoration()) continue;
         if (value(it->key()).isNull()) {
@@ -139,9 +154,73 @@ void Settings::initDefaults() {
 }
 
 QString Settings::style() {
-    return value("User/theme", "").toString();
+    return value(userSectionTag() + "/theme", "").toString();
 }
 
 int Settings::recentFilesLimit() {
-    return value("User/recent_files_limit").toInt();
+    return value(userSectionTag() + "/recent_files_limit").toInt();
+}
+
+int Settings::recentFilesDefault() {
+    return 5;
+}
+
+QString Settings::userSectionTag() {
+    return QString("User");
+}
+
+QString Settings::systemLanguage() {
+    QString defaultLocale = QLocale::system().name(); // Something like "en_US".
+    defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // Simplified to "en".
+    return defaultLocale;
+}
+
+std::map<QString, QVariant> Settings::availableLanguages() {
+    // English inbuilt to sources and don't require QM file.
+    auto const& en = KNOWN_LANGUAGE.find("en");
+#ifndef NDEBUG
+    assert(en != KNOWN_LANGUAGE.end() && "Settings::KNOWN_LANGUAGE missing 'en' entry.");
+#endif
+    std::map<QString, QVariant> result = {{en->first, en->second}};
+    QDir dir(QApplication::applicationDirPath());
+    dir.cd("i18n");
+    QStringList fileNames = dir.entryList(QStringList("appcomp_*.qm"));
+    for (auto const& it: fileNames) {
+        QString locale = it;
+        locale.truncate(locale.lastIndexOf('.'));
+        locale.remove(0, locale.lastIndexOf('_') + 1);
+        QString lang;
+        try {
+            lang = KNOWN_LANGUAGE.at(locale);
+        } catch (std::out_of_range& ex) {
+            // If out of range then use Qt, not localized name for language.
+            lang = QLocale::languageToString(QLocale(locale).language());
+        }
+        result[locale] = lang;
+    }
+    return result;
+}
+
+QString Settings::language() {
+    return value(userSectionTag() + "/language").toString();
+}
+
+void Settings::loadTranslation(const QString& language, QTranslator* translator) {
+    QApplication::removeTranslator(translator);
+    if (language == "en") {
+        return;
+    }
+    QLocale locale = QLocale(language);
+    QLatin1String filename("appcomp");
+    QLatin1String prefix("_");
+    QLatin1String i18nDir("i18n");
+    // Search app translation in local directory.
+    bool isLoaded = translator->load(locale, filename, prefix, i18nDir);
+    if (isLoaded) {
+        qInfo() << "Translation for" << locale.name() << "load successfully";
+    } else {
+        qWarning() << "Can't load translation for" << locale.name();
+    }
+    // Set translation.
+    QApplication::installTranslator(translator);
 }

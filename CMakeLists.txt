@@ -31,6 +31,7 @@ add_subdirectory(
         ${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5/build/${BUILD_TYPE_LOWER_CASE})
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time.
+# Headers included to support some IDEs that not show files outside of cmake project sources.
 file(GLOB SOURCES
         utility_boilerplate_qt.qrc
         utility_boilerplate_qt5/utility_boilerplate_qt5.qrc

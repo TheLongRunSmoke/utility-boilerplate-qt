@@ -145,7 +145,9 @@ private:
 
     QGridLayout* mainLayout;
 
-    QMenu* recentFilesSubmenu;
+    QMenu* recentFilesSubmenu{};
+
+    QTranslator _translator{};
 
     void createStatusBar();
 

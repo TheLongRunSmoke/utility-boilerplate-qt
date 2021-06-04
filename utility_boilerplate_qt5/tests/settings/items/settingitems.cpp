@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "test.hpp"
+#include "../../test.hpp"
 #include <settings/items/checkboxitem.hpp>
 #include <settings/items/comboboxitem.hpp>
 #include <settings/items/separatoritem.hpp>
@@ -8,11 +8,6 @@
 #include <settings/items/textitem.hpp>
 
 namespace ubTestSuit {
-
-    template<typename T>
-    T* findQWidgetByClass(QWidget* widget) {
-        return widget->findChildren<T*>().first();
-    }
 
     // CheckBoxItem /////////////
 

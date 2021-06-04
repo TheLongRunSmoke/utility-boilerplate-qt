@@ -16,6 +16,7 @@ set(CMAKE_AUTORCC ON)
 include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time.
+# Headers included to support some IDEs that not show files outside of cmake project sources.
 file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         utility_boilerplate_qt5.qrc
         *.hpp

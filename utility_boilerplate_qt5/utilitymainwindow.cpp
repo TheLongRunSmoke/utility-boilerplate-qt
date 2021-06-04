@@ -13,9 +13,13 @@
 #include "utilitymainwindow.hpp"
 #include "settings/settingschangedevent.hpp"
 #include <debug_new>
+#include <QProcess>
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent)
         : QMainWindow(parent) {
+    Settings settings;
+    // Set language.
+    Settings::loadTranslation(settings.language(), &_translator);
     // Set object name, to easily identified this window.
     setObjectName(UtilityMainWindow::objectName());
     auto* mainFrame = new QFrame(this);
@@ -39,9 +43,25 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
 bool UtilityMainWindow::event(QEvent* event) {
     if (event->type() == SettingsChangedEvent::type()) {
         Settings settings;
+        // Set style.
         QApplication::setStyle(settings.style());
-        mainLayout->event(event);
+        // Set language.
+        Settings::loadTranslation(settings.language(), &_translator);
         return true;
+    }
+    switch (event->type()) {
+        // this event is send if a translator is loaded
+        case QEvent::LanguageChange:
+
+            break;
+
+            // this event is send, if the system, language changes
+        case QEvent::LocaleChange: {
+            QString locale = QLocale::system().name();
+            locale.truncate(locale.lastIndexOf('_'));
+            //loadLanguage(locale);
+        }
+            break;
     }
     return QMainWindow::event(event);
 }

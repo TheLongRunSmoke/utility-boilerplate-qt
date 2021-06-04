@@ -9,9 +9,9 @@ class SettingsDialog : public QDialog {
 Q_OBJECT
 
 public:
-    SettingsDialog(Settings* settings, QWidget* parent = Q_NULLPTR);
+    explicit SettingsDialog(Settings* settings, QWidget* parent = Q_NULLPTR);
 
-    ~SettingsDialog();
+    ~SettingsDialog() override;
 
     void accept() override;
 

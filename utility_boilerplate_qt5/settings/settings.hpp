@@ -1,11 +1,12 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef UTILITY_BOILERPLATE_QT_SETTINGS_HPP
+#define UTILITY_BOILERPLATE_QT_SETTINGS_HPP
 
 #include <QSettings>
 #include <QApplication>
+#include <QStringList>
+#include <QTranslator>
 #include <memory>
 #include "items/abstract/settingitem.hpp"
-#include "items/comboboxitem.hpp"
 
 class Settings : public QSettings {
 
@@ -49,11 +50,20 @@ public:
 
     void setWindowState(const QByteArray& state);
 
+    QString language();
+
+    static void loadTranslation(const QString& language, QTranslator* translator);
+
 protected:
 
     std::list<user_settings_t> _items = std::list<user_settings_t>();
 
+    /**
+     * Initialize, but not load, basic user settings.
+     */
     void createUserSettings();
+
+    virtual QString userSectionTag();
 
     /**
      * Add user setting, that will be shown last in settings window.
@@ -64,6 +74,15 @@ protected:
      * Add user setting, that will be shown first in settings window.
      */
     void addUserSettingFirst(SettingItem* pItem);
+
+    /**
+     * Override to specified own value.
+     *
+     * Default is 5.
+     */
+    virtual int recentFilesDefault();
+
+    void readUserSettings();
 
 private:
 
@@ -77,7 +96,11 @@ private:
 
     static inline QString fileKey();
 
-    void readUserSettings();
+    static QString systemLanguage();
+
+    static std::map<QString, QVariant> availableLanguages();
+
+    static const std::map<QString, QString> KNOWN_LANGUAGE;
 };
 
-#endif //SETTINGS_H
+#endif //UTILITY_BOILERPLATE_QT_SETTINGS_HPP

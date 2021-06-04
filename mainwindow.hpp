@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
+#define UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
 
 #include "utility_boilerplate_qt5/utilitymainwindow.hpp"
 #include "texteditor.hpp"
@@ -46,4 +46,4 @@ private:
     TextEditor* textEditor;  // <- This is your widget.
 };
 
-#endif // MAINWINDOW_H
+#endif // UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP

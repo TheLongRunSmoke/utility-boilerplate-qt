@@ -1,5 +1,5 @@
-#ifndef UB_HELPERS_H
-#define UB_HELPERS_H
+#ifndef UTILITY_BOILERPLATE_QT_HELPERS_HPP
+#define UTILITY_BOILERPLATE_QT_HELPERS_HPP
 
 #include <QApplication>
 #include <QStringList>
@@ -11,4 +11,4 @@ namespace UBHelpers {
     QStringList parseFirstArgumentAsFile(const QApplication& app);
 }
 
-#endif //UB_HELPERS_H
+#endif //UTILITY_BOILERPLATE_QT_HELPERS_HPP

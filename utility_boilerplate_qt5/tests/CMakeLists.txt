@@ -12,6 +12,7 @@ include(${PARENT_SOURCE_DIR}/cmake/gtest.cmake)
 
 # Find tests sources.
 file(GLOB UB_TEST_SOURCES
+        settings/items/*.cpp
         *.cpp
         *.hpp)
 
