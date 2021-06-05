@@ -14,6 +14,8 @@ Q_OBJECT
 public:
     explicit UtilityMainWindow(QWidget* parent = Q_NULLPTR);
 
+    ~UtilityMainWindow() override;
+
     virtual void loadFile(const QString& fileName);
 
     /**
@@ -147,7 +149,10 @@ private:
 
     QMenu* recentFilesSubmenu{};
 
-    QTranslator _translator{};
+    QTranslator* _translator = new QTranslator();
+
+    QToolBar* _fileToolBar{};
+    QToolBar* _editToolBar{};
 
     void createStatusBar();
 
@@ -172,6 +177,7 @@ private:
 
     bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
+    virtual void retranslateUi();
 };
 
 #endif // UMAINWINDOW_H

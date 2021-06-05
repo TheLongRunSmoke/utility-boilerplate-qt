@@ -14,11 +14,11 @@ const std::map<QString, QString> Settings::KNOWN_LANGUAGE = {
 };
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
-    createUserSettings();
+    createBasicUserSettings();
     readUserSettings();
 }
 
-void Settings::createUserSettings() {
+void Settings::createBasicUserSettings() {
     auto* language = new ComboBoxItemWithData(
             "language",
             tr("Language"),
@@ -40,6 +40,12 @@ void Settings::createUserSettings() {
             10,
             recentFilesDefault());
     addUserSetting(recentFilesLimit);
+}
+
+void Settings::retranslateUi() {
+    _items.clear();
+    createBasicUserSettings();
+    readUserSettings();
 }
 
 void Settings::readUserSettings() {
@@ -206,10 +212,8 @@ QString Settings::language() {
 }
 
 void Settings::loadTranslation(const QString& language, QTranslator* translator) {
+    if (translator->objectName() == language) return;
     QApplication::removeTranslator(translator);
-    if (language == "en") {
-        return;
-    }
     QLocale locale = QLocale(language);
     QLatin1String filename("appcomp");
     QLatin1String prefix("_");
@@ -221,6 +225,7 @@ void Settings::loadTranslation(const QString& language, QTranslator* translator)
     } else {
         qWarning() << "Can't load translation for" << locale.name();
     }
+    translator->setObjectName(language);
     // Set translation.
     QApplication::installTranslator(translator);
 }

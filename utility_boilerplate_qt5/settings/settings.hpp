@@ -10,6 +10,8 @@
 
 class Settings : public QSettings {
 
+Q_DECLARE_TR_FUNCTIONS(Settings)
+
     using user_settings_t = std::unique_ptr<SettingItem>;
 
     using user_settings_terator_pair_t =
@@ -54,6 +56,9 @@ public:
 
     static void loadTranslation(const QString& language, QTranslator* translator);
 
+    virtual void retranslateUi();
+
+
 protected:
 
     std::list<user_settings_t> _items = std::list<user_settings_t>();
@@ -61,7 +66,7 @@ protected:
     /**
      * Initialize, but not load, basic user settings.
      */
-    void createUserSettings();
+    void createBasicUserSettings();
 
     virtual QString userSectionTag();
 

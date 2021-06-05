@@ -19,8 +19,18 @@ public slots:
 
     void apply();
 
+protected:
+    bool event(QEvent* event) override;
+
+    virtual void retranslateUi();
+
 private:
+
     Settings* _settings;
+
+    QWidget* _settingsWidget = new QWidget();
+
+    QWidget* createUserSettingsWidget();
 };
 
 

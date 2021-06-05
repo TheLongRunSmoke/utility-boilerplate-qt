@@ -10,8 +10,8 @@
  *
  * Add parameters that you need using addUserSetting(<some settings item>) in constructor,
  * than it's can be accessed by Qt value(key).
- * Note, when you set item key, add "User/" to retrieved value.
  *
+ * Note, start add userSectionTag() to begin of key.
  */
 class TextEditorSettings : public Settings {
 Q_OBJECT
@@ -24,6 +24,9 @@ private:
      * Add some examples settings.
      */
     void addTextEditorSettings();
+
+public:
+    void retranslateUi() override;
 };
 
 

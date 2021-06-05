@@ -19,7 +19,7 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
         : QMainWindow(parent) {
     Settings settings;
     // Set language.
-    Settings::loadTranslation(settings.language(), &_translator);
+    Settings::loadTranslation(settings.language(), _translator);
     // Set object name, to easily identified this window.
     setObjectName(UtilityMainWindow::objectName());
     auto* mainFrame = new QFrame(this);
@@ -40,28 +40,32 @@ UtilityMainWindow::UtilityMainWindow(QWidget* parent)
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
+
+UtilityMainWindow::~UtilityMainWindow() {
+    QApplication::removeTranslator(_translator);
+    _translator->deleteLater();
+    menuBar()->clear();
+    delete recentFilesSubmenu;
+    removeToolBar(_editToolBar);
+    delete _editToolBar;
+    removeToolBar(_fileToolBar);
+    delete _fileToolBar;
+    delete mainLayout;
+}
+
 bool UtilityMainWindow::event(QEvent* event) {
     if (event->type() == SettingsChangedEvent::type()) {
         Settings settings;
         // Set style.
         QApplication::setStyle(settings.style());
         // Set language.
-        Settings::loadTranslation(settings.language(), &_translator);
+        Settings::loadTranslation(settings.language(), _translator);
         return true;
-    }
-    switch (event->type()) {
-        // this event is send if a translator is loaded
-        case QEvent::LanguageChange:
-
-            break;
-
-            // this event is send, if the system, language changes
-        case QEvent::LocaleChange: {
-            QString locale = QLocale::system().name();
-            locale.truncate(locale.lastIndexOf('_'));
-            //loadLanguage(locale);
-        }
-            break;
+    } else if (event->type() == QEvent::LanguageChange) {
+        // App translator object change.
+        retranslateUi();
+    } else if (event->type() == QEvent::LocaleChange) {
+        // Stub! There is no points to change app localization on system locale change.
     }
     return QMainWindow::event(event);
 }
@@ -90,13 +94,17 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
  */
 void UtilityMainWindow::createActions() {
     auto* fileMenu = menuBar()->addMenu(tr("&File"));
-    auto* fileToolBar = addToolBar(tr("File"));
-    fileToolBar->setObjectName("file_toolbar");
-    createFileActions(fileMenu, fileToolBar);
+    _fileToolBar = addToolBar(tr("File"));
+    // Do not forget to set a unique name for a toolbar,
+    // otherwise window state can't be restored correctly.
+    _fileToolBar->setObjectName("file_toolbar");
+    createFileActions(fileMenu, _fileToolBar);
+
     auto* editMenu = menuBar()->addMenu(tr("&Edit"));
-    auto* editToolBar = addToolBar(tr("Edit"));
-    editToolBar->setObjectName("edit_toolbar");
-    createEditActions(editMenu, editToolBar);
+    _editToolBar = addToolBar(tr("Edit"));
+    _editToolBar->setObjectName("edit_toolbar");
+    createEditActions(editMenu, _editToolBar);
+
     QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
     createHelpActions(helpMenu);
 }
@@ -518,4 +526,13 @@ void UtilityMainWindow::showSettings() {
 
 QString UtilityMainWindow::objectName() {
     return QString::number(1000, 10);
+}
+
+void UtilityMainWindow::retranslateUi() {
+    // Clear menu and toolbars.
+    menuBar()->clear();
+    removeToolBar(_fileToolBar);
+    removeToolBar(_editToolBar);
+    // Recreate.
+    createActions();
 }

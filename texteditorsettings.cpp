@@ -46,3 +46,10 @@ void TextEditorSettings::addTextEditorSettings() {
             -1);
     addUserSetting(intSpinBox);
 }
+
+void TextEditorSettings::retranslateUi() {
+    _items.clear();
+    createBasicUserSettings();
+    addTextEditorSettings();
+    readUserSettings();
+}
