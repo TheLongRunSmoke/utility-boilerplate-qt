@@ -14,11 +14,11 @@ const std::map<QString, QString> Settings::KNOWN_LANGUAGE = {
 };
 
 Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
-    createBasicUserSettings();
+    createBasicSettings();
     readUserSettings();
 }
 
-void Settings::createBasicUserSettings() {
+void Settings::createBasicSettings() {
     auto* language = new ComboBoxItemWithData(
             "language",
             tr("Language"),
@@ -44,7 +44,8 @@ void Settings::createBasicUserSettings() {
 
 void Settings::retranslateUi() {
     _items.clear();
-    createBasicUserSettings();
+    createBasicSettings();
+    createUserSettings();
     readUserSettings();
 }
 

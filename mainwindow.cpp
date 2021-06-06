@@ -10,6 +10,9 @@
 
 MainWindow::MainWindow(QWidget* parent)
         : UtilityMainWindow(parent) {
+    // Set icon for that window.
+    QMainWindow::setWindowIcon(QIcon(":/app/icon"));
+    // Init UI.
     textEditor = new TextEditor();
     getLayout()->addWidget(textEditor);
 }

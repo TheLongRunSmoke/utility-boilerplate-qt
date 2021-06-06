@@ -6,11 +6,11 @@
 #include "utility_boilerplate_qt5/settings/items/checkboxitem.hpp"
 
 TextEditorSettings::TextEditorSettings() {
-    addTextEditorSettings();
+    TextEditorSettings::createUserSettings();
     readUserSettings();
 }
 
-void TextEditorSettings::addTextEditorSettings() {
+void TextEditorSettings::createUserSettings() {
     // Here some examples of how to use inbuilt controls.
     // To fetch them use value(userSectionTag() + "/key", "").
     addUserSetting(new SeparatorItem());
@@ -45,11 +45,4 @@ void TextEditorSettings::addTextEditorSettings() {
             5,
             -1);
     addUserSetting(intSpinBox);
-}
-
-void TextEditorSettings::retranslateUi() {
-    _items.clear();
-    createBasicUserSettings();
-    addTextEditorSettings();
-    readUserSettings();
 }

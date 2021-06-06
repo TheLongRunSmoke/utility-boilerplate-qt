@@ -8,25 +8,20 @@
  *
  * Things like window state, recent files, etc. already included in Settings class.
  *
- * Add parameters that you need using addUserSetting(<some settings item>) in constructor,
+ * Add parameters that you need using addUserSetting(<some settings item>) in createUserSettings(),
  * than it's can be accessed by Qt value(key).
  *
  * Note, start add userSectionTag() to begin of key.
  */
 class TextEditorSettings : public Settings {
-Q_OBJECT
+Q_DECLARE_TR_FUNCTIONS(TextEditorSettings)
 
 public:
     TextEditorSettings();
 
-private:
-    /**
-     * Add some examples settings.
-     */
-    void addTextEditorSettings();
+protected:
+    void createUserSettings() override;
 
-public:
-    void retranslateUi() override;
 };
 
 
