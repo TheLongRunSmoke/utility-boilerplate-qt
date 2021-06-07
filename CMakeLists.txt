@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(utility_boilerplate_qt VERSION 0.1)
+project(utility_boilerplate_qt_example VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,11 +32,13 @@ add_subdirectory(
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time.
 # Headers included to support some IDEs that not show files outside of cmake project sources.
+# Explicitly include library qrc, otherwise its not be found.
 file(GLOB SOURCES
-        utility_boilerplate_qt.qrc
+        example/app.qrc
         utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-        *.cpp
-        *.hpp)
+        example/*.cpp
+        example/*.hpp
+        main.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -59,4 +61,4 @@ endforeach ()
 
 # Add tests package.
 include(CTest)
-add_subdirectory(tests)
+add_subdirectory(example/tests)

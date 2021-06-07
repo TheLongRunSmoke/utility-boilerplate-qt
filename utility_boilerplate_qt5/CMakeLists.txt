@@ -28,6 +28,15 @@ file(GLOB UTILITY_BOILERPLATE_QT5_SOURCES
         settings/items/abstract/*.hpp
         nvwa/include/debug_new)
 
+SET(UTILITY_BOILERPLATE_QT5_INCLUDES
+        ${PROJECT_SOURCE_DIR}
+        settings
+        settings/items
+        settings/items/abstract
+        nvwa/include)
+
+message(${UTILITY_BOILERPLATE_QT5_INCLUDES})
+
 # If build type not set, let's assume it's a release.
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -55,8 +64,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         ${PROJECT_BINARY_DIR}/${BUILD_TYPE_LOWER_CASE})
 
 # Include nvwa header to use it in angle brackets.
-include_directories(nvwa/include)
-target_include_directories(${PROJECT_NAME} INTERFACE nvwa/include)
+include_directories(${UTILITY_BOILERPLATE_QT5_INCLUDES})
+target_include_directories(${PROJECT_NAME} INTERFACE ${UTILITY_BOILERPLATE_QT5_INCLUDES})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core

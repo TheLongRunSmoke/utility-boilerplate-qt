@@ -1,9 +1,9 @@
 
 #include "texteditorsettings.hpp"
-#include "utility_boilerplate_qt5/settings/items/spinboxitem.hpp"
-#include "utility_boilerplate_qt5/settings/items/separatoritem.hpp"
-#include "utility_boilerplate_qt5/settings/items/textitem.hpp"
-#include "utility_boilerplate_qt5/settings/items/checkboxitem.hpp"
+#include "settings/items/spinboxitem.hpp"
+#include "settings/items/separatoritem.hpp"
+#include "settings/items/textitem.hpp"
+#include "settings/items/checkboxitem.hpp"
 
 TextEditorSettings::TextEditorSettings() {
     TextEditorSettings::createUserSettings();

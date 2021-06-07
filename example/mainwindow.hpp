@@ -1,7 +1,7 @@
 #ifndef UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
 #define UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
 
-#include "utility_boilerplate_qt5/utilitymainwindow.hpp"
+#include "utilitymainwindow.hpp"
 #include "texteditor.hpp"
 
 /**

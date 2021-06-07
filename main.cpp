@@ -1,8 +1,8 @@
 #include <QApplication>
 #include <QTranslator>
 #include "utility_boilerplate_qt5/helpers.hpp"
-#include "mainwindow.hpp"
-#include "texteditorsettings.hpp"
+#include "example/mainwindow.hpp"
+#include "example/texteditorsettings.hpp"
 #include <debug_new>
 
 #ifndef NDEBUG
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     int* leak = new int(0);
 #endif
     // Load app resources.
-    Q_INIT_RESOURCE(utility_boilerplate_qt);
+    Q_INIT_RESOURCE(app);
     // Set you own app name and version here.
     QCoreApplication::setApplicationName("Utility Boilerplate Qt");
     QCoreApplication::setApplicationVersion("1.0");

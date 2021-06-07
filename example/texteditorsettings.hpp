@@ -1,7 +1,7 @@
 #ifndef UTILITY_BOILERPLATE_QT_TEXTEDITORSETTINGS_HPP
 #define UTILITY_BOILERPLATE_QT_TEXTEDITORSETTINGS_HPP
 
-#include "utility_boilerplate_qt5/settings/settings.hpp"
+#include <settings/settings.hpp>
 
 /**
  * Application settings.
@@ -14,7 +14,7 @@
  * Note, start add userSectionTag() to begin of key.
  */
 class TextEditorSettings : public Settings {
-Q_DECLARE_TR_FUNCTIONS(TextEditorSettings)
+    Q_DECLARE_TR_FUNCTIONS(TextEditorSettings)
 
 public:
     TextEditorSettings();
