@@ -13,7 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
+include(../cmake/utils.cmake)
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time.
 # Headers included to support some IDEs that not show files outside of cmake project sources.

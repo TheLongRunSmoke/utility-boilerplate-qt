@@ -8,6 +8,13 @@
 #include <QToolBar>
 
 namespace UBHelpers {
+
+    /**
+     * Handle command line params, keys and help message.
+     *
+     * @param app application object link.
+     * @return list of given command line args, can be empty.
+     */
     QStringList parseFirstArgumentAsFile(const QApplication& app);
 }
 

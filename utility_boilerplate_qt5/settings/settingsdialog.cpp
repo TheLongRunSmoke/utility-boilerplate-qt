@@ -43,7 +43,7 @@ void SettingsDialog::apply() {
     _settings->saveUserSettings();
     // If you have few entities that must be notified about settings changing add it here.
     for (auto const& it: QApplication::topLevelWidgets()) {
-        if (it->objectName() == UtilityMainWindow::objectName()) {
+        if (it->objectName() == UtilityMainWindow::objectId()) {
             QCoreApplication::sendEvent(it, new SettingsChangedEvent());
         }
     }

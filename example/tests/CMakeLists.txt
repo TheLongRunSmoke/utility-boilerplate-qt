@@ -9,7 +9,7 @@ get_parent_dir(${PARENT_SOURCE_DIR} PARENT_SOURCE_DIR)
 include_directories(${PARENT_SOURCE_DIR})
 
 # Include Google Test.
-include(${PARENT_SOURCE_DIR}/utility_boilerplate_qt5/cmake/gtest.cmake)
+include(../../cmake/gtest.cmake)
 
 # Include QT UI headers.
 set(PARENT_UIC_DIR "")
@@ -31,7 +31,8 @@ target_link_libraries(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         gtest
-        gtest_main)
+        gtest_main
+        gcov)
 
 # Make it discoverable for CTest.
 gtest_discover_tests(${PROJECT_NAME})

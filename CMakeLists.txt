@@ -1,9 +1,15 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 project(utility_boilerplate_qt_example VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+    message(
+            FATAL_ERROR
+            "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.")
+endif ()
 
 message("Check Qt version...")
 execute_process(COMMAND qmake --version)
@@ -15,7 +21,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-include(${PROJECT_SOURCE_DIR}/utility_boilerplate_qt5/cmake/utils.cmake)
+include(./cmake/utils.cmake)
 
 # If build type not set, let's assume it's a release.
 if (NOT CMAKE_BUILD_TYPE)
