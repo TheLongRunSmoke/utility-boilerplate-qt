@@ -1,0 +1,3 @@
+[submodule "libs/3rd/Format.cmake"]
+	path = libs/3rd/Format.cmake
+	url = https://github.com/TheLartians/Format.cmake

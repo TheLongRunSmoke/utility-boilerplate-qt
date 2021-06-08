@@ -1,9 +1,10 @@
 #include <QApplication>
 #include <QTranslator>
-#include "utility_boilerplate_qt5/helpers.hpp"
+#include <debug_new>
+
 #include "example/mainwindow.hpp"
 #include "example/texteditorsettings.hpp"
-#include <debug_new>
+#include "utility_boilerplate_qt5/helpers.hpp"
 
 #ifndef NDEBUG
 /**
@@ -11,24 +12,26 @@
  * Let you whitelist memory leaks if it false positive.
  *
  * By default, I assume that all project entities has debug_new included
- * and whitelisted all leak that do not have file name as Qt architecture caused false positive.
+ * and whitelisted all leak that do not have file name as Qt architecture caused
+ * false positive.
  *
  * @return true entity is whitelisted and hide from trace.
  * @return false entity is shown in trace as normal.
  */
-extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, void** stacktrace) {
-    // If file name empty, it is leak not in project...or you forget to include debug_new header somewhere.
+extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, void **stacktrace) {
+    // If file name empty, it is leak not in project...or you forget to include
+    // debug_new header somewhere.
     if (file == nullptr) return true;
     auto filename = std::string(file);
     // Let's whitelist something.
-    // I used QEvent, it's object deleted outside of origin file and will be detected.
-    auto whitelist = std::map<std::string, std::list<int>>{
-            {"settingsdialog.cpp", std::list<int>{47}}
-    };
+    // I used QEvent, it's object deleted outside of origin file and will be
+    // detected.
+    auto whitelist
+        = std::map<std::string, std::list<int>>{{"settingsdialog.cpp", std::list<int>{47}}};
     // Iterate through whitelist and return true if coincidence found.
-    for (auto const& it: whitelist) {
+    for (auto const &it : whitelist) {
         if (filename.find(it.first) == std::string::npos) continue;
-        for (auto const& row : it.second) {
+        for (auto const &row : it.second) {
             if (line == row) return true;
         }
     }
@@ -41,7 +44,7 @@ extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, 
  * Initialized and load application settings.
  */
 void readSettings() {
-    Settings* settings = new TextEditorSettings();
+    Settings *settings = new TextEditorSettings();
     // Init defaults if not set.
     settings->initDefaults();
     // Set style from settings.
@@ -49,13 +52,13 @@ void readSettings() {
     delete settings;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 #ifndef NDEBUG
     // Prepare NVWA leak detection.
     nvwa::new_progname = argv[0];
     nvwa::leak_whitelist_callback = leak_whitelist_callback;
     // Let's create debug memory leak. You can see it in a trace.
-    int* leak = new int(0);
+    int *leak = new int(0);
 #endif
     // Load app resources.
     Q_INIT_RESOURCE(app);
@@ -81,7 +84,7 @@ int main(int argc, char* argv[]) {
     try {
         // Run application.
         result = QApplication::exec();
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         // Catch exception if it make its way down here.
         qFatal("Error %s", e.what());
     }

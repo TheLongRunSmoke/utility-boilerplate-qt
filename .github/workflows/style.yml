@@ -1,0 +1,28 @@
+name: Style
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  style:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install format dependencies
+        run: |
+          sudo apt install clang-format
+          pip3 install cmake_format==0.6.11 pyyaml
+
+      - name: configure
+        run: cmake -S ./ -B build/style
+
+      - name: check style
+        run: cmake --build build/style --target check-format

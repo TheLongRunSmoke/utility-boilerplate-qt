@@ -2,15 +2,16 @@
 #define TEXTEDITOR_H
 
 #include <QWidget>
+
 #include "ui_texteditor.h"
 
 class TextEditor : public QWidget {
-Q_OBJECT
+    Q_OBJECT
 
-public:
-    explicit TextEditor(QWidget* parent = Q_NULLPTR);
+  public:
+    explicit TextEditor(QWidget *parent = Q_NULLPTR);
 
-    void setText(const QString& text);
+    void setText(const QString &text);
 
     QString getText();
 
@@ -24,9 +25,8 @@ public:
 
     void paste();
 
-private:
+  private:
     Ui::TextEditor ui;
 };
 
-#endif // TEXTEDITOR_H
-
+#endif  // TEXTEDITOR_H

@@ -74,7 +74,7 @@ ru_RU as example, use your language code.
    folder. Next merge TS files to one using `lconvert`.
    ```shell
    cd i18n/
-   lconvert -i ru/*.ts ../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
+   lconvert -i ru/*.ts ../../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
    ```
 
 4. At last convert TS file to QM file using `lrelease`. Build system automatically copy all QM files to appropriate

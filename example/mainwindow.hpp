@@ -1,25 +1,25 @@
 #ifndef UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
 #define UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
 
-#include "utilitymainwindow.hpp"
 #include "texteditor.hpp"
+#include "utilitymainwindow.hpp"
 
 /**
  * Main window of your utility.
  *
  * Inheritance from UtilityMainWindow give you a "ready to go" window
- * with menu, status bar and common operation like creating, opening and saving files.
+ * with menu, status bar and common operation like creating, opening and saving
+ * files.
  */
 class MainWindow : public UtilityMainWindow {
+    Q_OBJECT
 
-Q_OBJECT
+  public:
+    explicit MainWindow(QWidget *parent = Q_NULLPTR);
 
-public:
-    explicit MainWindow(QWidget* parent = Q_NULLPTR);
+    void loadFile(const QString &fileName) override;
 
-    void loadFile(const QString& fileName) override;
-
-protected:
+  protected:
     QString getExtensions() override;
 
     QIODevice::OpenMode getFileReadMode() override;
@@ -30,11 +30,11 @@ protected:
 
     void clearDocument() override;
 
-    bool saveFile(const QString& fileName) override;
+    bool saveFile(const QString &fileName) override;
 
     void showSettings() override;
 
-protected slots:
+  protected slots:
 
     void cut() override;
 
@@ -42,8 +42,8 @@ protected slots:
 
     void paste() override;
 
-private:
-    TextEditor* textEditor;  // <- This is your widget.
+  private:
+    TextEditor *textEditor;  // <- This is your widget.
 };
 
-#endif // UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
+#endif  // UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
