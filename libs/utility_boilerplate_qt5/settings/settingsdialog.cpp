@@ -17,7 +17,9 @@ SettingsDialog::SettingsDialog(Settings *settings, QWidget *parent)
     // Create button box.
     auto *buttonBox = new QDialogButtonBox(
         QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply, Qt::Horizontal);
-    connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this,
+    connect(buttonBox->button(QDialogButtonBox::Apply),
+            &QPushButton::clicked,
+            this,
             &SettingsDialog::apply);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);

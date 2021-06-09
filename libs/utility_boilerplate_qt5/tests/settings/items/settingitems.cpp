@@ -98,8 +98,10 @@ namespace ubTestSuit {
     TEST_F(UiFixture,
            SettingItems_ComboBoxItem_defaultValue) {  // NOLINT(cert-err58-cpp)
         auto *item = new ComboBoxItem(
-            "key", "name",
-            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}), "default");
+            "key",
+            "name",
+            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}),
+            "default");
 
         EXPECT_EQ(item->defaultValue(), "default");
 
@@ -109,7 +111,8 @@ namespace ubTestSuit {
         delete item;
 
         item = new ComboBoxItem(
-            "key", "name",
+            "key",
+            "name",
             QStringList::fromStdList(std::list<QString>{"first", "default", "second"}));
 
         EXPECT_EQ(item->defaultValue(), "first");
@@ -126,8 +129,10 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture, SettingItems_ComboBoxItem_value) {  // NOLINT(cert-err58-cpp)
         auto *item = new ComboBoxItem(
-            "key", "name",
-            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}), "default");
+            "key",
+            "name",
+            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}),
+            "default");
 
         EXPECT_EQ(item->value(), "default");
         auto *field = findQWidgetByClass<QComboBox>(item->view(window));

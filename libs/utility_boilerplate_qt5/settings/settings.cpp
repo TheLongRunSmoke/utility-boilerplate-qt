@@ -18,14 +18,17 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 }
 
 void Settings::createBasicSettings() {
-    auto *language = new ComboBoxItemWithData("language", tr("Language"), availableLanguages(),
-                                              systemLanguage());
+    auto* language = new ComboBoxItemWithData(
+        "language", tr("Language"), availableLanguages(), systemLanguage());
     addUserSetting(language);
-    auto *theme = new ComboBoxItem("theme", tr("Theme"), QStyleFactory::keys(),
-                                   QApplication::style()->objectName(), tr("Application theme"));
+    auto* theme = new ComboBoxItem("theme",
+                                   tr("Theme"),
+                                   QStyleFactory::keys(),
+                                   QApplication::style()->objectName(),
+                                   tr("Application theme"));
     addUserSetting(theme);
-    auto *recentFilesLimit = new SpinboxItem("recent_files_limit", tr("Recent files limit"), 0, 10,
-                                             recentFilesDefault());
+    auto* recentFilesLimit = new SpinboxItem(
+        "recent_files_limit", tr("Recent files limit"), 0, 10, recentFilesDefault());
     addUserSetting(recentFilesLimit);
 }
 
@@ -37,7 +40,7 @@ void Settings::retranslateUi() {
 }
 
 void Settings::readUserSettings() {
-    for (auto const &it : _items) {
+    for (auto const& it : _items) {
         if (it->isDecoration()) continue;
         auto savedValue = value(userSectionTag() + "/" + it->key());
         if (savedValue.isNull()) continue;
@@ -49,13 +52,13 @@ QByteArray Settings::windowGeometry() {
     return value(windowGeometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setWindowGeometry(const QByteArray &geometry) {
+void Settings::setWindowGeometry(const QByteArray& geometry) {
     setValue(windowGeometryKey(), geometry);
 }
 
 QByteArray Settings::windowState() { return value(windowStateKey(), QByteArray()).toByteArray(); }
 
-void Settings::setWindowState(const QByteArray &state) { setValue(windowStateKey(), state); }
+void Settings::setWindowState(const QByteArray& state) { setValue(windowStateKey(), state); }
 
 bool Settings::hasRecentFiles() {
     const int count = beginReadArray(recentFilesKey());
@@ -74,7 +77,7 @@ QStringList Settings::recentFiles() {
     return result;
 }
 
-void Settings::putRecentFile(const QString &path) {
+void Settings::putRecentFile(const QString& path) {
     QStringList files = recentFiles();
     if (files.contains(path)) return;
     files.insert(0, path);
@@ -105,24 +108,24 @@ Settings::~Settings() { _items.clear(); }
 
 void Settings::saveUserSettings() {
     beginGroup(userSectionTag());
-    for (auto const &it : _items) {
+    for (auto const& it : _items) {
         if (it->isDecoration()) continue;
         setValue(it->key(), it->value());
     }
     endGroup();
 }
 
-void Settings::addUserSettingFirst(SettingItem *pItem) {
+void Settings::addUserSettingFirst(SettingItem* pItem) {
     _items.push_front(std::unique_ptr<SettingItem>(pItem));
 }
 
-void Settings::addUserSetting(SettingItem *pItem) {
+void Settings::addUserSetting(SettingItem* pItem) {
     _items.push_back(std::unique_ptr<SettingItem>(pItem));
 }
 
 void Settings::initDefaults() {
     beginGroup(userSectionTag());
-    for (auto const &it : _items) {
+    for (auto const& it : _items) {
         if (it->isDecoration()) continue;
         if (value(it->key()).isNull()) {
             setValue(it->key(), it->defaultValue());
@@ -147,7 +150,7 @@ QString Settings::systemLanguage() {
 
 std::map<QString, QVariant> Settings::availableLanguages() {
     // English inbuilt to sources and don't require QM file.
-    auto const &en = KNOWN_LANGUAGE.find("en");
+    auto const& en = KNOWN_LANGUAGE.find("en");
 #ifndef NDEBUG
     assert(en != KNOWN_LANGUAGE.end() && "Settings::KNOWN_LANGUAGE missing 'en' entry.");
 #endif
@@ -155,14 +158,14 @@ std::map<QString, QVariant> Settings::availableLanguages() {
     QDir dir(QApplication::applicationDirPath());
     dir.cd("i18n");
     QStringList fileNames = dir.entryList(QStringList("appcomp_*.qm"));
-    for (auto const &it : fileNames) {
+    for (auto const& it : fileNames) {
         QString locale = it;
         locale.truncate(locale.lastIndexOf('.'));
         locale.remove(0, locale.lastIndexOf('_') + 1);
         QString lang;
         try {
             lang = KNOWN_LANGUAGE.at(locale);
-        } catch (std::out_of_range &ex) {
+        } catch (std::out_of_range& ex) {
             // If out of range then use Qt, not localized name for language.
             lang = QLocale::languageToString(QLocale(locale).language());
         }
@@ -173,7 +176,7 @@ std::map<QString, QVariant> Settings::availableLanguages() {
 
 QString Settings::language() { return value(userSectionTag() + "/language").toString(); }
 
-void Settings::loadTranslation(const QString &language, QTranslator *translator) {
+void Settings::loadTranslation(const QString& language, QTranslator* translator) {
     if (translator->objectName() == language) return;
     QApplication::removeTranslator(translator);
     QLocale locale = QLocale(language);

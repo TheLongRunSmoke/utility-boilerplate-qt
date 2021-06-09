@@ -114,14 +114,26 @@ void UtilityMainWindow::createActions() {
  */
 void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
     connect(menu, &QMenu::aboutToShow, this, &UtilityMainWindow::checkRecentFilesAvailability);
-    addAction(tr("&New"), tr("Create a new file"), &UtilityMainWindow::newFile, QKeySequence::New,
-              QIcon::fromTheme("document-new", QIcon(":/utility_boilerplate_qt5/ic_new")), menu,
+    addAction(tr("&New"),
+              tr("Create a new file"),
+              &UtilityMainWindow::newFile,
+              QKeySequence::New,
+              QIcon::fromTheme("document-new", QIcon(":/utility_boilerplate_qt5/ic_new")),
+              menu,
               toolbar);
-    addAction(tr("&Open"), tr("Open file"), &UtilityMainWindow::open, QKeySequence::Open,
-              QIcon::fromTheme("document-open", QIcon(":/utility_boilerplate_qt5/ic_open")), menu,
+    addAction(tr("&Open"),
+              tr("Open file"),
+              &UtilityMainWindow::open,
+              QKeySequence::Open,
+              QIcon::fromTheme("document-open", QIcon(":/utility_boilerplate_qt5/ic_open")),
+              menu,
               toolbar);
-    addAction(tr("&Save"), tr("Save file"), &UtilityMainWindow::save, QKeySequence::Save,
-              QIcon::fromTheme("document-save", QIcon(":/utility_boilerplate_qt5/ic_save")), menu,
+    addAction(tr("&Save"),
+              tr("Save file"),
+              &UtilityMainWindow::save,
+              QKeySequence::Save,
+              QIcon::fromTheme("document-save", QIcon(":/utility_boilerplate_qt5/ic_save")),
+              menu,
               toolbar);
     addAction(tr("Save as…"), tr("Save file as…"), &UtilityMainWindow::saveAs, menu);
     addSeparator(menu);
@@ -134,24 +146,33 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
 void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 #ifndef QT_NO_CLIPBOARD
 
-    addAction(tr("Cu&t"), tr("Cut the current selection's contents to the clipboard"),
-              &UtilityMainWindow::cut, QKeySequence::Cut,
-              QIcon::fromTheme("edit-cut", QIcon(":/utility_boilerplate_qt5/ic_cut")), menu,
+    addAction(tr("Cu&t"),
+              tr("Cut the current selection's contents to the clipboard"),
+              &UtilityMainWindow::cut,
+              QKeySequence::Cut,
+              QIcon::fromTheme("edit-cut", QIcon(":/utility_boilerplate_qt5/ic_cut")),
+              menu,
               toolbar);
-    addAction(tr("&Copy"), tr("Copy the current selection's contents to the clipboard"),
-              &UtilityMainWindow::copy, QKeySequence::Copy,
-              QIcon::fromTheme("edit-copy", QIcon(":/utility_boilerplate_qt5/ic_copy")), menu,
+    addAction(tr("&Copy"),
+              tr("Copy the current selection's contents to the clipboard"),
+              &UtilityMainWindow::copy,
+              QKeySequence::Copy,
+              QIcon::fromTheme("edit-copy", QIcon(":/utility_boilerplate_qt5/ic_copy")),
+              menu,
               toolbar);
-    addAction(tr("&Paste"), tr("Paste the clipboard's contents into the current selection"),
-              &UtilityMainWindow::paste, QKeySequence::Paste,
-              QIcon::fromTheme("edit-paste", QIcon(":/utility_boilerplate_qt5/ic_paste")), menu,
+    addAction(tr("&Paste"),
+              tr("Paste the clipboard's contents into the current selection"),
+              &UtilityMainWindow::paste,
+              QKeySequence::Paste,
+              QIcon::fromTheme("edit-paste", QIcon(":/utility_boilerplate_qt5/ic_paste")),
+              menu,
               toolbar);
     addSeparator(menu, toolbar);
 
 #endif  // !QT_NO_CLIPBOARD
 
-    addAction(tr("Se&ttings"), tr("Show application settings."), &UtilityMainWindow::showSettings,
-              menu);
+    addAction(
+        tr("Se&ttings"), tr("Show application settings."), &UtilityMainWindow::showSettings, menu);
 }
 
 void UtilityMainWindow::createHelpActions(QMenu* menu) {
@@ -185,7 +206,8 @@ bool UtilityMainWindow::isFileAccessibleLike(const QString& filename,
                                              const QIODevice::OpenMode mode) {
     QFile file(filename);
     if (!file.open(mode)) {
-        QMessageBox::warning(this, tr("Error"),
+        QMessageBox::warning(this,
+                             tr("Error"),
                              tr("Cannot open file %1 %2")
                                  .arg(QDir::toNativeSeparators(filename), file.errorString()));
         return false;
@@ -274,7 +296,8 @@ void UtilityMainWindow::about() {
  * Cut operation slot. Can't be pure virtual, due Qt restriction.
  */
 void UtilityMainWindow::cut() {
-    QMessageBox::warning(this, tr("Warning"),
+    QMessageBox::warning(this,
+                         tr("Warning"),
                          tr("Not implemented yet. Override "
                             "UtilityMainWindow::cut() slot before using."));
 }
@@ -283,7 +306,8 @@ void UtilityMainWindow::cut() {
  * Copy operation slot. Can't be pure virtual, due Qt restriction.
  */
 void UtilityMainWindow::copy() {
-    QMessageBox::warning(this, tr("Warning"),
+    QMessageBox::warning(this,
+                         tr("Warning"),
                          tr("Not implemented yet. Override "
                             "UtilityMainWindow::copy() slot before using."));
 }
@@ -292,7 +316,8 @@ void UtilityMainWindow::copy() {
  * Paste operation slot. Can't be pure virtual, due Qt restriction.
  */
 void UtilityMainWindow::paste() {
-    QMessageBox::warning(this, tr("Warning"),
+    QMessageBox::warning(this,
+                         tr("Warning"),
                          tr("Not implemented yet. Override "
                             "UtilityMainWindow::paste() slot before using."));
 }
@@ -370,7 +395,8 @@ void UtilityMainWindow::commitData(QSessionManager& manager) {
 bool UtilityMainWindow::isSaved() {
     if (!isDocumentModified()) return true;
     const QMessageBox::StandardButton ret
-        = QMessageBox::warning(this, tr("Application"),
+        = QMessageBox::warning(this,
+                               tr("Application"),
                                tr("The document has been modified.\n"
                                   "Do you want to save your changes?"),
                                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
@@ -417,8 +443,8 @@ QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip,
 template <typename FuncReference>
 QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method,
                                       QMenu* menu, QToolBar* toolbar) {
-    return addAction(name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu,
-                     toolbar);
+    return addAction(
+        name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
 }
 
 template <typename FuncReference>

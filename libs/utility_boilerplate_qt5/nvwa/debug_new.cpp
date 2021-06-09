@@ -712,7 +712,10 @@ namespace {
 #endif
         if (new_verbose_flag) {
             fast_mutex_autolock lock(new_output_lock);
-            fprintf(new_output_fp, "new%s: allocated %p (size %zu, ", is_array ? "[]" : "", usr_ptr,
+            fprintf(new_output_fp,
+                    "new%s: allocated %p (size %zu, ",
+                    is_array ? "[]" : "",
+                    usr_ptr,
                     size);
             if (line != 0) {
                 print_position(ptr->file, ptr->line);
@@ -744,8 +747,8 @@ namespace {
         if (ptr == nullptr) {
             {
                 fast_mutex_autolock lock(new_output_lock);
-                fprintf(new_output_fp, "delete%s: invalid pointer %p (", is_array ? "[]" : "",
-                        usr_ptr);
+                fprintf(
+                    new_output_fp, "delete%s: invalid pointer %p (", is_array ? "[]" : "", usr_ptr);
                 print_position(addr, 0);
                 fprintf(new_output_fp, ")\n");
             }
@@ -789,8 +792,12 @@ namespace {
         }
         if (new_verbose_flag) {
             fast_mutex_autolock lock(new_output_lock);
-            fprintf(new_output_fp, "delete%s: freed %p (size %zu, %zu bytes still allocated)\n",
-                    is_array ? "[]" : "", usr_ptr, ptr->size, total_mem_alloc);
+            fprintf(new_output_fp,
+                    "delete%s: freed %p (size %zu, %zu bytes still allocated)\n",
+                    is_array ? "[]" : "",
+                    usr_ptr,
+                    ptr->size,
+                    total_mem_alloc);
         }
 #if _DEBUG_NEW_REMEMBER_STACK_TRACE
         free(ptr->stacktrace);
@@ -851,7 +858,9 @@ int check_leaks() {
     }
     if (new_verbose_flag || leak_cnt) {
         if (whitelisted_leak_cnt > 0) {
-            fprintf(new_output_fp, "*** %d leaks found (%d whitelisted)\n", leak_cnt,
+            fprintf(new_output_fp,
+                    "*** %d leaks found (%d whitelisted)\n",
+                    leak_cnt,
                     whitelisted_leak_cnt);
         } else {
             fprintf(new_output_fp, "*** %d leaks found\n", leak_cnt);
@@ -889,7 +898,9 @@ int check_mem_corruption() {
         } else {
             // Adjust usr_ptr after the basic sanity check
             usr_ptr = reinterpret_cast<const char *>(ptr) + ptr->head_size;
-            fprintf(new_output_fp, "Overwritten past end of object at %p (size %zu, ", usr_ptr,
+            fprintf(new_output_fp,
+                    "Overwritten past end of object at %p (size %zu, ",
+                    usr_ptr,
                     ptr->size);
         }
 #endif
@@ -925,14 +936,16 @@ void debug_new_recorder::_M_process(void *usr_ptr) {
     auto ptr = convert_user_ptr(usr_ptr, _DEBUG_NEW_ALIGNMENT);
     if (ptr == nullptr || ptr->line != 0) {
         fast_mutex_autolock lock(new_output_lock);
-        fprintf(new_output_fp, "warning: debug_new used with placement new (%s:%d)\n", _M_file,
+        fprintf(new_output_fp,
+                "warning: debug_new used with placement new (%s:%d)\n",
+                _M_file,
                 _M_line);
         return;
     }
     if (new_verbose_flag) {
         fast_mutex_autolock lock(new_output_lock);
-        fprintf(new_output_fp, "info: pointer %p allocated from %s:%d\n", usr_ptr, _M_file,
-                _M_line);
+        fprintf(
+            new_output_fp, "info: pointer %p allocated from %s:%d\n", usr_ptr, _M_file, _M_line);
     }
 #if _DEBUG_NEW_FILENAME_LEN == 0
     ptr->file = _M_file;
@@ -1159,8 +1172,11 @@ void *operator new[](size_t size, std::align_val_t align_val, const char *file, 
 }
 
 void *operator new(size_t size, std::align_val_t align_val) {
-    void *ptr = alloc_mem(size, static_cast<char *>(_DEBUG_NEW_CALLER_ADDRESS), 0,
-                          alloc_is_not_array, size_t(align_val));
+    void *ptr = alloc_mem(size,
+                          static_cast<char *>(_DEBUG_NEW_CALLER_ADDRESS),
+                          0,
+                          alloc_is_not_array,
+                          size_t(align_val));
     if (ptr) {
         return ptr;
     } else {
@@ -1169,8 +1185,8 @@ void *operator new(size_t size, std::align_val_t align_val) {
 }
 
 void *operator new[](size_t size, std::align_val_t align_val) {
-    void *ptr = alloc_mem(size, static_cast<char *>(_DEBUG_NEW_CALLER_ADDRESS), 0, alloc_is_array,
-                          size_t(align_val));
+    void *ptr = alloc_mem(
+        size, static_cast<char *>(_DEBUG_NEW_CALLER_ADDRESS), 0, alloc_is_array, size_t(align_val));
     if (ptr) {
         return ptr;
     } else {
