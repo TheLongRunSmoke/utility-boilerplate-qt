@@ -1,10 +1,11 @@
 #include <QApplication>
 #include <QTranslator>
-#include <debug_new>
+#include <helpers.hpp>
 
 #include "example/mainwindow.hpp"
 #include "example/texteditorsettings.hpp"
-#include "utility_boilerplate_qt5/helpers.hpp"
+
+#include <debug_new>  // Must be last one.
 
 #ifndef NDEBUG
 /**
@@ -18,7 +19,7 @@
  * @return true entity is whitelisted and hide from trace.
  * @return false entity is shown in trace as normal.
  */
-extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, void **stacktrace) {
+extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, void** stacktrace) {
     // If file name empty, it is leak not in project...or you forget to include
     // debug_new header somewhere.
     if (file == nullptr) return true;
@@ -29,9 +30,9 @@ extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, 
     auto whitelist
         = std::map<std::string, std::list<int>>{{"settingsdialog.cpp", std::list<int>{47}}};
     // Iterate through whitelist and return true if coincidence found.
-    for (auto const &it : whitelist) {
+    for (auto const& it : whitelist) {
         if (filename.find(it.first) == std::string::npos) continue;
-        for (auto const &row : it.second) {
+        for (auto const& row : it.second) {
             if (line == row) return true;
         }
     }
@@ -44,7 +45,7 @@ extern "C" bool leak_whitelist_callback(char const *file, int line, void *addr, 
  * Initialized and load application settings.
  */
 void readSettings() {
-    Settings *settings = new TextEditorSettings();
+    Settings* settings = new TextEditorSettings();
     // Init defaults if not set.
     settings->initDefaults();
     // Set style from settings.
@@ -52,13 +53,13 @@ void readSettings() {
     delete settings;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 #ifndef NDEBUG
     // Prepare NVWA leak detection.
     nvwa::new_progname = argv[0];
     nvwa::leak_whitelist_callback = leak_whitelist_callback;
     // Let's create debug memory leak. You can see it in a trace.
-    int *leak = new int(0);
+    int* leak = new int(0);
 #endif
     // Load app resources.
     Q_INIT_RESOURCE(app);
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]) {
     // Create main window.
     MainWindow mainWin;
     // Check command line arguments for file to open.
-    QStringList arguments = UBHelpers::parseFirstArgumentAsFile(app);
+    QStringList arguments = ub_helpers::parseFirstArgumentAsFile(app);
     if (!arguments.isEmpty()) {
         mainWin.loadFile(arguments.first());
     }
@@ -84,7 +85,7 @@ int main(int argc, char *argv[]) {
     try {
         // Run application.
         result = QApplication::exec();
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
         // Catch exception if it make its way down here.
         qFatal("Error %s", e.what());
     }

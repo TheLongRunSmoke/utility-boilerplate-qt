@@ -192,8 +192,8 @@ class fast_mutex {
     }
 
   private:
-    fast_mutex(const fast_mutex &) _DELETED;
-    fast_mutex &operator=(const fast_mutex &) _DELETED;
+    fast_mutex(const fast_mutex&) _DELETED;
+    fast_mutex& operator=(const fast_mutex&) _DELETED;
 };
 NVWA_NAMESPACE_END
 #elif defined(NVWA_PTHREADS)
@@ -261,8 +261,8 @@ class fast_mutex {
     }
 
   private:
-    fast_mutex(const fast_mutex &) _DELETED;
-    fast_mutex &operator=(const fast_mutex &) _DELETED;
+    fast_mutex(const fast_mutex&) _DELETED;
+    fast_mutex& operator=(const fast_mutex&) _DELETED;
 };
 NVWA_NAMESPACE_END
 #elif defined(NVWA_WIN32THREADS)
@@ -328,8 +328,8 @@ class fast_mutex {
     }
 
   private:
-    fast_mutex(const fast_mutex &) _DELETED;
-    fast_mutex &operator=(const fast_mutex &) _DELETED;
+    fast_mutex(const fast_mutex&) _DELETED;
+    fast_mutex& operator=(const fast_mutex&) _DELETED;
 };
 NVWA_NAMESPACE_END
 #elif defined(NVWA_NOTHREADS)
@@ -365,8 +365,8 @@ class fast_mutex {
     }
 
   private:
-    fast_mutex(const fast_mutex &) _DELETED;
-    fast_mutex &operator=(const fast_mutex &) _DELETED;
+    fast_mutex(const fast_mutex&) _DELETED;
+    fast_mutex& operator=(const fast_mutex&) _DELETED;
 };
 NVWA_NAMESPACE_END
 #endif  // Definition of class fast_mutex
@@ -374,15 +374,15 @@ NVWA_NAMESPACE_END
 NVWA_NAMESPACE_BEGIN
 /** RAII lock class for fast_mutex. */
 class fast_mutex_autolock {
-    fast_mutex &_M_mtx;
+    fast_mutex& _M_mtx;
 
   public:
-    explicit fast_mutex_autolock(fast_mutex &mtx) : _M_mtx(mtx) { _M_mtx.lock(); }
+    explicit fast_mutex_autolock(fast_mutex& mtx) : _M_mtx(mtx) { _M_mtx.lock(); }
     ~fast_mutex_autolock() { _M_mtx.unlock(); }
 
   private:
-    fast_mutex_autolock(const fast_mutex_autolock &) _DELETED;
-    fast_mutex_autolock &operator=(const fast_mutex_autolock &) _DELETED;
+    fast_mutex_autolock(const fast_mutex_autolock&) _DELETED;
+    fast_mutex_autolock& operator=(const fast_mutex_autolock&) _DELETED;
 };
 NVWA_NAMESPACE_END
 

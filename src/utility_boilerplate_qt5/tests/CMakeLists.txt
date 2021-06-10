@@ -14,7 +14,9 @@ file(GLOB UB_TEST_SOURCES settings/items/*.cpp *.cpp *.hpp)
 
 # Create tests project and link with libraries.
 add_executable(${PROJECT_NAME} ${UB_TEST_SOURCES})
+
 target_link_libraries(${PROJECT_NAME} utility_boilerplate_qt5)
+
 target_link_libraries(${PROJECT_NAME} gtest gtest_main gcov)
 
 # Make it discoverable for CTest.

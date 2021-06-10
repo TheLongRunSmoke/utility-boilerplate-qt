@@ -4,5 +4,4 @@
 # I prefer older style with ampersand and asterisk near variable name.
 !.idea/codeStyles/
 # CMake
-cmake-build-*/
-build
+*build*/

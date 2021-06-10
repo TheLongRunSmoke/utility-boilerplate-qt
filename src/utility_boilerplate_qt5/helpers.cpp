@@ -3,7 +3,7 @@
 #include <QCommandLineParser>
 #include <debug_new>
 
-QStringList UBHelpers::parseFirstArgumentAsFile(const QApplication &app) {
+QStringList ub_helpers::parseFirstArgumentAsFile(const QApplication& app) {
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::applicationName());
     parser.addHelpOption();

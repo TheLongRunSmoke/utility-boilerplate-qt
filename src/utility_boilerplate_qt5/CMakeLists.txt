@@ -65,4 +65,4 @@ target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Widgets)
 
 include(CTest)
 add_subdirectory(tests)
-gtest_discover_tests(${PROJECT_NAME})
+# gtest_discover_tests(${PROJECT_NAME})

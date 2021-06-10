@@ -37,7 +37,7 @@ to_lower_case(${CMAKE_BUILD_TYPE} BUILD_TYPE_LOWER_CASE)
 
 # Set where to find library object.
 add_subdirectory(
-    ${PROJECT_SOURCE_DIR}/libs/utility_boilerplate_qt5 ${PROJECT_SOURCE_DIR}/libs/utility_boilerplate_qt5/build/${BUILD_TYPE_LOWER_CASE}
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5 ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/build/${BUILD_TYPE_LOWER_CASE}
 )
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time. Headers included to support some IDEs
@@ -45,11 +45,11 @@ add_subdirectory(
 file(
     GLOB
     SOURCES
-    example/app.qrc
-    libs/utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-    example/*.cpp
-    example/*.hpp
-    main.cpp
+    src/example/app.qrc
+    src/utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
+    src/example/*.cpp
+    src/example/*.hpp
+    src/main.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -67,5 +67,5 @@ endforeach()
 
 # Add tests package.
 include(CTest)
-add_subdirectory(example/tests)
-gtest_discover_tests(${PROJECT_NAME})
+add_subdirectory(src/example/tests)
+# gtest_discover_tests(${PROJECT_NAME})

@@ -52,14 +52,14 @@
 #endif
 
 /* Special allocation/deallocation functions in the global scope */
-void *operator new(size_t size, const char *file, int line);
-void *operator new[](size_t size, const char *file, int line);
-void operator delete(void *ptr, const char *file, int line) noexcept;
-void operator delete[](void *ptr, const char *file, int line) noexcept;
+void* operator new(size_t size, const char* file, int line);
+void* operator new[](size_t size, const char* file, int line);
+void operator delete(void* ptr, const char* file, int line) noexcept;
+void operator delete[](void* ptr, const char* file, int line) noexcept;
 
 #if NVWA_SUPPORTS_ALIGNED_NEW
-void *operator new(size_t size, std::align_val_t align_val, const char *file, int line);
-void *operator new[](size_t size, std::align_val_t align_val, const char *file, int line);
+void* operator new(size_t size, std::align_val_t align_val, const char* file, int line);
+void* operator new[](size_t size, std::align_val_t align_val, const char* file, int line);
 #endif
 
 NVWA_NAMESPACE_BEGIN
@@ -117,7 +117,7 @@ NVWA_NAMESPACE_BEGIN
  * @param fp          pointer to the output stream
  * @param stacktrace  pointer to the stack trace array (null-terminated)
  */
-typedef void (*stacktrace_print_callback_t)(FILE *fp, void **stacktrace);
+typedef void (*stacktrace_print_callback_t)(FILE* fp, void** stacktrace);
 
 /**
  * Callback type for the leak whitelist function.  \a file, \a address,
@@ -132,8 +132,8 @@ typedef void (*stacktrace_print_callback_t)(FILE *fp, void **stacktrace);
  * @return            \c true if the leak should be whitelisted;
  *                    \c false otherwise
  */
-typedef bool (*leak_whitelist_callback_t)(char const *file, int line, void *addr,
-                                          void **stacktrace);
+typedef bool (*leak_whitelist_callback_t)(char const* file, int line, void* addr,
+                                          void** stacktrace);
 
 /* Prototypes */
 int check_leaks();
@@ -142,8 +142,8 @@ int check_mem_corruption();
 /* Control variables */
 extern bool new_autocheck_flag;   // default to true: call check_leaks() on exit
 extern bool new_verbose_flag;     // default to false: no verbose information
-extern FILE *new_output_fp;       // default to stderr: output to console
-extern const char *new_progname;  // default to null; should be assigned argv[0]
+extern FILE* new_output_fp;       // default to stderr: output to console
+extern const char* new_progname;  // default to null; should be assigned argv[0]
 extern stacktrace_print_callback_t stacktrace_print_callback;  // default to null
 extern leak_whitelist_callback_t leak_whitelist_callback;      // default to null
 
@@ -167,11 +167,11 @@ extern leak_whitelist_callback_t leak_whitelist_callback;      // default to nul
 #ifdef _DEBUG_NEW_EMULATE_MALLOC
 #    include <stdlib.h>
 #    ifdef new
-#        define malloc(s) ((void *)(new char[s]))
+#        define malloc(s) ((void*)(new char[s]))
 #    else
-#        define malloc(s) ((void *)(DEBUG_NEW char[s]))
+#        define malloc(s) ((void*)(DEBUG_NEW char[s]))
 #    endif
-#    define free(p) delete[](char *)(p)
+#    define free(p) delete[](char*)(p)
 #endif
 
 /**
@@ -182,29 +182,29 @@ extern leak_whitelist_callback_t leak_whitelist_callback;      // default to nul
  * Herlihy's post</a> in comp.lang.c++.moderated.
  */
 class debug_new_recorder {
-    const char *_M_file;
+    const char* _M_file;
     const int _M_line;
-    void _M_process(void *ptr);
+    void _M_process(void* ptr);
 
   public:
     /**
      * Constructor to remember the call context.  The information will
      * be used in debug_new_recorder::operator->*.
      */
-    debug_new_recorder(const char *file, int line) : _M_file(file), _M_line(line) {}
+    debug_new_recorder(const char* file, int line) : _M_file(file), _M_line(line) {}
     /**
      * Operator to write the context information to memory.
      * <code>operator->*</code> is chosen because it has the right
      * precedence, it is rarely used, and it looks good: so people can
      * tell the special usage more quickly.
      */
-    template <class _Tp> _Tp *operator->*(_Tp *ptr) {
+    template <class _Tp> _Tp* operator->*(_Tp* ptr) {
         _M_process(ptr);
         return ptr;
     }
 
-    debug_new_recorder(const debug_new_recorder &) = delete;
-    debug_new_recorder &operator=(const debug_new_recorder &) = delete;
+    debug_new_recorder(const debug_new_recorder&) = delete;
+    debug_new_recorder& operator=(const debug_new_recorder&) = delete;
 };
 
 /**
