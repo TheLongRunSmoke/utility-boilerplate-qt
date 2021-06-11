@@ -5,7 +5,8 @@ project(utility_boilerplate_qt_example VERSION 0.1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(libs/3rd/Format.cmake)
+# Include formatter support.
+add_subdirectory(lib/3rd/Format.cmake)
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
     message(FATAL_ERROR "In-source builds not allowed. Please make a build directory and run CMake from there.")
@@ -68,4 +69,19 @@ endforeach()
 # Add tests package.
 include(CTest)
 add_subdirectory(src/example/tests)
-# gtest_discover_tests(${PROJECT_NAME})
+
+add_library(coverage_config INTERFACE)
+
+option(CODE_COVERAGE "Enable coverage reporting" ON)
+if(CMAKE_BUILD_TYPE MATCHES Debug
+   AND CODE_COVERAGE
+   AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
+)
+    target_compile_options(
+        tests
+        PUBLIC -O0 # no optimization
+               -g # generate debug info
+               -fprofile-arcs -ftest-coverage # sets all required flags
+    )
+    target_link_options(tests PUBLIC -fprofile-arcs -ftest-coverage)
+endif()

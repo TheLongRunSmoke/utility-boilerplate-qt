@@ -65,4 +65,17 @@ target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Widgets)
 
 include(CTest)
 add_subdirectory(tests)
-# gtest_discover_tests(${PROJECT_NAME})
+
+option(CODE_COVERAGE "Enable coverage reporting" ON)
+if(CMAKE_BUILD_TYPE MATCHES Debug
+   AND CODE_COVERAGE
+   AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
+)
+    target_compile_options(
+        ub_qt5_tests
+        PUBLIC -O0 # no optimization
+               -g # generate debug info
+               -fprofile-arcs -ftest-coverage # sets all required flags
+    )
+    target_link_options(ub_qt5_tests PUBLIC -fprofile-arcs -ftest-coverage)
+endif()

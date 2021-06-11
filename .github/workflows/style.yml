@@ -28,8 +28,8 @@ jobs:
           sudo apt install clang-format
           pip3 install cmake_format==0.6.11 pyyaml
 
-      - name: configure
-        run: cmake -S ./ -B build/style
+      - name: Configure
+        run: cmake -S. -Bbuild/style
 
-      - name: check style
+      - name: Style check
         run: cmake --build build/style --target check-format

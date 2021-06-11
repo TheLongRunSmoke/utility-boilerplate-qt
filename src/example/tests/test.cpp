@@ -3,5 +3,5 @@
 #include "mainwindow.hpp"
 
 TEST(Smoke, CheckEnvironment) {  // NOLINT(cert-err58-cpp)
-    ASSERT_EQ(MainWindow::objectId(), 1000);
+    ASSERT_EQ(MainWindow::objectId(), QString::number(1000, 10));
 }

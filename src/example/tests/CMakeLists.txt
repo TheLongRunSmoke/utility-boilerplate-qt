@@ -1,34 +1,33 @@
-# Prepare project name.
-project(tests)
-
-# Get parent directory and include source of project under test.
-set(PARENT_SOURCE_DIR "")
-get_parent_dir(${PROJECT_SOURCE_DIR} PARENT_SOURCE_DIR)
-include_directories(${PARENT_SOURCE_DIR})
-message(${PARENT_SOURCE_DIR})
-get_parent_dir(${PARENT_SOURCE_DIR} PARENT_SOURCE_DIR)
-include_directories(${PARENT_SOURCE_DIR})
-message(${PARENT_SOURCE_DIR})
-
 # Include Google Test.
 include(../../../cmake/gtest.cmake)
 
 # Include QT UI headers.
-set(PARENT_UIC_DIR "")
-get_parent_dir(${PROJECT_BINARY_DIR} PARENT_UIC_DIR)
-get_parent_dir(${PARENT_UIC_DIR} PARENT_UIC_DIR)
-get_parent_dir(${PARENT_UIC_DIR} PARENT_UIC_DIR)
-include_directories(${PARENT_UIC_DIR}/${CMAKE_PROJECT_NAME}_autogen/include)
+include_directories(${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}_autogen/include)
+
+# Include project source.
+include_directories(${PROJECT_SOURCE_DIR}/src/example)
+file(GLOB APP_SOURCE ${PROJECT_SOURCE_DIR}/src/example/*.cpp)
+
+file(
+    GLOB
+    UTILITY_BOILERPLATE_QT5_SOURCES
+    ../../utility_boilerplate_qt5/*.hpp
+    ../../utility_boilerplate_qt5/*.cpp
+    ../../utility_boilerplate_qt5/settings/*.hpp
+    ../../utility_boilerplate_qt5/settings/*.cpp
+    ../../utility_boilerplate_qt5/settings/items/*.hpp
+    ../../utility_boilerplate_qt5/settings/items/*.cpp
+    ../../utility_boilerplate_qt5/settings/items/abstract/*.hpp
+)
 
 # Find tests sources.
 file(GLOB TEST_SOURCES *.cpp *.hpp)
 
 # Create tests project and link with libraries.
-add_executable(${PROJECT_NAME} ${TEST_SOURCES})
+add_executable(tests ${TEST_SOURCES} ${APP_SOURCE} ${UTILITY_BOILERPLATE_QT5_SOURCES})
 
-target_link_libraries(${PROJECT_NAME} utility_boilerplate_qt5)
-
-target_link_libraries(${PROJECT_NAME} gtest gtest_main gcov)
+target_link_libraries(tests utility_boilerplate_qt5)
+target_link_libraries(tests gtest gtest_main gcov)
 
 # Make it discoverable for CTest.
-gtest_discover_tests(${PROJECT_NAME})
+gtest_discover_tests(tests)

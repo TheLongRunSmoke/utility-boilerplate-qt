@@ -1,3 +1,3 @@
-[submodule "libs/3rd/Format.cmake"]
-	path = libs/3rd/Format.cmake
-	url = https://github.com/TheLartians/Format.cmake
+[submodule "lib/3rd/Format.cmake"]
+	path = lib/3rd/Format.cmake
+	url = git@github.com:TheLartians/Format.cmake.git

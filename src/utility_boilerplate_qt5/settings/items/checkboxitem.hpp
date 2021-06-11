@@ -1,7 +1,7 @@
 #ifndef UTILITY_BOILERPLATE_QT_CHECKBOXITEM_HPP
 #define UTILITY_BOILERPLATE_QT_CHECKBOXITEM_HPP
 
-#include "QCheckBox"
+#include <QCheckBox>
 #include "abstract/simplesettingitem.hpp"
 
 class CheckBoxItem : public SimpleSettingItem<QCheckBox> {

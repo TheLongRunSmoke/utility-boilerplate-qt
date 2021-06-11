@@ -7,7 +7,6 @@
 #include <QTextStream>
 #include <QWidget>
 #include <debug_new>
-
 #include "texteditorsettings.hpp"
 
 MainWindow::MainWindow(QWidget *parent) : UtilityMainWindow(parent) {
