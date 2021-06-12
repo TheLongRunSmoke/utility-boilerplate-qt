@@ -89,4 +89,39 @@ ru_RU as example, use your language code.
 5. To check that translation load correctly run application from command line and look
    for `Translation for "<language code>" load successfully` message. If translation can't be load you
    see `Can't load translation for "<language code>"` message. Qt do not offer more debug information for that.
-   
+
+# Code style enforcement
+
+Project offer code style enforcement via clang-format and cmake format. Idea styles included.
+
+Style workflow failed if any project file has bad formatting.
+
+If requirements not installed format enforcing ignored.
+
+## Install requirements
+
+### Windows
+
+`clang-format` can be [downloaded](https://llvm.org/builds/) with LLVM package.
+
+`cmake-format` installed using `pip`.
+
+```shell
+pip install cmakelang pyyaml
+```
+
+### Linux
+
+Normally, linux systems has all requirements, except `cmake-format`.
+
+```shell
+pip install cmakelang
+```
+
+## Using
+
+Fix all files in project.
+
+```shell
+cmake --build build --target fix-format
+```

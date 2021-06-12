@@ -66,6 +66,21 @@ foreach(FILE_PATH ${I18N_QM})
     configure_file(${FILE_PATH} ${PROJECT_BINARY_DIR}/i18n/${FILE_NAME} COPYONLY)
 endforeach()
 
+# Copy dlls and other necessary files.
+if(WIN32)
+    message("Collecting binaries for Windows...")
+    find_program(QT_DEPLOY windeployqt)
+    if(QT_DEPLOY)
+        add_custom_command(
+            TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMAND windeployqt ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.exe
+        )
+    else()
+        message("Windeployqt not found!")
+    endif()
+endif()
+
 # Add tests package.
 include(CTest)
 add_subdirectory(src/example/tests)
