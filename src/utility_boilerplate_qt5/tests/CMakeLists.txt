@@ -13,3 +13,9 @@ target_link_libraries(ub_qt5_tests gtest gtest_main gcov)
 
 # Make it discoverable for CTest.
 gtest_discover_tests(ub_qt5_tests)
+
+add_custom_command(
+    TARGET ub_qt5_tests
+    POST_BUILD
+    COMMAND windeployqt ${CMAKE_BINARY_DIR}/ub_qt5_tests.exe
+)

@@ -8,10 +8,10 @@ SpinboxItem::SpinboxItem(QString key, QString name, int min, int max, int defaul
     _defaultValue = intToValue(validateValue(defaultValue, _min, _max));
 }
 
-QWidget *SpinboxItem::view(QWidget *parent) {
+QWidget* SpinboxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _field = new QSpinBox(_view);
     _field->setRange(_min, _max);
     if (_defaultValue != nullptr) {
@@ -48,7 +48,7 @@ QString SpinboxItem::defaultValue() {
 
 QString SpinboxItem::intToValue(int integer) { return QString::number(integer, 10); }
 
-int SpinboxItem::valueToInt(const QString &value) {
+int SpinboxItem::valueToInt(const QString& value) {
     if (value == nullptr) return 0;
     bool isOk;
     int result = value.toInt(&isOk, 10);

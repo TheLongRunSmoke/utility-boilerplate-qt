@@ -13,7 +13,7 @@
 /**
  * Template for simple setting item, that contain one field and label.
  */
-template <typename T, typename std::enable_if<std::is_base_of<QWidget, T>::value>::type * = nullptr>
+template <typename T, typename std::enable_if<std::is_base_of<QWidget, T>::value>::type* = nullptr>
 class SimpleSettingItem : public SettingItem {
   public:
     SimpleSettingItem(QString key, QString name, QString toolTip)
@@ -25,13 +25,13 @@ class SimpleSettingItem : public SettingItem {
     };
 
   protected:
-    QWidget *_view = nullptr;
-    T *_field = nullptr;
+    QWidget* _view = nullptr;
+    T* _field = nullptr;
     QString _name = nullptr;
     QString _toolTip = nullptr;
 
-    QWidget *createLabel() {
-        auto *label = new QLabel(_view);
+    QWidget* createLabel() {
+        auto* label = new QLabel(_view);
         label->setTextFormat(Qt::TextFormat::PlainText);
         label->setText(_name);
         label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);

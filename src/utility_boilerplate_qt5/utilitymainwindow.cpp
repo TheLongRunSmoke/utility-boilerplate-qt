@@ -4,14 +4,12 @@
 #include <QFileDialog>
 #include <QFrame>
 #include <QGridLayout>
-#include <QGuiApplication>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QProcess>
 #include <QScreen>
 #include <QToolBar>
-#include <QWidget>
 #include <QWindow>
 #include <debug_new>
 

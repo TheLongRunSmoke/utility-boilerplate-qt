@@ -6,10 +6,10 @@ TextItem::TextItem(QString key, QString name, QString defaultValue, QString tool
     : SimpleSettingItem<QLineEdit>(std::move(key), std::move(name), std::move(toolTip)),
       _defaultValue{std::move(defaultValue)} {}
 
-QWidget *TextItem::view(QWidget *parent) {
+QWidget* TextItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _field = new QLineEdit(_view);
     if (_defaultValue != nullptr) {
         _field->setText(defaultValue());

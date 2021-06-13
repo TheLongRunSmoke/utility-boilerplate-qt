@@ -1,6 +1,7 @@
 #ifndef UMAINWINDOW_H
 #define UMAINWINDOW_H
 
+#include <QFrame>
 #include <QGridLayout>
 #include <QMainWindow>
 #include <QSessionManager>
@@ -32,7 +33,7 @@ class UtilityMainWindow : public QMainWindow {
     Q_OBJECT
 
   public:
-    explicit UtilityMainWindow(QWidget *parent = Q_NULLPTR);
+    explicit UtilityMainWindow(QWidget* parent = Q_NULLPTR);
 
     ~UtilityMainWindow() override;
 
@@ -40,7 +41,7 @@ class UtilityMainWindow : public QMainWindow {
      * Handle loading of specified file. Reading from disc must implemented in
      * heir.
      */
-    virtual void loadFile(const QString &fileName);
+    virtual void loadFile(const QString& fileName);
 
     /**
      * Return number to use as object name.
@@ -54,13 +55,13 @@ class UtilityMainWindow : public QMainWindow {
     /**
      * Return pointer on window layout where user widget can be placed.
      */
-    QGridLayout *getLayout();
+    QGridLayout* getLayout();
 
     /**
      * Handle close event to ask user to save document if isDocumentModified() is
      * true.
      */
-    void closeEvent(QCloseEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
 
     /**
      * Set current file filename for window.
@@ -69,7 +70,7 @@ class UtilityMainWindow : public QMainWindow {
      *
      * @param filePath file path.
      */
-    void setCurrentFile(const QString &filePath);
+    void setCurrentFile(const QString& filePath);
 
     /**
      * Create basic actions and fill menu and toolbars with it.
@@ -80,17 +81,17 @@ class UtilityMainWindow : public QMainWindow {
      * Populate File menu and toolbar with actions like open, save, recent files
      * and so on.
      */
-    virtual void createFileActions(QMenu *menu, QToolBar *toolbar);
+    virtual void createFileActions(QMenu* menu, QToolBar* toolbar);
 
     /**
      * Populate Edit menu and toolbar with actions like copy, paste and settings.
      */
-    virtual void createEditActions(QMenu *menu, QToolBar *toolbar);
+    virtual void createEditActions(QMenu* menu, QToolBar* toolbar);
 
     /**
      * Populate Help menu About and About Qt actions.
      */
-    virtual void createHelpActions(QMenu *menu);
+    virtual void createHelpActions(QMenu* menu);
 
     /**
      * Default name for newly created document.
@@ -122,7 +123,7 @@ class UtilityMainWindow : public QMainWindow {
      * @return true file can be used.
      * @return false file not exist or user do not have permissions to read it.
      */
-    virtual bool isFileReadable(const QString &filename);
+    virtual bool isFileReadable(const QString& filename);
 
     /**
      * Check that file writeable.
@@ -130,7 +131,7 @@ class UtilityMainWindow : public QMainWindow {
      * @return true file can be used.
      * @return false file can not be written for some reason.
      */
-    virtual bool isFileWritable(const QString &filename);
+    virtual bool isFileWritable(const QString& filename);
 
     /**
      * Clear and reset user's widget before loading new document.
@@ -151,7 +152,7 @@ class UtilityMainWindow : public QMainWindow {
      * @return true if wrote successfully
      * @return false if any error occurred.
      */
-    virtual bool saveFile(const QString &fileName) = 0;
+    virtual bool saveFile(const QString& fileName) = 0;
 
     /**
      * Call "About" dialog.
@@ -178,9 +179,9 @@ class UtilityMainWindow : public QMainWindow {
      * @return pointer to created action.
      */
     template <typename FuncReference>
-    QAction *addAction(const QString &name, const QString &tip, FuncReference method,
-                       QKeySequence::StandardKey keySequence, const QIcon &icon = QIcon(),
-                       QMenu *menu = nullptr, QToolBar *toolbar = nullptr);
+    QAction* addAction(const QString& name, const QString& tip, FuncReference method,
+                       QKeySequence::StandardKey keySequence, const QIcon& icon = QIcon(),
+                       QMenu* menu = nullptr, QToolBar* toolbar = nullptr);
 
     /**
      * Add action without icon shortcut to a menu and/or toolbar.
@@ -195,8 +196,8 @@ class UtilityMainWindow : public QMainWindow {
      * @return pointer to created action.
      */
     template <typename FuncReference>
-    QAction *addAction(const QString &name, const QString &tip, FuncReference method,
-                       QMenu *menu = nullptr, QToolBar *toolbar = nullptr);
+    QAction* addAction(const QString& name, const QString& tip, FuncReference method,
+                       QMenu* menu = nullptr, QToolBar* toolbar = nullptr);
 
     /**
      * Add action to a menu and/or toolbar in to position.
@@ -214,10 +215,10 @@ class UtilityMainWindow : public QMainWindow {
      * @return pointer to created action.
      */
     template <typename FuncReference>
-    QAction *addActionToPosition(int position, const QString &name, const QString &tip,
+    QAction* addActionToPosition(int position, const QString& name, const QString& tip,
                                  FuncReference method, QKeySequence::StandardKey keySequence,
-                                 const QIcon &icon = QIcon(), QMenu *menu = nullptr,
-                                 QToolBar *toolbar = nullptr);
+                                 const QIcon& icon = QIcon(), QMenu* menu = nullptr,
+                                 QToolBar* toolbar = nullptr);
 
     /**
      * Add separator in to menu and/or toolbar.
@@ -225,7 +226,7 @@ class UtilityMainWindow : public QMainWindow {
      * @param menu menu pointer, can be nullptr.
      * @param toolBar toolbar pointer, can be nullptr.
      */
-    static void addSeparator(QMenu *menu, QToolBar *toolBar = nullptr);
+    static void addSeparator(QMenu* menu, QToolBar* toolBar = nullptr);
 
   protected slots:
 
@@ -301,14 +302,14 @@ class UtilityMainWindow : public QMainWindow {
      * @return true if event fully handled and must not appear anywhere else.
      * @return false event can be passed next by hierarchy.
      */
-    bool event(QEvent *event) override;
+    bool event(QEvent* event) override;
 
 #ifndef QT_NO_SESSIONMANAGER
 
     /**
      * Handle user session. Will non-interactively save document if modified.
      */
-    void commitData(QSessionManager &);
+    void commitData(QSessionManager&);
 
 #endif
 
@@ -321,24 +322,24 @@ class UtilityMainWindow : public QMainWindow {
     /**
      * Window layout.
      */
-    QGridLayout *_mainLayout;
+    QGridLayout* _mainLayout;
 
     /**
      * Recent files submenu.
      */
-    QMenu *_recentFilesSubmenu{};
+    QMenu* _recentFilesSubmenu{};
 
     /**
      * Current application translation object.
      */
-    QTranslator *_translator = new QTranslator();
+    QTranslator* _translator = new QTranslator();
 
     /**
      * Toolbars. Keep pointer as class member to make possible to change translate
      * on-fly.
      */
-    QToolBar *_fileToolBar{};
-    QToolBar *_editToolBar{};
+    QToolBar* _fileToolBar{};
+    QToolBar* _editToolBar{};
 
     /**
      * Initialize a window status bar.
@@ -387,7 +388,7 @@ class UtilityMainWindow : public QMainWindow {
     /**
      * Check that file can be opened in specified mode.
      */
-    bool isFileAccessibleLike(const QString &filename, QIODevice::OpenMode mode);
+    bool isFileAccessibleLike(const QString& filename, QIODevice::OpenMode mode);
 
     /**
      * Call UI retranslation. Do it by hand or use ui->retranslateUi().

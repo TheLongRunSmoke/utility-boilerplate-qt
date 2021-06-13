@@ -13,11 +13,11 @@ namespace ubTestSuit {
     // CheckBoxItem /////////////
 
     TEST_F(UiFixture, SettingItems_CheckBoxItem) {  // NOLINT(cert-err58-cpp)
-        auto *item = new CheckBoxItem("key", "name");
+        auto* item = new CheckBoxItem("key", "name");
 
         EXPECT_EQ(item->key(), "key");
 
-        auto *label = findQWidgetByClass<QLabel>(item->view(window));
+        auto* label = findQWidgetByClass<QLabel>(item->view(window));
         EXPECT_EQ(label->text(), "name");
 
         delete item;
@@ -25,10 +25,10 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture,
            SettingItems_CheckBoxItem_defaultValue) {  // NOLINT(cert-err58-cpp)
-        auto *item = new CheckBoxItem("key", "name");
+        auto* item = new CheckBoxItem("key", "name");
 
         EXPECT_EQ(item->defaultValue(), "false");
-        auto *field = findQWidgetByClass<QCheckBox>(item->view(window));
+        auto* field = findQWidgetByClass<QCheckBox>(item->view(window));
         EXPECT_EQ(field->checkState(), Qt::Unchecked);
 
         delete item;
@@ -51,10 +51,10 @@ namespace ubTestSuit {
     }
 
     TEST_F(UiFixture, SettingItems_CheckBoxItem_value) {  // NOLINT(cert-err58-cpp)
-        auto *item = new CheckBoxItem("key", "name");
+        auto* item = new CheckBoxItem("key", "name");
 
         EXPECT_EQ(item->value(), "false");
-        auto *field = findQWidgetByClass<QCheckBox>(item->view(window));
+        auto* field = findQWidgetByClass<QCheckBox>(item->view(window));
         EXPECT_EQ(field->checkState(), Qt::Unchecked);
 
         delete item;
@@ -84,12 +84,11 @@ namespace ubTestSuit {
     // ComboBoxItem /////////////
 
     TEST_F(UiFixture, SettingItems_ComboBoxItem) {  // NOLINT(cert-err58-cpp)
-        auto *item
-            = new ComboBoxItem("key", "name", QStringList::fromStdList(std::list<QString>{}));
+        auto* item = new ComboBoxItem("key", "name", QList<QString>());
 
         EXPECT_EQ(item->key(), "key");
 
-        auto *label = findQWidgetByClass<QLabel>(item->view(window));
+        auto* label = findQWidgetByClass<QLabel>(item->view(window));
         EXPECT_EQ(label->text(), "name");
 
         delete item;
@@ -97,23 +96,17 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture,
            SettingItems_ComboBoxItem_defaultValue) {  // NOLINT(cert-err58-cpp)
-        auto *item = new ComboBoxItem(
-            "key",
-            "name",
-            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}),
-            "default");
+        auto* item = new ComboBoxItem(
+            "key", "name", QList<QString>{"first", "default", "second"}, "default");
 
         EXPECT_EQ(item->defaultValue(), "default");
 
-        auto *field = findQWidgetByClass<QComboBox>(item->view(window));
+        auto* field = findQWidgetByClass<QComboBox>(item->view(window));
         EXPECT_EQ(field->currentIndex(), 1);
 
         delete item;
 
-        item = new ComboBoxItem(
-            "key",
-            "name",
-            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}));
+        item = new ComboBoxItem("key", "name", QList<QString>{"first", "default", "second"});
 
         EXPECT_EQ(item->defaultValue(), "first");
 
@@ -122,20 +115,17 @@ namespace ubTestSuit {
 
         delete item;
 
-        item = new ComboBoxItem("key", "name", QStringList::fromStdList(std::list<QString>{}));
+        item = new ComboBoxItem("key", "name", QList<QString>());
         EXPECT_EQ(item->defaultValue(), "");
         delete item;
     }
 
     TEST_F(UiFixture, SettingItems_ComboBoxItem_value) {  // NOLINT(cert-err58-cpp)
-        auto *item = new ComboBoxItem(
-            "key",
-            "name",
-            QStringList::fromStdList(std::list<QString>{"first", "default", "second"}),
-            "default");
+        auto* item = new ComboBoxItem(
+            "key", "name", QList<QString>{"first", "default", "second"}, "default");
 
         EXPECT_EQ(item->value(), "default");
-        auto *field = findQWidgetByClass<QComboBox>(item->view(window));
+        auto* field = findQWidgetByClass<QComboBox>(item->view(window));
         EXPECT_EQ(field->currentIndex(), 1);
 
         item->setValue("second");
@@ -144,7 +134,7 @@ namespace ubTestSuit {
 
         delete item;
 
-        item = new ComboBoxItem("key", "name", QStringList::fromStdList(std::list<QString>{}));
+        item = new ComboBoxItem("key", "name", QList<QString>());
         EXPECT_EQ(item->value(), "");
         delete item;
     }
@@ -152,11 +142,11 @@ namespace ubTestSuit {
     // SeparatorItem /////////////
 
     TEST_F(UiFixture, SettingItems_SeparatorItem) {  // NOLINT(cert-err58-cpp)
-        auto *item = new SeparatorItem();
+        auto* item = new SeparatorItem();
 
         EXPECT_EQ(item->key(), nullptr);
 
-        QWidget *widget = item->view(window);
+        QWidget* widget = item->view(window);
         EXPECT_NE(widget, nullptr);
 
         delete item;
@@ -165,11 +155,11 @@ namespace ubTestSuit {
     // SpinBoxItem /////////////
 
     TEST_F(UiFixture, SettingItems_SpinboxItem) {  // NOLINT(cert-err58-cpp)
-        auto *item = new SpinboxItem("key", "name");
+        auto* item = new SpinboxItem("key", "name");
 
         EXPECT_EQ(item->key(), "key");
 
-        auto *label = findQWidgetByClass<QLabel>(item->view(window));
+        auto* label = findQWidgetByClass<QLabel>(item->view(window));
         EXPECT_EQ(label->text(), "name");
 
         delete item;
@@ -177,11 +167,11 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture,
            SettingItems_SpinboxItem_defaultValue) {  // NOLINT(cert-err58-cpp)
-        auto *item = new SpinboxItem("key", "name");
+        auto* item = new SpinboxItem("key", "name");
 
         EXPECT_EQ(item->defaultValue(), "0");
 
-        auto *field = findQWidgetByClass<QSpinBox>(item->view(window));
+        auto* field = findQWidgetByClass<QSpinBox>(item->view(window));
         EXPECT_EQ(field->value(), 0);
 
         delete item;
@@ -242,12 +232,12 @@ namespace ubTestSuit {
     }
 
     TEST_F(UiFixture, SettingItems_SpinboxItem_value) {  // NOLINT(cert-err58-cpp)
-        auto *item = new SpinboxItem("key", "name", -10, 20, 8);
+        auto* item = new SpinboxItem("key", "name", -10, 20, 8);
 
         EXPECT_EQ(item->defaultValue(), "8");
         EXPECT_EQ(item->value(), "8");
 
-        auto *field = findQWidgetByClass<QSpinBox>(item->view(window));
+        auto* field = findQWidgetByClass<QSpinBox>(item->view(window));
         EXPECT_EQ(field->value(), 8);
 
         item->setValue("15");
@@ -274,11 +264,11 @@ namespace ubTestSuit {
     // TextItem /////////////
 
     TEST_F(UiFixture, SettingItems_TextItem) {  // NOLINT(cert-err58-cpp)
-        auto *item = new TextItem("key", "name");
+        auto* item = new TextItem("key", "name");
 
         EXPECT_EQ(item->key(), "key");
 
-        auto *label = findQWidgetByClass<QLabel>(item->view(window));
+        auto* label = findQWidgetByClass<QLabel>(item->view(window));
         EXPECT_EQ(label->text(), "name");
 
         delete item;
@@ -286,11 +276,11 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture,
            SettingItems_TextItem_defaultValue) {  // NOLINT(cert-err58-cpp)
-        auto *item = new TextItem("key", "name");
+        auto* item = new TextItem("key", "name");
 
         EXPECT_EQ(item->defaultValue(), "");
 
-        auto *field = findQWidgetByClass<QLineEdit>(item->view(window));
+        auto* field = findQWidgetByClass<QLineEdit>(item->view(window));
         EXPECT_EQ(field->text(), "");
 
         delete item;
@@ -313,11 +303,11 @@ namespace ubTestSuit {
     }
 
     TEST_F(UiFixture, SettingItems_TextItem_value) {  // NOLINT(cert-err58-cpp)
-        auto *item = new TextItem("key", "name");
+        auto* item = new TextItem("key", "name");
 
         EXPECT_EQ(item->value(), "");
 
-        auto *field = findQWidgetByClass<QLineEdit>(item->view(window));
+        auto* field = findQWidgetByClass<QLineEdit>(item->view(window));
         EXPECT_EQ(field->text(), "");
 
         item->setValue("test_text");
