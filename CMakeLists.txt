@@ -83,10 +83,18 @@ endif()
 
 # Add tests package.
 include(CTest)
-# add_subdirectory(src/example/tests)
+add_subdirectory(src/example/tests)
 
-# add_library(coverage_config INTERFACE)
-
-# option(CODE_COVERAGE "Enable coverage reporting" ON) if(CMAKE_BUILD_TYPE MATCHES Debug AND CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES
-# "GNU|Clang" ) target_compile_options( tests PUBLIC -O0 # no optimization -g # generate debug info -fprofile-arcs -ftest-coverage # sets
-# all required flags ) target_link_options(tests PUBLIC -fprofile-arcs -ftest-coverage) endif()
+option(CODE_COVERAGE "Enable coverage reporting" OFF)
+if(CMAKE_BUILD_TYPE MATCHES Debug
+   AND CODE_COVERAGE
+   AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
+)
+    target_compile_options(
+        tests
+        PUBLIC -O0 # no optimization
+               -g # generate debug info
+               -fprofile-arcs -ftest-coverage # sets all required flags
+    )
+    target_link_options(tests PUBLIC -fprofile-arcs -ftest-coverage)
+endif()

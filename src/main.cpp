@@ -7,7 +7,7 @@
 
 #include <debug_new>  // Must be last one.
 
-#ifndef NDEBUG
+#ifdef NVWA_INCLUDE
 /**
  * C style callback for NVWA memory leak detection.
  * Let you whitelist memory leaks if it false positive.
@@ -54,7 +54,7 @@ void readSettings() {
 }
 
 int main(int argc, char* argv[]) {
-#ifndef NDEBUG
+#ifdef NVWA_INCLUDE
     // Prepare NVWA leak detection.
     nvwa::new_progname = argv[0];
     nvwa::leak_whitelist_callback = leak_whitelist_callback;

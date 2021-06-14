@@ -3,7 +3,7 @@
 
 // Facade file to make debug_new easy to include.
 
-#ifndef NDEBUG
+#ifdef NVWA_INCLUDE
 #include "../debug_new.h"
 #endif
 

@@ -46,7 +46,8 @@ set(BUILD_TYPE_LOWER_CASE "")
 to_lower_case(${CMAKE_BUILD_TYPE} BUILD_TYPE_LOWER_CASE)
 
 # For debug build add nvwa library.
-if(CMAKE_BUILD_TYPE MATCHES Debug)
+if(NVWA_INCLUDE AND CMAKE_BUILD_TYPE MATCHES Debug)
+    message("Including NVWA...")
     file(GLOB NVWA_SOURCE nvwa/*.h nvwa/*.cpp)
     list(APPEND UTILITY_BOILERPLATE_QT5_SOURCES ${NVWA_SOURCE})
 endif()
@@ -64,8 +65,18 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${UTILITY_BOILERPLATE_QT5_I
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Widgets)
 
 include(CTest)
-# add_subdirectory(tests)
+add_subdirectory(tests)
 
-# option(CODE_COVERAGE "Enable coverage reporting" ON) if(CMAKE_BUILD_TYPE MATCHES Debug AND CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES
-# "GNU|Clang" ) target_compile_options( ub_qt5_tests PUBLIC -O0 # no optimization -g # generate debug info -fprofile-arcs -ftest-coverage #
-# sets all required flags ) target_link_options(ub_qt5_tests PUBLIC -fprofile-arcs -ftest-coverage) endif()
+option(CODE_COVERAGE "Enable coverage reporting" OFF)
+if(CMAKE_BUILD_TYPE MATCHES Debug
+   AND CODE_COVERAGE
+   AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
+)
+    target_compile_options(
+        ub_qt5_tests
+        PUBLIC -O0 # no optimization
+               -g # generate debug info
+               -fprofile-arcs -ftest-coverage # sets all required flags
+    )
+    target_link_options(ub_qt5_tests PUBLIC -fprofile-arcs -ftest-coverage)
+endif()
