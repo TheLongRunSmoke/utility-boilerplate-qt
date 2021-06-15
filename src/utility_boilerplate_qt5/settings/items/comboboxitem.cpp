@@ -3,16 +3,16 @@
 #include <debug_new>
 
 ComboBoxItem::ComboBoxItem(QString key, QString name, QStringList elements,
-                           const QString &defaultValue, QString toolTip)
+                           const QString& defaultValue, QString toolTip)
     : SimpleSettingItem(std::move(key), std::move(name), std::move(toolTip)),
       _elements{std::move(elements)} {
     if (_elements.contains(defaultValue, Qt::CaseInsensitive)) _defaultValue = defaultValue;
 }
 
-QWidget *ComboBoxItem::view(QWidget *parent) {
+QWidget* ComboBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _field = new QComboBox(_view);
     _field->addItems(_elements);
     if (_field->count() > 0) {

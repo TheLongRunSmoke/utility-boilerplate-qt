@@ -7,9 +7,9 @@ namespace ubTestSuit {
 
     class UiFixture : public ::testing::Test {
       protected:
-        QApplication *app{};
-        QMainWindow *window{};
-        char **argv{};
+        QApplication* app{};
+        QMainWindow* window{};
+        char** argv{};
 
         void SetUp() override {
             int arg = 0;
@@ -23,8 +23,8 @@ namespace ubTestSuit {
         }
     };
 
-    template <typename T> T *findQWidgetByClass(QWidget *widget) {
-        return widget->findChildren<T *>().first();
+    template <typename T> T* findQWidgetByClass(QWidget* widget) {
+        return widget->findChildren<T*>().first();
     }
 
 }  // namespace ubTestSuit

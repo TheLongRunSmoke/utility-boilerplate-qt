@@ -39,7 +39,7 @@ class Settings : public QSettings {
     /**
      * Save window size and position.
      */
-    void setWindowGeometry(const QByteArray &geometry);
+    void setWindowGeometry(const QByteArray& geometry);
 
     /**
      * Effectively check that application have recently opened files.
@@ -64,7 +64,7 @@ class Settings : public QSettings {
      * Save path to list of recent opened paths.
      * FIFO logic applied.
      */
-    void putRecentFile(const QString &path);
+    void putRecentFile(const QString& path);
 
     /**
      * Return iterators to look through settings list.
@@ -106,7 +106,7 @@ class Settings : public QSettings {
     /**
      * Save window state.
      */
-    void setWindowState(const QByteArray &state);
+    void setWindowState(const QByteArray& state);
 
     /**
      * Saved interface language.
@@ -121,7 +121,7 @@ class Settings : public QSettings {
      * @param language 2 chars code like "en", "ru", etc.
      * @param translator translator object pointer.
      */
-    static void loadTranslation(const QString &language, QTranslator *translator);
+    static void loadTranslation(const QString& language, QTranslator* translator);
 
     /**
      * Recreate settings list to catch translation change.
@@ -155,12 +155,12 @@ class Settings : public QSettings {
     /**
      * Add user setting, that will be shown last in settings dialog.
      */
-    void addUserSetting(SettingItem *pItem);
+    void addUserSetting(SettingItem* pItem);
 
     /**
      * Add user setting, that will be shown first in settings dialog.
      */
-    void addUserSettingFirst(SettingItem *pItem);
+    void addUserSettingFirst(SettingItem* pItem);
 
     /**
      * Default limit of recent files. Override to specified own value.

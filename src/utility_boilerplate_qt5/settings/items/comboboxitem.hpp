@@ -11,9 +11,9 @@
 class ComboBoxItem : public SimpleSettingItem<QComboBox> {
   public:
     ComboBoxItem(QString key, QString name, QStringList elements,
-                 const QString &defaultValue = nullptr, QString toolTip = nullptr);
+                 const QString& defaultValue = nullptr, QString toolTip = nullptr);
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override;
 

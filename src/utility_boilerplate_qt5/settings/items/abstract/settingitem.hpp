@@ -22,7 +22,7 @@ class SettingItem {
      *
      * @return pointer on QWidget representation.
      */
-    virtual QWidget *view(QWidget *parent) = 0;
+    virtual QWidget* view(QWidget* parent) = 0;
 
     /**
      * Actual selected value.

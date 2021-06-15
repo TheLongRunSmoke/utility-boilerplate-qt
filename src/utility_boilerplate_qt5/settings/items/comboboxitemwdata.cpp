@@ -4,10 +4,10 @@
 
 ComboBoxItemWithData::ComboBoxItemWithData(QString key, QString name,
                                            std::map<QString, QVariant> elements,
-                                           const QString &defaultValue, QString toolTip)
+                                           const QString& defaultValue, QString toolTip)
     : SimpleSettingItem<QComboBox>(std::move(key), std::move(name), std::move(toolTip)),
       _elements{std::move(elements)} {
-    auto const &element = _elements.find(defaultValue);
+    auto const& element = _elements.find(defaultValue);
     if (element != _elements.end()) {
         _defaultValue = defaultValue;
     } else {
@@ -15,12 +15,12 @@ ComboBoxItemWithData::ComboBoxItemWithData(QString key, QString name,
     }
 }
 
-QWidget *ComboBoxItemWithData::view(QWidget *parent) {
+QWidget* ComboBoxItemWithData::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _field = new QComboBox(_view);
-    for (const auto &it : _elements) {
+    for (const auto& it : _elements) {
         _field->addItem(it.second.toString(), it.first);
     }
     if (_field->count() > 0) {

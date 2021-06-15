@@ -7,10 +7,10 @@ CheckBoxItem::CheckBoxItem(QString key, QString name, bool defaultValue, QString
     : SimpleSettingItem(std::move(key), std::move(name), std::move(toolTip)),
       _defaultValue(defaultValue) {}
 
-QWidget *CheckBoxItem::view(QWidget *parent) {
+QWidget* CheckBoxItem::view(QWidget* parent) {
     if (_view) return _view;
     _view = new QWidget(parent);
-    auto *layout = new QHBoxLayout;
+    auto* layout = new QHBoxLayout;
     _field = new QCheckBox(_view);
     _field->setCheckState(boolToState(_defaultValue));
     if (_value != nullptr) {
@@ -46,7 +46,7 @@ QString CheckBoxItem::stateToValue(Qt::CheckState state) {
     return "";
 }
 
-Qt::CheckState CheckBoxItem::valueToState(const QString &value) {
+Qt::CheckState CheckBoxItem::valueToState(const QString& value) {
     if (value == QString("true")) return Qt::Checked;
     return Qt::Unchecked;
 }

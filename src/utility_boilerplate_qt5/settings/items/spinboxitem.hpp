@@ -10,7 +10,7 @@ class SpinboxItem : public SimpleSettingItem<QSpinBox> {
     SpinboxItem(QString key, QString name, int min = 0, int max = 10, int defaultValue = 0,
                 QString toolTip = nullptr);
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override;
 
@@ -26,7 +26,7 @@ class SpinboxItem : public SimpleSettingItem<QSpinBox> {
 
     static QString intToValue(int integer);
 
-    static int valueToInt(const QString &value);
+    static int valueToInt(const QString& value);
 
     static int validateValue(int value, int min, int max);
 };

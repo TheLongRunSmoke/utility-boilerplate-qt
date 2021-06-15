@@ -9,7 +9,7 @@ class TextItem : public SimpleSettingItem<QLineEdit> {
   public:
     TextItem(QString key, QString name, QString defaultValue = "", QString toolTip = nullptr);
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override;
 

@@ -11,7 +11,7 @@ class SeparatorItem : public SettingItem {
 
     ~SeparatorItem() override;
 
-    QWidget *view(QWidget *parent) override;
+    QWidget* view(QWidget* parent) override;
 
     QString value() override { return ""; };
 
@@ -20,7 +20,7 @@ class SeparatorItem : public SettingItem {
     QString defaultValue() override { return ""; };
 
   private:
-    QWidget *_view = nullptr;
+    QWidget* _view = nullptr;
 };
 
 #endif  // UTILITY_BOILERPLATE_QT_SEPARATORITEM_HPP

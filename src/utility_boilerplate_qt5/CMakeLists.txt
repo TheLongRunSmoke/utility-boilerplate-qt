@@ -45,9 +45,17 @@ endif()
 set(BUILD_TYPE_LOWER_CASE "")
 to_lower_case(${CMAKE_BUILD_TYPE} BUILD_TYPE_LOWER_CASE)
 
+option(NVWA "Enable NVWA memory leak detection" OFF)
+if(WIN32)
+    set(NVWA OFF)
+endif()
+
 # For debug build add nvwa library.
-if(NVWA_INCLUDE AND CMAKE_BUILD_TYPE MATCHES Debug)
+if(NVWA AND CMAKE_BUILD_TYPE MATCHES Debug)
     message("Including NVWA...")
+    if(WIN32)
+        message("NVWA not recommended on Windows!")
+    endif()
     file(GLOB NVWA_SOURCE nvwa/*.h nvwa/*.cpp)
     list(APPEND UTILITY_BOILERPLATE_QT5_SOURCES ${NVWA_SOURCE})
 endif()
