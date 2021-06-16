@@ -8,13 +8,27 @@ English | [Русский](README.ru.MD)
 
 # What is it?
 
-# How to build
+Template for creating simple cross-platform application with GUI based on Qt.
 
-You need Qt 5.10 at least.
+You can go straight to developing widget contained target functionality.
+
+Features:
+
+* Ready-to-go template.
+* Cross-platform. Can be build for Windows, Linux, any OS that Qt support.
+* Minimal architecture and directory structure, to keep coupling low.
+* Settings system, with OS independent storage and behavior.
+* Test suites and code coverage already setup.
+* Code style enforcing tooling.
+* Internationalization support.
+* Cmake as build system.
+* Basic CI, based on GitHub Actions.
+
+# How to build
 
 ## Requirements installation
 
-For details see [Qt Wiki](https://wiki.qt.io/Main).
+You need Qt 5.12 at least.
 
 ### Windows
 
@@ -27,6 +41,10 @@ Examples for Ubuntu 20.04, for another version or distributive refer to [Qt Wiki
 ```shell
 sudo apt install build-essential qt5-default qttools5-dev-tools
 ```
+
+### Other systems
+
+See [Qt Wiki](https://wiki.qt.io/Main).
 
 ## Build
 
@@ -96,7 +114,7 @@ Project offer code style enforcement via clang-format and cmake format. Idea sty
 
 Style workflow failed if any project file has bad formatting.
 
-If requirements not installed format enforcing ignored.
+Format enforcing ignored if requirements not installed.
 
 ## Install requirements
 

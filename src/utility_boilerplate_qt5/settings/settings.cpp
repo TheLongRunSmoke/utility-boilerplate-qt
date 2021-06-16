@@ -156,7 +156,7 @@ std::map<QString, QVariant> Settings::availableLanguages() {
 #endif
     std::map<QString, QVariant> result = {{en->first, en->second}};
     QDir dir(QApplication::applicationDirPath());
-    dir.cd("i18n");
+    dir.cd(translationsDirectory());
     QStringList fileNames = dir.entryList(QStringList("appcomp_*.qm"));
     for (auto const& it : fileNames) {
         QString locale = it;
@@ -181,16 +181,35 @@ void Settings::loadTranslation(const QString& language, QTranslator* translator)
     QApplication::removeTranslator(translator);
     QLocale locale = QLocale(language);
     QLatin1String filename("appcomp");
-    QLatin1String prefix("_");
-    QLatin1String i18nDir("i18n");
     // Search app translation in local directory.
-    bool isLoaded = translator->load(locale, filename, prefix, i18nDir);
-    if (isLoaded) {
-        qInfo() << "Translation for" << locale.name() << "load successfully";
-    } else {
-        qWarning() << "Can't load translation for" << locale.name();
+    bool isLoaded = tryingToLoadTranslation(
+        translator,
+        locale,
+        filename,
+        QString("Complete translation for %1 load successfully"),
+        QString("Can't load complete translation for %1. Searching for basic Qt translation..."));
+    if (!isLoaded) {
+        tryingToLoadTranslation(translator,
+                                locale,
+                                QLatin1String("qt"),
+                                QString("Basic translation for %1 load successfully"),
+                                QString("Can't load any translation for %1"));
     }
     translator->setObjectName(language);
     // Set translation.
     QApplication::installTranslator(translator);
 }
+
+bool Settings::tryingToLoadTranslation(QTranslator* translator, const QLocale& locale,
+                                       QLatin1String filename, const QString& successMessage,
+                                       const QString& failMessage) {
+    bool isLoaded = translator->load(locale, filename, QLatin1String("_"), translationsDirectory());
+    if (isLoaded) {
+        qInfo() << successMessage.arg(locale.name());
+    } else {
+        qWarning() << failMessage.arg(locale.name());
+    }
+    return isLoaded;
+}
+
+QLatin1String Settings::translationsDirectory() { return QLatin1String("translations"); }

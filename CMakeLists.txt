@@ -63,7 +63,7 @@ file(GLOB_RECURSE I18N_QM *.qm)
 # Copy translation to binaries folder.
 foreach(FILE_PATH ${I18N_QM})
     get_filename_component(FILE_NAME ${FILE_PATH} NAME)
-    configure_file(${FILE_PATH} ${PROJECT_BINARY_DIR}/i18n/${FILE_NAME} COPYONLY)
+    configure_file(${FILE_PATH} ${PROJECT_BINARY_DIR}/translations/${FILE_NAME} COPYONLY)
 endforeach()
 
 # Add tests package.
@@ -84,7 +84,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug
     target_link_options(tests PUBLIC -fprofile-arcs -ftest-coverage)
 endif()
 
-# Copy dlls and other necessary files.
+# Copy dlls and other necessary files. For Windows only.
 if(WIN32)
     message("Collecting binaries for Windows...")
     find_program(QT_DEPLOY windeployqt)
@@ -92,7 +92,7 @@ if(WIN32)
         add_custom_command(
             TARGET ${PROJECT_NAME}
             POST_BUILD
-            COMMAND windeployqt ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.exe
+            COMMAND windeployqt --no-system-d3d-compiler ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.exe
         )
     else()
         message("Windeployqt not found.")

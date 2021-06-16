@@ -183,6 +183,8 @@ class Settings : public QSettings {
 
     static inline QString fileKey();
 
+    static inline QLatin1String translationsDirectory();
+
     /**
      * Get system interface language.
      *
@@ -207,6 +209,10 @@ class Settings : public QSettings {
      * english name of that language.
      */
     static const std::map<QString, QString> KNOWN_LANGUAGE;
+
+    static bool tryingToLoadTranslation(QTranslator* translator, const QLocale& locale,
+                                        QLatin1String filename, const QString& successMessage,
+                                        const QString& failMessage);
 };
 
 #endif  // UTILITY_BOILERPLATE_QT_SETTINGS_HPP
