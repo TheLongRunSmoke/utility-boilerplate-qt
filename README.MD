@@ -12,7 +12,7 @@ Template for creating simple cross-platform application with GUI based on Qt.
 
 You can go straight to developing widget contained target functionality.
 
-Features:
+**Features:**
 
 * Ready-to-go template.
 * Cross-platform. Can be build for Windows, Linux, any OS that Qt support.
@@ -21,6 +21,7 @@ Features:
 * Test suites and code coverage already setup.
 * Code style enforcing tooling.
 * Internationalization support.
+* No Boost.
 * Cmake as build system.
 * Basic CI, based on GitHub Actions.
 

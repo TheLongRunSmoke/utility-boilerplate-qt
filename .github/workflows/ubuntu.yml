@@ -9,6 +9,7 @@ on:
       - main
 
 env:
+  QT_DEBUG_PLUGINS: 1
   CTEST_OUTPUT_ON_FAILURE: 1
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -28,7 +29,6 @@ jobs:
 
       - name: Configure
         run: |
-          xrandr --fb 1920x1080
           cmake -S. -Bbuild/tests -DCMAKE_BUILD_TYPE=Debug
 
       - name: Build
