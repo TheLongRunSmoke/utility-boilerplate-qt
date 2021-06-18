@@ -25,7 +25,7 @@ You can go straight to developing widget contained target functionality.
 * Cmake as build system.
 * Basic CI, based on GitHub Actions.
 
-# How to build
+# How to build?
 
 ## Requirements installation
 
@@ -49,7 +49,7 @@ See [Qt Wiki](https://wiki.qt.io/Main).
 
 ## Build
 
-From source folder:
+In-source build restricted. From source folder do:
 
 ```shell
 mkdir build
@@ -73,7 +73,7 @@ Take a note, for now module `utility_boilerplate_qt5` support only 2 languages:
 
 Pull requests with another language are welcome.
 
-## How to assemble new translation
+## How to assemble new translation?
 
 ru_RU as example, use your language code.
 

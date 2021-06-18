@@ -25,31 +25,31 @@
 * Cmake как система сборки.
 * Базовый CI на основе GitHub Actions.
 
-# How to build
+# Как собрать?
 
-## Requirements installation
+## Установка требований
 
-You need Qt 5.12 at least.
+Нужен Qt 5.12 или выше.
 
 ### Windows
 
-Install Qt from [official site](https://www.qt.io/download).
+Уствновите Qt c [официального сайта](https://www.qt.io/download).
 
 ### Linux
 
-Examples for Ubuntu 20.04, for another version or distributive refer to [Qt Wiki](https://wiki.qt.io/Main).
+Пример для Ubuntu 20.04, для других версий или дистрибутивов смотрите [Qt Wiki](https://wiki.qt.io/Main).
 
 ```shell
 sudo apt install build-essential qt5-default qttools5-dev-tools
 ```
 
-### Other systems
+### Другие ОС
 
-See [Qt Wiki](https://wiki.qt.io/Main).
+Смотрите [Qt Wiki](https://wiki.qt.io/Main).
 
-## Build
+## Сборка
 
-From source folder:
+Сборка in-source запрещена. Собирайте в новой директории:
 
 ```shell
 mkdir build
@@ -58,58 +58,57 @@ cmake ../
 cmake --build .
 ```
 
-# Example
+# Пример
 
-# Internationalization support
+# Поддержка интернационализации
 
-This boilerplate code include Qt internationalization support.
+Этот шаблон включает поддержку интернационализации Qt.
 
-You need to create application translation files to make it work.
+Вам нажно только создать перевод, чтобы это заработало.
 
-Take a note, for now module `utility_boilerplate_qt5` support only 2 languages:
+Обратите внимание, в данный момент модуль `utility_boilerplate_qt5` поддерживает только 2 языка:
 
-1. English - in-built to sources
-2. Russian
+1. Английский - встроен в исходный код
+2. Русский
 
-Pull requests with another language are welcome.
+## Как собрать новый перевод?
 
-## How to assemble new translation
+ru_RU для примера, используйте ваш код языка.
 
-ru_RU as example, use your language code.
-
-1. Collect all strings inside `tr()` to TS file using `lupdate`.
+1. Соберите все строки внутри `tr()` в TS файл с использованием `lupdate`.
 
    ```shell
    lupdate *.cpp -ts i18n/ru/app_ru.ts
    ```
 
-2. Open it in translation tool and translate.
+2. Откройте в средстве переводов и переведите.
 
    ```shell
    linguist i18n/ru/app_ru.ts
    ```
 
-3. Qt can load only one translation file at ones, so you need to collect a complete translation file with `lconvert`.
-   Search for Qt `qtbase_<language code>.ts` in distribution package
-   or [repository](https://github.com/qt/qttranslations/tree/dev/translations) and place it in to `i18n/<language code>`
-   folder. Next merge TS files to one using `lconvert`.
+3. Qt может загружать только один файл перевода за раз, поэтому необходимо создать полный перевод используя `lconvert`.
+   Найдите файл содержащий перевод системных строк Qt `qtbase_<language code>.ts` в пакете установки
+   или [репозитории](https://github.com/qt/qttranslations/tree/dev/translations) и поместите его в
+   директорию `i18n/<language code>`. Далее соберите TS файлы в один с помощью `lconvert`.
+
    ```shell
    cd i18n/
    lconvert -i ru/*.ts ../../utility_boilerplate_qt5/i18n/ru/*.ts -o ru/appcomp_ru.ts
    ```
 
-4. At last convert TS file to QM file using `lrelease`. Build system automatically copy all QM files to appropriate
-   location, where binaries can find it.
+4. Соберите QM файл используя `lrelease`. Система сборки автоматически копирует все QM файлы в директорию, где
+   исполняемый файл может их найти.
 
    ```shell
    lrelease ru/appcomp_ru.ts ru/appcomp_ru.qm
    ```
 
-5. To check that translation load correctly run application from command line and look
-   for `Translation for "<language code>" load successfully` message. If translation can't be load you
-   see `Can't load translation for "<language code>"` message. Qt do not offer more debug information for that.
+5. Чтобы проверить, что перевод загружается корректно, запустите приложение из командной строки, и найдите
+   строчку `Translation for "<language code>" load successfully`. Если перевод не загрузился вы
+   увидите `Can't load translation for "<language code>"`. Qt не предлагает дополнительной отладочной информации.
 
-# Code style enforcement
+# Контроль стиля кода
 
 Project offer code style enforcement via clang-format and cmake format. Idea styles included.
 
