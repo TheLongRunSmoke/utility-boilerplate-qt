@@ -27,13 +27,13 @@
 
 # Как собрать?
 
-## Установка требований
+## Установка зависимостей
 
 Нужен Qt 5.12 или выше.
 
 ### Windows
 
-Уствновите Qt c [официального сайта](https://www.qt.io/download).
+Установите Qt c [официального сайта](https://www.qt.io/download).
 
 ### Linux
 
@@ -62,13 +62,13 @@ cmake --build .
 
 # Поддержка интернационализации
 
-Этот шаблон включает поддержку интернационализации Qt.
+Шаблон включает поддержку интернационализации Qt.
 
-Вам нажно только создать перевод, чтобы это заработало.
+Вам нужно только создать перевод, чтобы это заработало.
 
 Обратите внимание, в данный момент модуль `utility_boilerplate_qt5` поддерживает только 2 языка:
 
-1. Английский - встроен в исходный код
+1. Английский — встроен в исходный код
 2. Русский
 
 ## Как собрать новый перевод?
@@ -88,7 +88,7 @@ ru_RU для примера, используйте ваш код языка.
    ```
 
 3. Qt может загружать только один файл перевода за раз, поэтому необходимо создать полный перевод используя `lconvert`.
-   Найдите файл содержащий перевод системных строк Qt `qtbase_<language code>.ts` в пакете установки
+   Найдите файл содержащий локализацию системных строк Qt `qtbase_<language code>.ts` в пакете установки
    или [репозитории](https://github.com/qt/qttranslations/tree/dev/translations) и поместите его в
    директорию `i18n/<language code>`. Далее соберите TS файлы в один с помощью `lconvert`.
 
@@ -110,19 +110,19 @@ ru_RU для примера, используйте ваш код языка.
 
 # Контроль стиля кода
 
-Project offer code style enforcement via clang-format and cmake format. Idea styles included.
+Проект предлагает инструменты контроля стиля кода с помощью clang-format and cmake-format. Включая стили для IDEA.
 
-Style workflow failed if any project file has bad formatting.
+Проверка стиля в CI провалится, если хоть один файл не соответствует указанным правилам.
 
-Format enforcing ignored if requirements not installed.
+Установка инструментов контроля стиля необязательна.
 
-## Install requirements
+## Установка зависимостей
 
 ### Windows
 
-`clang-format` can be [downloaded](https://llvm.org/builds/) with LLVM package.
+`clang-format` может быть [загружен](https://llvm.org/builds/) с пакетом LLVM.
 
-`cmake-format` installed using `pip`.
+`cmake-format` устанавливается с помощью `pip`.
 
 ```shell
 pip install cmakelang pyyaml
@@ -130,15 +130,21 @@ pip install cmakelang pyyaml
 
 ### Linux
 
-Normally, linux systems has all requirements, except `cmake-format`.
+Должны иметь всё необходимое, кроме `cmake-format`.
 
 ```shell
 pip install cmakelang
 ```
 
-## Using
+## Использование
 
-Fix all files in project.
+Проверить все файлы в проекте.
+
+```shell
+cmake --build build --target check-format
+```
+
+Исправить все файлы в проекте.
 
 ```shell
 cmake --build build --target fix-format

@@ -8,16 +8,18 @@ include_directories(${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}_autogen/include)
 include_directories(${PROJECT_SOURCE_DIR}/src/example)
 file(GLOB APP_SOURCE ${PROJECT_SOURCE_DIR}/src/example/*.cpp)
 
+message(${PROJECT_SOURCE_DIR})
+
 file(
     GLOB
     UTILITY_BOILERPLATE_QT5_SOURCES
-    ../../utility_boilerplate_qt5/*.hpp
-    ../../utility_boilerplate_qt5/*.cpp
-    ../../utility_boilerplate_qt5/settings/*.hpp
-    ../../utility_boilerplate_qt5/settings/*.cpp
-    ../../utility_boilerplate_qt5/settings/items/*.hpp
-    ../../utility_boilerplate_qt5/settings/items/*.cpp
-    ../../utility_boilerplate_qt5/settings/items/abstract/*.hpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/*.hpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/settings/*.hpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/settings/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/settings/items/*.hpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/settings/items/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/utility_boilerplate_qt5/settings/items/abstract/*.hpp
 )
 
 # Find tests sources.

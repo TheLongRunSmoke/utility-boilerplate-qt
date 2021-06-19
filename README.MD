@@ -111,7 +111,7 @@ ru_RU as example, use your language code.
 
 # Code style enforcement
 
-Project offer code style enforcement via clang-format and cmake format. Idea styles included.
+Project offer code style enforcement via clang-format and cmake-format. IDEA styles included.
 
 Style workflow failed if any project file has bad formatting.
 
