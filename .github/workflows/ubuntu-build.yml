@@ -1,0 +1,30 @@
+name: Ubuntu build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install project dependencies
+        run: |
+          sudo apt install qt5-default qttools5-dev-tools
+
+      - name: Configure
+        run: |
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
+        run: cmake --build build -j4
