@@ -43,17 +43,9 @@ add_subdirectory(
 
 # I use globbing here, because it's a small project and cmake reload do not need any significant time. Headers included to support some IDEs
 # that not show files outside of cmake project sources. Explicitly include library qrc, otherwise its not be found.
-file(
-    GLOB
-    SOURCES
-    src/example/app.qrc
-    src/utility_boilerplate_qt5/utility_boilerplate_qt5.qrc
-    src/example/*.cpp
-    src/example/*.hpp
-    src/main.cpp
-)
+file(GLOB SOURCES src/example/app.qrc src/utility_boilerplate_qt5/utility_boilerplate_qt5.qrc src/example/*.cpp src/example/*.hpp)
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Widgets utility_boilerplate_qt5)
 

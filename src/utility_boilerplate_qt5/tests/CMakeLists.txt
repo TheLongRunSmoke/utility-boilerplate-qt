@@ -5,11 +5,10 @@ include(../../../cmake/gtest.cmake)
 file(GLOB UB_TEST_SOURCES settings/items/*.cpp *.cpp *.hpp)
 
 # Create tests project and link with libraries.
-add_executable(ub_qt5_tests ${UTILITY_BOILERPLATE_QT5_SOURCES} ${UB_TEST_SOURCES})
+add_executable(ub_qt5_tests ${UB_TEST_SOURCES})
 
 target_link_libraries(ub_qt5_tests utility_boilerplate_qt5)
-
 target_link_libraries(ub_qt5_tests gtest gtest_main gcov)
 
 # Make it discoverable for CTest.
-gtest_discover_tests(ub_qt5_tests)
+add_test(NAME utility_boilerplate_qt5_tests COMMAND ub_qt5_tests --platform offscreen)
