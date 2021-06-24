@@ -34,6 +34,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: '5.15.2'
 
       - name: Install project dependencies
         run: |
@@ -48,7 +49,7 @@ jobs:
       - name: Test
         run: |
           cd build/tests
-          ctest
+          ctest -V
 
       - name: Collect code coverage
         run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
