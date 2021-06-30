@@ -9,7 +9,7 @@
 #include <debug_new>
 #include "texteditorsettings.hpp"
 
-MainWindow::MainWindow(QWidget *parent) : UtilityMainWindow(parent) {
+MainWindow::MainWindow(QWidget* parent) : UtilityMainWindow(parent) {
     // Set icon for that window.
     QMainWindow::setWindowIcon(QIcon(":/app/icon"));
     // Init UI.
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : UtilityMainWindow(parent) {
     getLayout()->addWidget(textEditor);
 }
 
-void MainWindow::loadFile(const QString &fileName) {
+void MainWindow::loadFile(const QString& fileName) {
     UtilityMainWindow::loadFile(fileName);
     QFile file(fileName);
     file.open(getFileReadMode());
@@ -27,7 +27,7 @@ void MainWindow::loadFile(const QString &fileName) {
     statusBar()->showMessage(tr("File loaded"), 2000);
 }
 
-bool MainWindow::saveFile(const QString &fileName) {
+bool MainWindow::saveFile(const QString& fileName) {
     QString errorMessage;
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
     QSaveFile file(fileName);

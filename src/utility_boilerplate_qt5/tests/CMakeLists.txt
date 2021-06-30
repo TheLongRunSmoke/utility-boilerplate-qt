@@ -11,4 +11,4 @@ target_link_libraries(ub_qt5_tests utility_boilerplate_qt5)
 target_link_libraries(ub_qt5_tests gtest gtest_main gcov)
 
 # Make it discoverable for CTest.
-add_test(NAME utility_boilerplate_qt5_tests COMMAND ub_qt5_tests --platform offscreen)
+add_test(NAME utility_boilerplate_qt5_tests COMMAND ub_qt5_tests)

@@ -53,8 +53,11 @@
 
 /* Special allocation/deallocation functions in the global scope */
 void* operator new(size_t size, const char* file, int line);
+
 void* operator new[](size_t size, const char* file, int line);
+
 void operator delete(void* ptr, const char* file, int line) noexcept;
+
 void operator delete[](void* ptr, const char* file, int line) noexcept;
 
 #if NVWA_SUPPORTS_ALIGNED_NEW
@@ -137,6 +140,7 @@ typedef bool (*leak_whitelist_callback_t)(char const* file, int line, void* addr
 
 /* Prototypes */
 int check_leaks();
+
 int check_mem_corruption();
 
 /* Control variables */
@@ -184,6 +188,7 @@ extern leak_whitelist_callback_t leak_whitelist_callback;      // default to nul
 class debug_new_recorder {
     const char* _M_file;
     const int _M_line;
+
     void _M_process(void* ptr);
 
   public:
@@ -192,6 +197,7 @@ class debug_new_recorder {
      * be used in debug_new_recorder::operator->*.
      */
     debug_new_recorder(const char* file, int line) : _M_file(file), _M_line(line) {}
+
     /**
      * Operator to write the context information to memory.
      * <code>operator->*</code> is chosen because it has the right
@@ -204,6 +210,7 @@ class debug_new_recorder {
     }
 
     debug_new_recorder(const debug_new_recorder&) = delete;
+
     debug_new_recorder& operator=(const debug_new_recorder&) = delete;
 };
 
@@ -218,8 +225,10 @@ class debug_new_counter {
 
   public:
     debug_new_counter();
+
     ~debug_new_counter();
 };
+
 /** Counting object for each file including debug_new.h. */
 static debug_new_counter __debug_new_count;
 

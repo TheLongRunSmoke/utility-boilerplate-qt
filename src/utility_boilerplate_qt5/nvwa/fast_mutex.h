@@ -197,7 +197,9 @@ class fast_mutex {
 };
 NVWA_NAMESPACE_END
 #elif defined(NVWA_PTHREADS)
+
 #    include <pthread.h>
+
 NVWA_NAMESPACE_BEGIN
 /**
  * Class for non-reentrant fast mutexes.  This is the implementation
@@ -223,6 +225,7 @@ class fast_mutex {
         _M_initialized = true;
 #    endif
     }
+
     ~fast_mutex() {
         _FAST_MUTEX_ASSERT(!_M_locked, "~fast_mutex(): still locked");
 #    if _FAST_MUTEX_CHECK_INITIALIZATION
@@ -230,6 +233,7 @@ class fast_mutex {
 #    endif
         ::pthread_mutex_destroy(&_M_mtx_impl);
     }
+
     void lock() {
 #    if _FAST_MUTEX_CHECK_INITIALIZATION
         if (!_M_initialized) {
@@ -247,6 +251,7 @@ class fast_mutex {
         _M_locked = true;
 #    endif
     }
+
     void unlock() {
 #    if _FAST_MUTEX_CHECK_INITIALIZATION
         if (!_M_initialized) {
@@ -262,6 +267,7 @@ class fast_mutex {
 
   private:
     fast_mutex(const fast_mutex&) _DELETED;
+
     fast_mutex& operator=(const fast_mutex&) _DELETED;
 };
 NVWA_NAMESPACE_END
@@ -378,10 +384,12 @@ class fast_mutex_autolock {
 
   public:
     explicit fast_mutex_autolock(fast_mutex& mtx) : _M_mtx(mtx) { _M_mtx.lock(); }
+
     ~fast_mutex_autolock() { _M_mtx.unlock(); }
 
   private:
     fast_mutex_autolock(const fast_mutex_autolock&) _DELETED;
+
     fast_mutex_autolock& operator=(const fast_mutex_autolock&) _DELETED;
 };
 NVWA_NAMESPACE_END

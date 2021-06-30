@@ -26,6 +26,7 @@ class TextEditor : public QWidget {
     void paste();
 
   public slots:
+
     static void modificationChanged(bool isModified);
 
   private:

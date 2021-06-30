@@ -38,6 +38,7 @@
 #define NVWA_CXX_FEATURES_H
 
 #include "_nvwa.h"  // NVWA_APPLE/NVWA_APPLE_CLANG
+
 #if NVWA_APPLE
 #    include <Availability.h>  // __MAC_OS_X_VERSION_MIN_REQUIRED
 #endif

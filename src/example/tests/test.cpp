@@ -1,15 +1,16 @@
 #include <gtest/gtest.h>
 
+#include "fixtures.hpp"
 #include "mainwindow.hpp"
-#include "../utility_boilerplate_qt5/tests/fixtures.hpp"
 
+namespace appTestSuit {
 
-TEST(Smoke, CheckEnvironment) {  // NOLINT(cert-err58-cpp)
-    ASSERT_EQ(MainWindow::objectId(), QString::number(1000, 10));
-}
+    TEST(Smoke, CheckEnvironment) {  // NOLINT(cert-err58-cpp)
+        ASSERT_EQ(MainWindow::objectId(), QString::number(1000, 10));
+    }
 
-TEST_F(UiFixture, loadFile) {
-    window->loadFile("settings.ini");
-    QApplication::exit(0);
-}
-
+    TEST_F(AppUiFixture, loadFile) {
+        window->loadFile("settings.ini");
+        QApplication::exit(0);
+    }
+}  // namespace appTestSuit

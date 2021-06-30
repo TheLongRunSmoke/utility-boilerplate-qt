@@ -16,9 +16,9 @@ class MainWindow : public UtilityMainWindow {
     Q_OBJECT
 
   public:
-    explicit MainWindow(QWidget *parent = Q_NULLPTR);
+    explicit MainWindow(QWidget* parent = Q_NULLPTR);
 
-    void loadFile(const QString &fileName) override;
+    void loadFile(const QString& fileName) override;
 
   protected:
     QString getExtensions() override;
@@ -31,7 +31,7 @@ class MainWindow : public UtilityMainWindow {
 
     void clearDocument() override;
 
-    bool saveFile(const QString &fileName) override;
+    bool saveFile(const QString& fileName) override;
 
     void showSettings() override;
 
@@ -44,7 +44,7 @@ class MainWindow : public UtilityMainWindow {
     void paste() override;
 
   private:
-    TextEditor *textEditor;  // <- This is your widget.
+    TextEditor* textEditor;  // <- This is your widget.
 };
 
 #endif  // UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP

@@ -3,9 +3,8 @@
 
 #include <QEvent>
 
-template<class Derived>
-class UBEvent : public QEvent {
-public:
+template <class Derived> class UBEvent : public QEvent {
+  public:
     /**
      * Registered this event in QEvent system, return used to init _eventType.
      * @return id for this type of event.
@@ -18,10 +17,10 @@ public:
         return _eventType;
     };
 
-protected:
-    UBEvent() : QEvent(type()) {};
+  protected:
+    UBEvent() : QEvent(type()){};
 
-private:
+  private:
     static QEvent::Type _eventType;
 };
 
@@ -29,7 +28,7 @@ private:
  * This event sent when user change settings.
  */
 class SettingsChangedEvent : public UBEvent<SettingsChangedEvent> {
-public:
+  public:
     SettingsChangedEvent() = default;
 };
 
@@ -37,13 +36,13 @@ public:
  * This event sent when current document modified.
  */
 class DocumentModifiedEvent : public UBEvent<DocumentModifiedEvent> {
-public:
+  public:
     explicit DocumentModifiedEvent(bool isModified);
 
     bool isModified() const { return _value; }
 
-private:
+  private:
     const bool _value = false;
 };
 
-#endif //UTILITY_BOILERPLATE_QT_EXAMPLE_EVENTS_HPP
+#endif  // UTILITY_BOILERPLATE_QT_EXAMPLE_EVENTS_HPP

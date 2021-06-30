@@ -1,20 +1,20 @@
 #include <gtest/gtest.h>
 
 #include <QApplication>
-#include <QMainWindow>
+#include "../mainwindow.hpp"
 
-namespace ubTestSuit {
+namespace appTestSuit {
 
-    class UiFixture : public ::testing::Test {
+    class AppUiFixture : public ::testing::Test {
       protected:
         QApplication* app{};
-        QMainWindow* window{};
+        MainWindow* window{};
         const char* argv[2] = {"--platform", "offscreen"};
 
         void SetUp() override {
             int arg = 2;
             app = new QApplication(arg, const_cast<char**>(argv));
-            window = new QMainWindow();
+            window = new MainWindow();
         }
 
         void TearDown() override {
@@ -23,8 +23,4 @@ namespace ubTestSuit {
         }
     };
 
-    template <typename T> T* findQWidgetByClass(QWidget* widget) {
-        return widget->findChildren<T*>().first();
-    }
-
-}  // namespace ubTestSuit
+}  // namespace appTestSuit

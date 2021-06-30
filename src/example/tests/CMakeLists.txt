@@ -19,8 +19,6 @@ file(
     ../../utility_boilerplate_qt5/settings/items/abstract/*.hpp
 )
 
-message(${UTILITY_BOILERPLATE_QT5_SOURCES})
-
 # Find tests sources.
 file(GLOB TEST_SOURCES *.cpp *.hpp)
 # Create tests project and link with libraries.
@@ -30,4 +28,4 @@ target_link_libraries(tests utility_boilerplate_qt5)
 target_link_libraries(tests gtest_main gtest gcov)
 
 # Make it discoverable for CTest.
-add_test(NAME app_tests COMMAND tests --platform offscreen)
+add_test(NAME app_tests COMMAND tests)

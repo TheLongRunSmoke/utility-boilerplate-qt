@@ -48,7 +48,9 @@
 #    include <alloca.h>  // alloca
 #endif
 #if NVWA_WIN32
+
 #    include <malloc.h>  // alloca/_aligned_malloc/_aligned_free
+
 #endif
 
 #if NVWA_LINUX || NVWA_APPLE
@@ -59,7 +61,9 @@
 #    ifndef WIN32_LEAN_AND_MEAN
 #        define WIN32_LEAN_AND_MEAN
 #    endif
+
 #    include <windows.h>  // CaptureStackBackTrace
+
 #endif
 
 #include "fast_mutex.h"  // nvwa::fast_mutex
@@ -71,6 +75,7 @@
  * is defined to \c 0 to disable the redefinition of \c new.
  */
 #define _DEBUG_NEW_REDEFINE_NEW 0
+
 #include "debug_new.h"
 
 #if !_FAST_MUTEX_CHECK_INITIALIZATION && !defined(_NOTHREADS)
@@ -358,6 +363,7 @@ namespace {
     size_t total_mem_alloc = 0;
 
 #if _DEBUG_NEW_USE_ADDR2LINE
+
     /**
      * Tries printing the position information from an instruction address.
      * This is the version that uses \e addr2line.
@@ -440,6 +446,7 @@ namespace {
         }
         return false;
     }
+
 #else
     /**
      * Tries printing the position information from an instruction address.
