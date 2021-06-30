@@ -6,7 +6,7 @@
 #include <settings/items/spinboxitem.hpp>
 #include <settings/items/textitem.hpp>
 
-#include "../../test.hpp"
+#include "../../fixtures.hpp"
 
 namespace ubTestSuit {
 

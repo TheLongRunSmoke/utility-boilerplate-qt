@@ -9,9 +9,9 @@ class TextEditor : public QWidget {
     Q_OBJECT
 
   public:
-    explicit TextEditor(QWidget *parent = Q_NULLPTR);
+    explicit TextEditor(QWidget* parent = Q_NULLPTR);
 
-    void setText(const QString &text);
+    void setText(const QString& text);
 
     QString getText();
 
@@ -24,6 +24,9 @@ class TextEditor : public QWidget {
     void copy();
 
     void paste();
+
+  public slots:
+    static void modificationChanged(bool isModified);
 
   private:
     Ui::TextEditor ui;

@@ -4,8 +4,8 @@
 #include <QPushButton>
 #include <debug_new>
 
+#include "../events.hpp"
 #include "../utilitymainwindow.hpp"
-#include "settingschangedevent.hpp"
 
 SettingsDialog::SettingsDialog(Settings* settings, QWidget* parent)
     : QDialog(parent), _settings{settings} {

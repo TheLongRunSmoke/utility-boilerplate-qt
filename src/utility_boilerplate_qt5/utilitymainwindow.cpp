@@ -1,6 +1,8 @@
 #include "utilitymainwindow.hpp"
+#include "events.hpp"
 
 #include <QCloseEvent>
+#include <QEvent>
 #include <QFileDialog>
 #include <QFrame>
 #include <QGridLayout>
@@ -12,8 +14,6 @@
 #include <QToolBar>
 #include <QWindow>
 #include <debug_new>
-
-#include "settings/settingschangedevent.hpp"
 
 UtilityMainWindow::UtilityMainWindow(QWidget* parent) : QMainWindow(parent) {
     Settings settings;
@@ -62,8 +62,11 @@ bool UtilityMainWindow::event(QEvent* event) {
         // App translator object change.
         retranslateUi();
     } else if (event->type() == QEvent::LocaleChange) {
-        // Stub! There is no points to change app localization on system locale
+        // Stub! There is no points, for now, to change app localization on system locale
         // change.
+    } else if (event->type() == DocumentModifiedEvent::type()) {
+        // Monitor document modification.
+        setWindowModified(dynamic_cast<DocumentModifiedEvent*>(event)->isModified());
     }
     return QMainWindow::event(event);
 }
@@ -72,6 +75,7 @@ void UtilityMainWindow::loadFile(const QString& fileName) {
     if (!isFileReadable(fileName)) return;
     setCurrentFile(fileName);
     Settings().putRecentFile(fileName);
+    setWindowModified(false);
 }
 
 QGridLayout* UtilityMainWindow::getLayout() { return _mainLayout; }
@@ -80,7 +84,8 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     _currentFile = filePath;
     QString shownName = _currentFile;
     if (shownName.isEmpty()) shownName = defaultFileName();
-    setWindowTitle(shownName.append(" - ").append(QCoreApplication::applicationName()));
+    setWindowTitle(
+        QString("[*]").append(shownName).append(" - ").append(QCoreApplication::applicationName()));
     setWindowModified(false);
 }
 

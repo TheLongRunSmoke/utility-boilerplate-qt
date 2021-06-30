@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../../test.hpp"
+#include "../../fixtures.hpp"
 
 namespace ubTestSuit {
 
