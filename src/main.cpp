@@ -5,6 +5,10 @@
 #include "example/mainwindow.hpp"
 #include "example/texteditorsettings.hpp"
 
+#include <QDateTime>
+#include <QFile>
+#include <QTextStream>
+
 #include <debug_new>  // Must be last one.
 
 #ifdef NVWA_INCLUDE
@@ -70,6 +74,8 @@ int main(int argc, char* argv[]) {
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
     // Create normal Qt application class.
     QApplication app(argc, argv);
+    // Set logging handler here, if you need to redirect logs in to file.
+    // qInstallMessageHandler(messageHandler);
     // Load settings.
     readSettings();
     // Create main window.

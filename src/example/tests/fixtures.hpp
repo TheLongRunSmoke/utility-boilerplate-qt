@@ -9,12 +9,13 @@ namespace appTestSuit {
       protected:
         QApplication* app{};
         MainWindow* window{};
-        const char* argv[2] = {"--platform", "offscreen"};
+        int argc = 3;
+        const char* argv[3] = {"", "--platform", "offscreen"};
 
         void SetUp() override {
-            int arg = 2;
-            app = new QApplication(arg, const_cast<char**>(argv));
+            app = new QApplication(argc, const_cast<char**>(argv));
             window = new MainWindow();
+            qInfo("platform: %s", QApplication::platformName().toStdString().c_str());
         }
 
         void TearDown() override {

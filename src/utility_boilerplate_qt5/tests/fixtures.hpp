@@ -7,14 +7,15 @@ namespace ubTestSuit {
 
     class UiFixture : public ::testing::Test {
       protected:
-        QApplication* app{};
-        QMainWindow* window{};
-        const char* argv[2] = {"--platform", "offscreen"};
+        QApplication* app;
+        QMainWindow* window;
+        const char* argv[3] = {"", "--platform", "offscreen"};
 
         void SetUp() override {
-            int arg = 2;
-            app = new QApplication(arg, const_cast<char**>(argv));
+            int argc = 3;
+            app = new QApplication(argc, const_cast<char**>(argv));
             window = new QMainWindow();
+            qInfo("platform: %s", QApplication::platformName().toStdString().c_str());
         }
 
         void TearDown() override {
