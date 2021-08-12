@@ -60,6 +60,8 @@ cmake --build .
 
 # Example
 
+
+
 # Internationalization support
 
 This boilerplate code include Qt internationalization support.
@@ -139,8 +141,17 @@ pip install cmakelang
 
 ## Using
 
+See Format.cmake [documentation](https://github.com/TheLartians/Format.cmake) for details.
+
+Check format of all project files.
+
+```shell
+cmake --build build --target check-format
+```
+
 Fix all files in project.
 
 ```shell
 cmake --build build --target fix-format
 ```
+

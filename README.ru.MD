@@ -138,14 +138,18 @@ pip install cmakelang
 
 ## Использование
 
-Проверить все файлы в проекте.
+Подробности в [документации](https://github.com/TheLartians/Format.cmake) Format.cmake.
+
+Проверить формат всех файлов в проекте.
 
 ```shell
 cmake --build build --target check-format
 ```
 
-Исправить все файлы в проекте.
+Исправить формат всех файлов.
 
 ```shell
 cmake --build build --target fix-format
 ```
+
+
