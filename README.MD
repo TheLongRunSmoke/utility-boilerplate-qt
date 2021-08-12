@@ -3,8 +3,10 @@ English | [Русский](README.ru.MD)
 [![Qt5 Utility Boilerplate by TheLongRunSmoke]()](#)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Style](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/style.yml/badge.svg)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/style.yml)
-[![Ubuntu build](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml/badge.svg)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml)
+[![Style](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/style.yml/badge.svg?branch=main)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/style.yml)
+[![Ubuntu tests](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-tests.yml/badge.svg?branch=main)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-tests.yml)
+[![Ubuntu build](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml/badge.svg?branch=main)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml)
+
 
 # What is it?
 

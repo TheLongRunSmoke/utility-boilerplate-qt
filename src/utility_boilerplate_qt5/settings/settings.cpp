@@ -1,10 +1,10 @@
 #include "settings.hpp"
 
-#include <QCoreApplication>
 #include <QDir>
 #include <QStyleFactory>
 #include <QtDebug>
 #include <debug_new>
+#include <stdexcept>
 
 #include "items/comboboxitem.hpp"
 #include "items/comboboxitemwdata.hpp"

@@ -31,7 +31,6 @@ jobs:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
           version: '5.15.2'
           host: 'windows'
-          target: 'desktop'
           arch: 'win64_mingw81'
 
       - name: Install project dependencies

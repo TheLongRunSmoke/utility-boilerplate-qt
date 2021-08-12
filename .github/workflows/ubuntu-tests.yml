@@ -41,7 +41,7 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -S. -Bbuild/tests -DCMAKE_BUILD_TYPE=Debug
+          cmake -S. -Bbuild/tests -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=1
 
       - name: Build
         run: cmake --build build/tests -j4
