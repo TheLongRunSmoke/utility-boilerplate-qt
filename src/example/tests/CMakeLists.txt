@@ -27,5 +27,7 @@ add_executable(tests ${TEST_SOURCES} ${UTILITY_BOILERPLATE_QT5_SOURCES} ${SOURCE
 target_link_libraries(tests utility_boilerplate_qt5)
 target_link_libraries(tests gtest_main gtest gcov)
 
+set_target_properties(utility_boilerplate_qt5 PROPERTIES COMPILE_FLAGS "--coverage" LINK_FLAGS "--coverage")
+
 # Make it discoverable for CTest.
 add_test(NAME app_tests COMMAND tests)

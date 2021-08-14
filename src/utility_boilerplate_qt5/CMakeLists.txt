@@ -72,19 +72,21 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${UTILITY_BOILERPLATE_QT5_I
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Widgets)
 
-include(CTest)
-add_subdirectory(tests)
-
 option(CODE_COVERAGE "Enable coverage reporting" OFF)
 if(CMAKE_BUILD_TYPE MATCHES Debug
    AND CODE_COVERAGE
    AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
 )
+    include(CTest)
+    add_subdirectory(tests)
+
+    target_link_libraries(${PROJECT_NAME} gcov)
+
     target_compile_options(
         ub_qt5_tests
         PUBLIC -O0 # no optimization
                -g # generate debug info
-               -fprofile-arcs -ftest-coverage # sets all required flags
+               --coverage # sets all required flags
     )
-    target_link_options(ub_qt5_tests PUBLIC -fprofile-arcs -ftest-coverage)
+    target_link_options(ub_qt5_tests PUBLIC --coverage)
 endif()

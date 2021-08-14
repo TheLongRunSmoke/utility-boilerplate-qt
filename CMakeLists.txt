@@ -59,21 +59,21 @@ foreach(FILE_PATH ${I18N_QM})
 endforeach()
 
 # Add tests package.
-include(CTest)
-add_subdirectory(src/example/tests)
-
 option(CODE_COVERAGE "Enable coverage reporting" OFF)
 if(CMAKE_BUILD_TYPE MATCHES Debug
    AND CODE_COVERAGE
    AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"
 )
+    include(CTest)
+    add_subdirectory(src/example/tests)
+
     target_compile_options(
         tests
         PUBLIC -O0 # no optimization
                -g # generate debug info
-               -fprofile-arcs -ftest-coverage # sets all required flags
+               --coverage # sets all required flags
     )
-    target_link_options(tests PUBLIC -fprofile-arcs -ftest-coverage)
+    target_link_options(tests PUBLIC --coverage)
 endif()
 
 # Copy dlls and other necessary files. For Windows only.
