@@ -5,6 +5,3 @@ parsers:
       loop: yes
       method: yes
       macro: no
-
-ignore:
-  - "*/**/tests/**/*"

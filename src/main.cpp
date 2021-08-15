@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
     // Create normal Qt application class.
     QApplication app(argc, argv);
-    // Set logging handler here, if you need to redirect logs in to file.
+    // Set logging handler here, if you need to redirect logs in to a file.
     // qInstallMessageHandler(messageHandler);
     // Load settings.
     readSettings();
