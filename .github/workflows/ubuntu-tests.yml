@@ -51,5 +51,17 @@ jobs:
           cd build/tests
           ctest -V
 
-      - name: Collect code coverage
-        run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+      - name: Debug
+        run: |
+          ls
+          cd build/tests
+          ls
+          cd Testing
+          ls
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true
