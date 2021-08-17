@@ -5,3 +5,6 @@ parsers:
       loop: yes
       method: yes
       macro: no
+
+ignore:
+  - "build"  # Ignore test coverage for generated files.

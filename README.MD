@@ -10,6 +10,7 @@ English | [Русский](README.ru.MD)
 [![codecov](https://codecov.io/gh/TheLongRunSmoke/utility-boilerplate-qt/branch/main/graph/badge.svg?token=KM70OB0LHY)](https://codecov.io/gh/TheLongRunSmoke/utility-boilerplate-qt)
 
 [![Ubuntu build](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml/badge.svg?branch=main)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/ubuntu-build.yml)
+[![Windows build](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/windows-build.yml/badge.svg?branch=main)](https://github.com/TheLongRunSmoke/utility-boilerplate-qt/actions/workflows/windows-build.yml)
 
 # What is it?
 
