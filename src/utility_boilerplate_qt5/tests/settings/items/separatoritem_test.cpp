@@ -13,6 +13,12 @@ namespace ubTestSuit {
         QWidget* widget = item->view(window);
         EXPECT_NE(widget, nullptr);
 
+        EXPECT_EQ(item->value(), "");
+        item->setValue("must-be-ignored");
+        EXPECT_EQ(item->value(), "");
+
+        EXPECT_EQ(item->defaultValue(), "");
+
         delete item;
     }
 

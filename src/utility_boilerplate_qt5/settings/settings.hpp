@@ -37,9 +37,9 @@ class Settings : public QSettings {
     QByteArray windowGeometry();
 
     /**
-     * Save window size and position.
+     * Put window size and position in to settings file.
      */
-    void setWindowGeometry(const QByteArray& geometry);
+    void putWindowGeometry(const QByteArray& geometry);
 
     /**
      * Effectively check that application have recently opened files.
@@ -65,6 +65,16 @@ class Settings : public QSettings {
      * FIFO logic applied.
      */
     void putRecentFile(const QString& path);
+
+    /**
+     * Remove recent files list.
+     */
+    void clearRecentFiles();
+
+    /**
+     * Set new limit for count of recent files.
+     */
+    void setRecentFilesLimit(int value);
 
     /**
      * Return iterators to look through settings list.
@@ -96,7 +106,7 @@ class Settings : public QSettings {
 
     /**
      * Saved window state, including toolbars position.
-     * Note, toolbar mast have unique name set by setObjectName() to save-restore
+     * Note, toolbars mast have unique names set by setObjectName() to save-restore
      * correctly.
      *
      * @return nullptr if empty.
@@ -104,9 +114,9 @@ class Settings : public QSettings {
     QByteArray windowState();
 
     /**
-     * Save window state.
+     * Put window state in to settings file.
      */
-    void setWindowState(const QByteArray& state);
+    void putWindowState(const QByteArray& state);
 
     /**
      * Saved interface language.
@@ -180,6 +190,8 @@ class Settings : public QSettings {
     inline static QString windowStateKey();
 
     inline static QString recentFilesKey();
+
+    inline static QString recentFilesLimitKey();
 
     static inline QString fileKey();
 

@@ -28,7 +28,7 @@ void Settings::createBasicSettings() {
                                    tr("Application theme"));
     addUserSetting(theme);
     auto* recentFilesLimit = new SpinboxItem(
-        "recent_files_limit", tr("Recent files limit"), 0, 10, recentFilesDefault());
+        recentFilesLimitKey(), tr("Recent files limit"), 0, 10, recentFilesDefault());
     addUserSetting(recentFilesLimit);
 }
 
@@ -52,13 +52,13 @@ QByteArray Settings::windowGeometry() {
     return value(windowGeometryKey(), QByteArray()).toByteArray();
 }
 
-void Settings::setWindowGeometry(const QByteArray& geometry) {
+void Settings::putWindowGeometry(const QByteArray& geometry) {
     setValue(windowGeometryKey(), geometry);
 }
 
 QByteArray Settings::windowState() { return value(windowStateKey(), QByteArray()).toByteArray(); }
 
-void Settings::setWindowState(const QByteArray& state) { setValue(windowStateKey(), state); }
+void Settings::putWindowState(const QByteArray& state) { setValue(windowStateKey(), state); }
 
 bool Settings::hasRecentFiles() {
     const int count = beginReadArray(recentFilesKey());
@@ -90,15 +90,21 @@ void Settings::putRecentFile(const QString& path) {
     endArray();
 }
 
+void Settings::clearRecentFiles() { remove(recentFilesKey()); }
+
+void Settings::setRecentFilesLimit(int value) {
+    setValue(userSectionTag() + "/" + recentFilesLimitKey(), std::max(value, 0));
+}
+
 QString Settings::path() { return QCoreApplication::applicationDirPath() + "/settings.ini"; }
 
-inline QString Settings::windowGeometryKey() { return QString("window_geometry"); }
+inline QString Settings::windowGeometryKey() { return {"window_geometry"}; }
 
-inline QString Settings::windowStateKey() { return QString("window_state"); }
+inline QString Settings::windowStateKey() { return {"window_state"}; }
 
-inline QString Settings::recentFilesKey() { return QString("RecentFiles"); }
+inline QString Settings::recentFilesKey() { return {"RecentFiles"}; }
 
-inline QString Settings::fileKey() { return QString("file"); }
+inline QString Settings::fileKey() { return {"file"}; }
 
 Settings::user_settings_terator_pair_t Settings::items() {
     return std::make_pair(_items.cbegin(), _items.cend());
@@ -136,11 +142,15 @@ void Settings::initDefaults() {
 
 QString Settings::style() { return value(userSectionTag() + "/theme", "").toString(); }
 
-int Settings::recentFilesLimit() { return value(userSectionTag() + "/recent_files_limit").toInt(); }
+inline QString Settings::recentFilesLimitKey() { return {"recent_files_limit"}; }
+
+int Settings::recentFilesLimit() {
+    return value(userSectionTag() + "/" + recentFilesLimitKey()).toInt();
+}
 
 int Settings::recentFilesDefault() { return 5; }
 
-QString Settings::userSectionTag() { return QString("User"); }
+QString Settings::userSectionTag() { return {"User"}; }
 
 QString Settings::systemLanguage() {
     QString defaultLocale = QLocale::system().name();        // Something like "en_US".

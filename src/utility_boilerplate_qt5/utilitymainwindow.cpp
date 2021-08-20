@@ -378,8 +378,8 @@ void UtilityMainWindow::restoreState() {
 
 void UtilityMainWindow::saveState() {
     Settings settings;
-    settings.setWindowGeometry(saveGeometry());
-    settings.setWindowState(QMainWindow::saveState(0));
+    settings.putWindowGeometry(saveGeometry());
+    settings.putWindowState(QMainWindow::saveState(0));
 }
 
 #ifndef QT_NO_SESSIONMANAGER

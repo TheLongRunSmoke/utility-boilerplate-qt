@@ -2,7 +2,7 @@
 include(../../../cmake/gtest.cmake)
 
 # Find tests sources.
-file(GLOB UB_TEST_SOURCES settings/items/*.cpp *.cpp *.hpp)
+file(GLOB_RECURSE UB_TEST_SOURCES *.cpp *.hpp)
 
 # Create tests project and link with libraries.
 add_executable(ub_qt5_tests ${UB_TEST_SOURCES})
