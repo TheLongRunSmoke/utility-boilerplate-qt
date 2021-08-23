@@ -19,9 +19,9 @@ Settings::Settings() : QSettings(path(), QSettings::IniFormat) {
 
 void Settings::createBasicSettings() {
     auto* language = new ComboBoxItemWithData(
-        "language", tr("Language"), availableLanguages(), systemLanguage());
+        languageKey(), tr("Language"), availableLanguages(), systemLanguage());
     addUserSetting(language);
-    auto* theme = new ComboBoxItem("theme",
+    auto* theme = new ComboBoxItem(themeKey(),
                                    tr("Theme"),
                                    QStyleFactory::keys(),
                                    QApplication::style()->objectName(),
@@ -42,7 +42,7 @@ void Settings::retranslateUi() {
 void Settings::readUserSettings() {
     for (auto const& it : _items) {
         if (it->isDecoration()) continue;
-        auto savedValue = value(userSectionTag() + "/" + it->key());
+        auto savedValue = value(key(userSectionTag(), it->key()));
         if (savedValue.isNull()) continue;
         it->setValue(savedValue.toString());
     }
@@ -93,10 +93,18 @@ void Settings::putRecentFile(const QString& path) {
 void Settings::clearRecentFiles() { remove(recentFilesKey()); }
 
 void Settings::setRecentFilesLimit(int value) {
-    setValue(userSectionTag() + "/" + recentFilesLimitKey(), std::max(value, 0));
+    setValue(key(userSectionTag(), recentFilesLimitKey()), std::max(value, 0));
+}
+
+QString Settings::key(const QString& sectionTag, const QString& key) {
+    return QString("%1/%2").arg(sectionTag, key);
 }
 
 QString Settings::path() { return QCoreApplication::applicationDirPath() + "/settings.ini"; }
+
+inline QString Settings::themeKey() { return {"theme"}; }
+
+inline QString Settings::languageKey() { return {"language"}; }
 
 inline QString Settings::windowGeometryKey() { return {"window_geometry"}; }
 
@@ -140,12 +148,12 @@ void Settings::initDefaults() {
     endGroup();
 }
 
-QString Settings::style() { return value(userSectionTag() + "/theme", "").toString(); }
+QString Settings::style() { return value(key(userSectionTag(), themeKey()), "").toString(); }
 
 inline QString Settings::recentFilesLimitKey() { return {"recent_files_limit"}; }
 
 int Settings::recentFilesLimit() {
-    return value(userSectionTag() + "/" + recentFilesLimitKey()).toInt();
+    return value(key(userSectionTag(), recentFilesLimitKey())).toInt();
 }
 
 int Settings::recentFilesDefault() { return 5; }
@@ -184,7 +192,7 @@ std::map<QString, QVariant> Settings::availableLanguages() {
     return result;
 }
 
-QString Settings::language() { return value(userSectionTag() + "/language").toString(); }
+QString Settings::language() { return value(key(userSectionTag(), languageKey())).toString(); }
 
 void Settings::loadTranslation(const QString& language, QTranslator* translator) {
     if (translator->objectName() == language) return;

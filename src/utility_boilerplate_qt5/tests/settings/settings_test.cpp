@@ -24,7 +24,7 @@ namespace ubTestSuit {
     TEST_F(UiFixture, Settings_recentFiles) {  // NOLINT(cert-err58-cpp)
         Settings settings;
         settings.clearRecentFiles();
-        settings.initDefaults();
+        settings.setRecentFilesLimit(5);
         EXPECT_EQ(settings.recentFilesLimit(), 5);
         EXPECT_FALSE(settings.hasRecentFiles());
         EXPECT_EQ(settings.recentFiles().size(), 0);
@@ -52,6 +52,28 @@ namespace ubTestSuit {
         Settings::loadTranslation("ru", translator);
         Settings::loadTranslation("not_exist", translator);
         delete translator;
+    }
+
+    TEST_F(UiFixture, Settings_key) {  // NOLINT(cert-err58-cpp)
+        EXPECT_EQ(Settings::key("Section", "key"), "Section/key");
+    }
+
+    TEST_F(UiFixture, Settings_retranslateUi) {  // NOLINT(cert-err58-cpp)
+        Settings settings;
+        settings.retranslateUi();
+    }
+
+    TEST_F(UiFixture, Settings_saveUserSettings) {  // NOLINT(cert-err58-cpp)
+        Settings settings;
+        settings.saveUserSettings();
+    }
+
+    TEST_F(UiFixture, Settings_items) {  // NOLINT(cert-err58-cpp)
+        Settings settings;
+        auto p = settings.items();
+        for (auto const& it = p.first; p.first != p.second; p.first++) {
+            it->get()->view(window);
+        }
     }
 
 }  // namespace ubTestSuit

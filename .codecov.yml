@@ -6,5 +6,9 @@ parsers:
       method: yes
       macro: no
 
+github_checks:
+  annotations: false
+
 ignore:
   - "build"  # Ignore test coverage for generated files.
+  - "utility_boilerplate_qt5/build"

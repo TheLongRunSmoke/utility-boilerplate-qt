@@ -138,6 +138,14 @@ class Settings : public QSettings {
      */
     virtual void retranslateUi();
 
+    /**
+     * Format full key for stored property.
+     *
+     * @param sectionTag section name in CamelCase.
+     * @param key property name in SnakeCase.
+     */
+    static QString key(const QString& sectionTag, const QString& key);
+
   protected:
     /**
      * List of user settings. Initialized in createBasicSettings() and
@@ -184,6 +192,10 @@ class Settings : public QSettings {
      * Path to INI file, where setting stored.
      */
     static QString path();
+
+    inline static QString themeKey();
+
+    inline static QString languageKey();
 
     inline static QString windowGeometryKey();
 
