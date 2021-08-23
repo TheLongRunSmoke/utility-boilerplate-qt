@@ -6,8 +6,10 @@ parsers:
       method: yes
       macro: no
 
-github_checks:
-  annotations: false
+coverage:
+  status:
+    patch:
+      default: false
 
 ignore:
   - "build"  # Ignore test coverage for generated files.
