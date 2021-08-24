@@ -131,7 +131,7 @@ class Settings : public QSettings {
      * @param language 2 chars code like "en", "ru", etc.
      * @param translator translator object pointer.
      */
-    static void loadTranslation(const QString& language, QTranslator* translator);
+    void loadTranslation(const QString& language, QTranslator* translator);
 
     /**
      * Recreate settings list to catch translation change.
@@ -207,7 +207,7 @@ class Settings : public QSettings {
 
     static inline QString fileKey();
 
-    static inline QLatin1String translationsDirectory();
+    virtual QLatin1String translationsDirectory();
 
     /**
      * Get system interface language.
@@ -222,7 +222,7 @@ class Settings : public QSettings {
      * @return list, guaranty has "en" key. Key is 2 chars language code, value -
      * user-friendly language name.
      */
-    static std::map<QString, QVariant> availableLanguages();
+    std::map<QString, QVariant> availableLanguages();
 
     /**
      * Contain localized language name. Key is 2 chars code like "en", "ru", etc.
@@ -234,9 +234,19 @@ class Settings : public QSettings {
      */
     static const std::map<QString, QString> KNOWN_LANGUAGE;
 
-    static bool tryingToLoadTranslation(QTranslator* translator, const QLocale& locale,
-                                        QLatin1String filename, const QString& successMessage,
-                                        const QString& failMessage);
+    /**
+     * Search and load translation.
+     *
+     * @param translator
+     * @param locale
+     * @param filename
+     * @param successMessage
+     * @param failMessage
+     * @return true if load correctly.
+     */
+    bool tryingToLoadTranslation(QTranslator* translator, const QLocale& locale,
+                                 QLatin1String filename, const QString& successMessage,
+                                 const QString& failMessage);
 };
 
 #endif  // UTILITY_BOILERPLATE_QT_SETTINGS_HPP

@@ -1,9 +1,27 @@
 #include <gtest/gtest.h>
 #include "../fixtures.hpp"
 
+#include "items/separatoritem.hpp"
 #include "settings.hpp"
 
 namespace ubTestSuit {
+
+    /**
+     * Fixture for testing some tricky methods.
+     */
+    class TestSettings : public Settings {
+        Q_DECLARE_TR_FUNCTIONS(TestSettings)
+
+      public:
+        TestSettings() {
+            TestSettings::createUserSettings();
+            initDefaults();
+            readUserSettings();
+        }
+
+      protected:
+        void createUserSettings() override { addUserSettingFirst(new SeparatorItem()); }
+    };
 
     TEST_F(UiFixture, Settings_windowGeometry) {  // NOLINT(cert-err58-cpp)
         Settings settings;
@@ -47,10 +65,11 @@ namespace ubTestSuit {
     }
 
     TEST_F(UiFixture, Settings_loadTranslation) {  // NOLINT(cert-err58-cpp)
+        Settings settings;
         auto* translator = new QTranslator();
-        Settings::loadTranslation("en", translator);
-        Settings::loadTranslation("ru", translator);
-        Settings::loadTranslation("not_exist", translator);
+        settings.loadTranslation("en", translator);
+        settings.loadTranslation("ru", translator);
+        settings.loadTranslation("not_exist", translator);
         delete translator;
     }
 
@@ -74,6 +93,10 @@ namespace ubTestSuit {
         for (auto const& it = p.first; p.first != p.second; p.first++) {
             it->get()->view(window);
         }
+    }
+
+    TEST_F(UiFixture, Settings_addUserSettingFirst) {  // NOLINT(cert-err58-cpp)
+        TestSettings settings;
     }
 
 }  // namespace ubTestSuit

@@ -8,12 +8,13 @@
 
 TextEditorSettings::TextEditorSettings() {
     TextEditorSettings::createUserSettings();
+    initDefaults();
     readUserSettings();
 }
 
 void TextEditorSettings::createUserSettings() {
     // Here some examples of how to use inbuilt controls.
-    // To fetch them use value(userSectionTag() + "/key", "").
+    // To fetch them use value(key(userSectionTag(), <key>)).
     addUserSetting(new SeparatorItem());
     auto* checkBoxFalse = new CheckBoxItem("checkbox_default_false", tr("Default false"));
     addUserSetting(checkBoxFalse);

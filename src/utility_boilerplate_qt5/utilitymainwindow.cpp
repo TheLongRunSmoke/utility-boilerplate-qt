@@ -18,7 +18,7 @@
 UtilityMainWindow::UtilityMainWindow(QWidget* parent) : QMainWindow(parent) {
     Settings settings;
     // Set language.
-    Settings::loadTranslation(settings.language(), _translator);
+    settings.loadTranslation(settings.language(), _translator);
     // Set object name, to easily identified this window.
     setObjectName(UtilityMainWindow::objectId());
     auto* mainFrame = new QFrame(this);
@@ -56,7 +56,7 @@ bool UtilityMainWindow::event(QEvent* event) {
         // Set style.
         QApplication::setStyle(settings.style());
         // Set language.
-        Settings::loadTranslation(settings.language(), _translator);
+        settings.loadTranslation(settings.language(), _translator);
         return true;
     } else if (event->type() == QEvent::LanguageChange) {
         // App translator object change.
