@@ -1,11 +1,14 @@
 #ifndef UMAINWINDOW_H
 #define UMAINWINDOW_H
 
+#include <QAction>
 #include <QFrame>
 #include <QGridLayout>
 #include <QMainWindow>
+#include <QMenu>
 #include <QSessionManager>
 #include <QStatusBar>
+#include <QToolBar>
 
 #include "settings/settingsdialog.hpp"
 
@@ -19,11 +22,12 @@
  * Using:
  * 1) Inherit from UtilityMainWindow.
  * 2) Initialize UI in constructor, by Qt documentation. Add you widget for
- * example. 2) Override loadFile(fileName) and saveFile(filename) implementing
- * read and write file from disc. See example for basic variant. 3) Override
- * getExtensions(), getFileReadMode(), getFileWriteMode() to specified file
- * types and read-write modes. 4) Delegate cut(), copy(), paste() to your
- * widget.
+ * example.
+ * 3) Override getExtensions(), getFileReadMode(), getFileWriteMode() to specified file
+ * types and read-write modes.
+ * 4) Override loadFile(fileName) and saveFile(filename) implementing
+ * read and write file from disc. See example for basic variant.
+ * 5) Delegate cut(), copy(), paste() to your widget.
  *
  * Instantiate and use as normal:
  *  MainWindow mainWin; <- heir of UtilityMainWindow.
@@ -178,10 +182,23 @@ class UtilityMainWindow : public QMainWindow {
      * nullptr.
      * @return pointer to created action.
      */
-    template <typename FuncReference>
-    QAction* addAction(const QString& name, const QString& tip, FuncReference method,
-                       QKeySequence::StandardKey keySequence, const QIcon& icon = QIcon(),
-                       QMenu* menu = nullptr, QToolBar* toolbar = nullptr);
+    template <typename FuncReference> static inline QAction* addAction(
+        const QString& name, const QString& tip,
+        typename QtPrivate::FunctionPointer<FuncReference>::Object* receiver, FuncReference method,
+        QKeySequence::StandardKey keySequence, const QIcon& icon = QIcon(), QMenu* menu = nullptr,
+        QToolBar* toolbar = nullptr) {
+        // Create action with or without icon.
+        auto* action
+            = !icon.isNull() ? new QAction(icon, name, receiver) : new QAction(name, receiver);
+        action->setStatusTip(tip);
+        // Add hotkey if specified.
+        if (keySequence != QKeySequence::StandardKey::UnknownKey) action->setShortcuts(keySequence);
+        // Connect to slot and add to menu and toolbar, if specified.
+        connect(action, &QAction::triggered, receiver, method, Qt::QueuedConnection);
+        if (menu != nullptr) menu->addAction(action);
+        if (toolbar != nullptr) toolbar->addAction(action);
+        return action;
+    }
 
     /**
      * Add action without icon shortcut to a menu and/or toolbar.
@@ -195,9 +212,19 @@ class UtilityMainWindow : public QMainWindow {
      * nullptr.
      * @return pointer to created action.
      */
-    template <typename FuncReference>
-    QAction* addAction(const QString& name, const QString& tip, FuncReference method,
-                       QMenu* menu = nullptr, QToolBar* toolbar = nullptr);
+    template <typename FuncReference> static inline QAction* addAction(
+        const QString& name, const QString& tip,
+        typename QtPrivate::FunctionPointer<FuncReference>::Object* receiver, FuncReference method,
+        QMenu* menu = nullptr, QToolBar* toolbar = nullptr) {
+        return addAction(name,
+                         tip,
+                         receiver,
+                         method,
+                         QKeySequence::StandardKey::UnknownKey,
+                         QIcon(),
+                         menu,
+                         toolbar);
+    }
 
     /**
      * Add action to a menu and/or toolbar in to position.
@@ -214,11 +241,29 @@ class UtilityMainWindow : public QMainWindow {
      * nullptr.
      * @return pointer to created action.
      */
-    template <typename FuncReference>
-    QAction* addActionToPosition(int position, const QString& name, const QString& tip,
-                                 FuncReference method, QKeySequence::StandardKey keySequence,
-                                 const QIcon& icon = QIcon(), QMenu* menu = nullptr,
-                                 QToolBar* toolbar = nullptr);
+    template <typename FuncReference> static inline QAction* addActionToPosition(
+        int position, const QString& name, const QString& tip,
+        typename QtPrivate::FunctionPointer<FuncReference>::Object* receiver, FuncReference method,
+        QKeySequence::StandardKey keySequence, const QIcon& icon = QIcon(), QMenu* menu = nullptr,
+        QToolBar* toolbar = nullptr) {
+        // Create action with or without icon.
+        auto* action
+            = !icon.isNull() ? new QAction(icon, name, receiver) : new QAction(name, receiver);
+        action->setStatusTip(tip);
+        // Add hotkey if specified.
+        if (keySequence != QKeySequence::StandardKey::UnknownKey) action->setShortcuts(keySequence);
+        // Connect to slot and add to menu and toolbar, if specified.
+        connect(action, &QAction::triggered, receiver, method, Qt::QueuedConnection);
+        if (menu != nullptr) {
+            auto* beforeAction = menu->actions().at(position);
+            menu->insertAction(beforeAction, action);
+        }
+        if (toolbar != nullptr) {
+            auto* beforeAction = toolbar->actions().at(position);
+            toolbar->insertAction(beforeAction, action);
+        }
+        return action;
+    }
 
     /**
      * Add separator in to menu and/or toolbar.

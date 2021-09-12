@@ -1,11 +1,9 @@
 #include "mainwindow.hpp"
 
 #include <QDir>
-#include <QFile>
 #include <QMessageBox>
 #include <QSaveFile>
 #include <QTextStream>
-#include <QWidget>
 #include <debug_new>
 #include "texteditorsettings.hpp"
 
@@ -81,3 +79,26 @@ void MainWindow::copy() { textEditor->copy(); }
 void MainWindow::paste() { textEditor->paste(); }
 
 void MainWindow::showSettings() { SettingsDialog(new TextEditorSettings()).exec(); }
+
+/**
+ * How to add your actions to menus.
+ */
+void MainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
+    UtilityMainWindow::createEditActions(menu, toolbar);
+    addActionToPosition(0,
+                        "first example action",
+                        "first example action tip",
+                        this,
+                        &MainWindow::nop,
+                        QKeySequence::UnknownKey,
+                        QIcon(),
+                        menu);
+    addSeparator(menu);
+    addAction("last example action",
+              "last example action tip",
+              this,
+              &MainWindow::nop,
+              QKeySequence::UnknownKey,
+              QIcon(),
+              menu);
+}

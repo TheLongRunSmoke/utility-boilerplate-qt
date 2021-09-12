@@ -13,4 +13,4 @@ coverage:
 
 ignore:
   - "build"  # Ignore test coverage for generated files.
-  - "utility_boilerplate_qt5/build"
+  - "src/utility_boilerplate_qt5/build"

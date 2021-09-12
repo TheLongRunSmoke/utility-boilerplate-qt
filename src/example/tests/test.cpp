@@ -19,7 +19,7 @@ namespace appTestSuit {
         ASSERT_EQ(QApplication::platformName(), "offscreen");
     }
 
-    // TODO: Not require user action, but hanging in GitHubAction for some reason. @thelongrunsmoke
+    // FIXME: Not require user action, but hanging in GitHubAction for some reason. @thelongrunsmoke
     TEST_F(AppUiFixture, DISABLED_loadFile) {  // NOLINT(cert-err58-cpp)
         window->loadFile("settings.ini");
         QApplication::exit(0);

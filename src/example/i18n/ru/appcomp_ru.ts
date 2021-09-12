@@ -7962,7 +7962,7 @@ The minimum Direct2D version required is %1. The Direct2D version on this system
         <location filename="../../utilitymainwindow.cpp" line="326"/>
         <source>This is example shows how to crate simple utility application using Utility Boilerplate Qt5. For details see
 &lt;a href=&apos;https://github.com/TheLongRunSmoke/utility-boilerplate-qt&apos;&gt;https://github.com/TheLongRunSmoke/utility-boilerplate-qt&lt;/a&gt;</source>
-        <translation>Это пример простого приложения созданого с использование каркаса using Utility Boilerplate Qt5. Подробная информация доступна по сслыке
+        <translation>Это пример простого приложения созданного с использование каркаса Utility Boilerplate Qt5. Подробная информация доступна по ссылке
 &lt;a href=&apos;https://github.com/TheLongRunSmoke/utility-boilerplate-qt&apos;&gt;https://github.com/TheLongRunSmoke/utility-boilerplate-qt&lt;/a&gt;</translation>
     </message>
     <message>

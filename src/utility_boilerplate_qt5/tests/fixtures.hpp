@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 
 #include <QApplication>
+#include <QMenuBar>
 
+#include "helpers.hpp"
 #include "utilitymainwindow.hpp"
 
 namespace ubTestSuit {
@@ -13,6 +15,12 @@ namespace ubTestSuit {
         Q_OBJECT
       public:
         explicit TestUtilityMainWindow(QWidget* parent = Q_NULLPTR) : UtilityMainWindow(parent){};
+
+        void updateRecentFiles_test() { updateRecentFiles(); }
+
+        void checkRecentFilesAvailability_test() { checkRecentFilesAvailability(); }
+
+        void newFile_test() { newFile(); }
 
       protected:
         void clearDocument() override {}

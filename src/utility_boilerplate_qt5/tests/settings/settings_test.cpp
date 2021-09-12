@@ -13,14 +13,14 @@ namespace ubTestSuit {
         Q_DECLARE_TR_FUNCTIONS(TestSettings)
 
       public:
-        TestSettings() {
-            TestSettings::createUserSettings();
-            initDefaults();
-            readUserSettings();
-        }
+        TestSettings() = default;
+
+        void addUserSettingFirst_test() { addUserSettingFirst(new SeparatorItem()); }
 
       protected:
-        void createUserSettings() override { addUserSettingFirst(new SeparatorItem()); }
+        void createUserSettings()
+
+            override {}
     };
 
     TEST_F(UiFixture, Settings_windowGeometry) {  // NOLINT(cert-err58-cpp)
@@ -67,8 +67,7 @@ namespace ubTestSuit {
     TEST_F(UiFixture, Settings_loadTranslation) {  // NOLINT(cert-err58-cpp)
         Settings settings;
         auto* translator = new QTranslator();
-        settings.loadTranslation("en", translator);
-        settings.loadTranslation("ru", translator);
+        // No translation available form here.
         settings.loadTranslation("not_exist", translator);
         delete translator;
     }
@@ -97,6 +96,7 @@ namespace ubTestSuit {
 
     TEST_F(UiFixture, Settings_addUserSettingFirst) {  // NOLINT(cert-err58-cpp)
         TestSettings settings;
+        settings.addUserSettingFirst_test();
     }
 
 }  // namespace ubTestSuit

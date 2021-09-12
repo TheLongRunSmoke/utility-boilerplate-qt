@@ -1,5 +1,6 @@
 #include "utilitymainwindow.hpp"
 #include "events.hpp"
+#include "helpers.hpp"
 
 #include <QCloseEvent>
 #include <QEvent>
@@ -15,7 +16,7 @@
 #include <QWindow>
 #include <debug_new>
 
-UtilityMainWindow::UtilityMainWindow(QWidget* parent) : QMainWindow(parent) {
+UtilityMainWindow::UtilityMainWindow(QWidget* parent) {
     Settings settings;
     // Set language.
     settings.loadTranslation(settings.language(), _translator);
@@ -84,6 +85,7 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     _currentFile = filePath;
     QString shownName = _currentFile;
     if (shownName.isEmpty()) shownName = defaultFileName();
+    // TODO: Rewrite to formatting.
     setWindowTitle(
         QString("[*]").append(shownName).append(" - ").append(QCoreApplication::applicationName()));
     setWindowModified(false);
@@ -119,6 +121,7 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
     connect(menu, &QMenu::aboutToShow, this, &UtilityMainWindow::checkRecentFilesAvailability);
     addAction(tr("&New"),
               tr("Create a new file"),
+              this,
               &UtilityMainWindow::newFile,
               QKeySequence::New,
               QIcon::fromTheme("document-new", QIcon(":/utility_boilerplate_qt5/ic_new")),
@@ -126,6 +129,7 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
               toolbar);
     addAction(tr("&Open"),
               tr("Open file"),
+              this,
               &UtilityMainWindow::open,
               QKeySequence::Open,
               QIcon::fromTheme("document-open", QIcon(":/utility_boilerplate_qt5/ic_open")),
@@ -133,17 +137,18 @@ void UtilityMainWindow::createFileActions(QMenu* menu, QToolBar* toolbar) {
               toolbar);
     addAction(tr("&Save"),
               tr("Save file"),
+              this,
               &UtilityMainWindow::save,
               QKeySequence::Save,
               QIcon::fromTheme("document-save", QIcon(":/utility_boilerplate_qt5/ic_save")),
               menu,
               toolbar);
-    addAction(tr("Save as…"), tr("Save file as…"), &UtilityMainWindow::saveAs, menu);
+    addAction(tr("Save as…"), tr("Save file as…"), this, &UtilityMainWindow::saveAs, menu);
     addSeparator(menu);
     _recentFilesSubmenu = menu->addMenu(tr("R&ecent files…"));
     connect(_recentFilesSubmenu, &QMenu::aboutToShow, this, &UtilityMainWindow::updateRecentFiles);
     addSeparator(menu);
-    addAction(tr("E&xit"), tr("Quit"), &UtilityMainWindow::exit, menu);
+    addAction(tr("E&xit"), tr("Quit"), this, &UtilityMainWindow::exit, menu);
 }
 
 void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
@@ -151,6 +156,7 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 
     addAction(tr("Cu&t"),
               tr("Cut the current selection's contents to the clipboard"),
+              this,
               &UtilityMainWindow::cut,
               QKeySequence::Cut,
               QIcon::fromTheme("edit-cut", QIcon(":/utility_boilerplate_qt5/ic_cut")),
@@ -158,6 +164,7 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
               toolbar);
     addAction(tr("&Copy"),
               tr("Copy the current selection's contents to the clipboard"),
+              this,
               &UtilityMainWindow::copy,
               QKeySequence::Copy,
               QIcon::fromTheme("edit-copy", QIcon(":/utility_boilerplate_qt5/ic_copy")),
@@ -165,6 +172,7 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
               toolbar);
     addAction(tr("&Paste"),
               tr("Paste the clipboard's contents into the current selection"),
+              this,
               &UtilityMainWindow::paste,
               QKeySequence::Paste,
               QIcon::fromTheme("edit-paste", QIcon(":/utility_boilerplate_qt5/ic_paste")),
@@ -174,13 +182,19 @@ void UtilityMainWindow::createEditActions(QMenu* menu, QToolBar* toolbar) {
 
 #endif  // !QT_NO_CLIPBOARD
 
-    addAction(
-        tr("Se&ttings"), tr("Show application settings."), &UtilityMainWindow::showSettings, menu);
+    addAction(tr("Se&ttings"),
+              tr("Show application settings."),
+              this,
+              &UtilityMainWindow::showSettings,
+              menu);
 }
 
 void UtilityMainWindow::createHelpActions(QMenu* menu) {
-    addAction(tr("&About"), tr("About application."), &UtilityMainWindow::about, menu);
-    addAction(tr("About &Qt"), tr("Show the Qt library's About box"), &QApplication::aboutQt, menu);
+    addAction(tr("&About"), tr("About application."), this, &UtilityMainWindow::about, menu);
+    auto* action = new QAction(tr("About &Qt"), this);
+    action->setStatusTip(tr("Show the Qt library's About box"));
+    connect(action, &QAction::triggered, this, &QApplication::aboutQt, Qt::QueuedConnection);
+    menu->addAction(action);
 }
 
 void UtilityMainWindow::updateRecentFiles() {
@@ -425,53 +439,6 @@ void UtilityMainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void UtilityMainWindow::createStatusBar() { statusBar()->showMessage(tr("Ready"), 3000); }
-
-template <typename FuncReference>
-QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip,
-                                      const FuncReference method,
-                                      const QKeySequence::StandardKey keySequence,
-                                      const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
-    // Create action with or without icon.
-    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
-    action->setStatusTip(tip);
-    // Add hotkey if specified.
-    if (keySequence != QKeySequence::StandardKey::UnknownKey) action->setShortcuts(keySequence);
-    // Connect to slot and add to menu and toolbar, if specified.
-    connect(action, &QAction::triggered, this, method, Qt::QueuedConnection);
-    if (menu != nullptr) menu->addAction(action);
-    if (toolbar != nullptr) toolbar->addAction(action);
-    return action;
-}
-
-template <typename FuncReference>
-QAction* UtilityMainWindow::addAction(const QString& name, const QString& tip, FuncReference method,
-                                      QMenu* menu, QToolBar* toolbar) {
-    return addAction(
-        name, tip, method, QKeySequence::StandardKey::UnknownKey, QIcon(), menu, toolbar);
-}
-
-template <typename FuncReference>
-QAction* UtilityMainWindow::addActionToPosition(int position, const QString& name,
-                                                const QString& tip, FuncReference method,
-                                                QKeySequence::StandardKey keySequence,
-                                                const QIcon& icon, QMenu* menu, QToolBar* toolbar) {
-    // Create action with or without icon.
-    auto* action = !icon.isNull() ? new QAction(icon, name, this) : new QAction(name, this);
-    action->setStatusTip(tip);
-    // Add hotkey if specified.
-    if (keySequence != QKeySequence::StandardKey::UnknownKey) action->setShortcuts(keySequence);
-    // Connect to slot and add to menu and toolbar, if specified.
-    connect(action, &QAction::triggered, this, method, Qt::QueuedConnection);
-    if (menu != nullptr) {
-        auto* beforeAction = menu->actions().at(position);
-        menu->insertAction(beforeAction, action);
-    }
-    if (toolbar != nullptr) {
-        auto* beforeAction = toolbar->actions().at(position);
-        toolbar->insertAction(beforeAction, action);
-    }
-    return action;
-}
 
 QString UtilityMainWindow::defaultFileName() { return "untitled"; }
 

@@ -37,6 +37,8 @@ class MainWindow : public UtilityMainWindow {
 
   protected slots:
 
+    void createEditActions(QMenu* menu, QToolBar* toolbar) override;
+
     void cut() override;
 
     void copy() override;
@@ -45,6 +47,8 @@ class MainWindow : public UtilityMainWindow {
 
   private:
     TextEditor* textEditor;  // <- This is your widget.
+
+    void nop(){};
 };
 
 #endif  // UTILITY_BOILERPLATE_QT_MAINWINDOW_HPP
