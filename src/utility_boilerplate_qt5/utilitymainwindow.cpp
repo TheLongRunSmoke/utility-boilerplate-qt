@@ -85,9 +85,7 @@ void UtilityMainWindow::setCurrentFile(const QString& filePath) {
     _currentFile = filePath;
     QString shownName = _currentFile;
     if (shownName.isEmpty()) shownName = defaultFileName();
-    // TODO: Rewrite to formatting.
-    setWindowTitle(
-        QString("[*]").append(shownName).append(" - ").append(QCoreApplication::applicationName()));
+    setWindowTitle(QString("[*]%1 - %2").arg(shownName, QCoreApplication::applicationName()));
     setWindowModified(false);
 }
 

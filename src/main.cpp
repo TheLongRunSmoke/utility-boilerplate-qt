@@ -32,7 +32,7 @@ extern "C" bool leak_whitelist_callback(char const* file, int line, void* addr, 
     // I used QEvent, it's object deleted outside of origin file and will be
     // detected.
     auto whitelist
-        = std::map<std::string, std::list<int>>{{"settingsdialog.cpp", std::list<int>{47}}};
+        = std::map<std::string, std::list<int>>{{"settingsdialog.cpp", std::list<int>{46}}};
     // Iterate through whitelist and return true if coincidence found.
     for (auto const& it : whitelist) {
         if (filename.find(it.first) == std::string::npos) continue;

@@ -49,8 +49,8 @@ jobs:
       - name: Test
         run: |
           cd build/tests
-          ctest
-          ctest -T coverage
+          ctest -V
+          ctest -V -T coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
