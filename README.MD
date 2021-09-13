@@ -1,6 +1,6 @@
 English | [Русский](README.ru.MD)
 
-[![Qt5 Utility Boilerplate by TheLongRunSmoke]()](#)
+[![Qt5 Utility Boilerplate by TheLongRunSmoke](https://user-images.githubusercontent.com/5612507/133026200-2b10dc0d-d11e-44cd-a816-48e3a27b6c4d.png)](#)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -27,6 +27,7 @@ You can go straight to developing widget contained target functionality.
 * Test suites and code coverage already setup.
 * Code style enforcing tooling.
 * Internationalization support.
+* Build in memory leaks detection.
 * No Boost.
 * Cmake as build system.
 * Basic CI, based on GitHub Actions.
@@ -58,15 +59,22 @@ See [Qt Wiki](https://wiki.qt.io/Main).
 In-source build restricted. From source folder do:
 
 ```shell
-mkdir build
-cd build/
-cmake ../
-cmake --build .
+cmake -S. -Bbuild
+cmake --build build
 ```
 
 # Example
 
+Directory `src/example` contains code that show how to create application on this boilerplate.
 
+1. Inherit your main window class from `UtilityMainWindow` class instead of `QMainWindow`.
+2. Initialize UI in constructor by Qt documentation, add you widget and so on.
+3. Override getExtensions(), getFileReadMode(), getFileWriteMode() to specified file types and read-write modes.
+4. Override loadFile(fileName) and saveFile(filename) implementing read and write file from disc. See example for basic
+   variant.
+5. Implement isDocumentModified() and clearDocument() this let window to keep track of document state.
+6. Delegate methods cut(), copy() and paste() to your widget.
+7. In `main.cpp` change `MainWindow` to your class.
 
 # Internationalization support
 
@@ -161,3 +169,14 @@ Fix all files in project.
 cmake --build build --target fix-format
 ```
 
+# Build in memory leaks detection
+
+Boilerplate have memory leaks detection based debug_new technics implemented by NVWA library.
+
+Can be enabled on Linux and Mac by adding `-DNVWA` on build.
+
+Disabled on Windows due poor compatibility.
+
+# Contacts
+
+Rise issues, if you have questions or support request.

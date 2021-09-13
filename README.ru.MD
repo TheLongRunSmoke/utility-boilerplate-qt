@@ -1,6 +1,6 @@
 [English](README.MD) | Русский
 
-[![Qt5 Utility Boilerplate by TheLongRunSmoke]()](#)
+[![Qt5 Utility Boilerplate by TheLongRunSmoke](https://user-images.githubusercontent.com/5612507/133026200-2b10dc0d-d11e-44cd-a816-48e3a27b6c4d.png)](#)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -27,6 +27,7 @@
 * Наборы тестов и покрытие уже настроены.
 * Инструменты контроля стиля кода.
 * Поддержка интернационализации.
+* Встроенная поддержка поиска утечек памяти.
 * Нет Boost.
 * Cmake как система сборки.
 * Базовый CI на основе GitHub Actions.
@@ -58,13 +59,22 @@ sudo apt install build-essential qt5-default qttools5-dev-tools
 Сборка in-source запрещена. Собирайте в новой директории:
 
 ```shell
-mkdir build
-cd build/
-cmake ../
-cmake --build .
+cmake -S. -Bbuild
+cmake --build build
 ```
 
 # Пример
+
+Папка `src/example` содержит пример создания приложения с использованием этого каркаса.
+
+1. Создайте класс основного окна от `UtilityMainWindow` вместо `QMainWindow`.
+2. Инициализируйте UI в конструкторе, в соответствии с документацией Qt.
+3. Переопределите getExtensions(), getFileReadMode(), getFileWriteMode() чтобы указать тип фала и режимы записи-чтения.
+4. Переопределите loadFile(fileName) and saveFile(filename) реализовав чтение и запись вашего файла. В примере есть
+   базовый вариант подходящий для текста.
+5. Реализуйте isDocumentModified() and clearDocument() это позволит окну отвечать на состояние документа.
+6. Делегируйте методы cut(), copy() and paste() вашему виджету.
+7. В `main.cpp` замените `MainWindow` на ваш класс.
 
 # Поддержка интернационализации
 
@@ -158,4 +168,15 @@ cmake --build build --target check-format
 cmake --build build --target fix-format
 ```
 
+# Встроенная поддержка поиска утечек памяти
+
+Каркас включает поиск утечек памяти на базе техники debug_new, реализованной библиотекой NVWA.
+
+Чтобы включить этот механизм на Linux и Mac добавьте ключ `-DNVWA` во время сборки.
+
+На Windows механизм выключен в силу плохой совместимости.
+
+# Контакты
+
+Используйте тикеты (issues), если у вас есть вопросы.
 
