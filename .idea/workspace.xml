@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt" />
+      <config projectName="utility_boilerplate_qt_example" targetName="fix-cmake-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gmock_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="Experimental" />
+      <config projectName="utility_boilerplate_qt_example" targetName="tests_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="check-cmake-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="check-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalMemCheck" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousConfigure" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyUpdate" />
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt5" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalUpdate" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gtest_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyMemCheck" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gtest_main_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousCoverage" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyTest" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousBuild" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyConfigure" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousStart" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalTest" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gtest_main" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ub_qt5_tests" />
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="fix-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousUpdate" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalCoverage" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousTest" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gtest" />
+      <config projectName="utility_boilerplate_qt_example" targetName="format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt_example" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyMemoryCheck" />
+      <config projectName="utility_boilerplate_qt_example" targetName="check-clang-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gmock" />
+      <config projectName="utility_boilerplate_qt_example" targetName="clang-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyStart" />
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt_example_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousMemCheck" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalBuild" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyCoverage" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalStart" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gmock_main_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="cmake-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlySubmit" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ub_qt5_tests_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalConfigure" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ContinuousSubmit" />
+      <config projectName="utility_boilerplate_qt_example" targetName="ExperimentalSubmit" />
+      <config projectName="utility_boilerplate_qt_example" targetName="Continuous" />
+      <config projectName="utility_boilerplate_qt_example" targetName="utility_boilerplate_qt5_autogen" />
+      <config projectName="utility_boilerplate_qt_example" targetName="fix-clang-format" />
+      <config projectName="utility_boilerplate_qt_example" targetName="tests" />
+      <config projectName="utility_boilerplate_qt_example" targetName="Nightly" />
+      <config projectName="utility_boilerplate_qt_example" targetName="gmock_main" />
+      <config projectName="utility_boilerplate_qt_example" targetName="NightlyBuild" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug-MinGW" ENABLED="true" GENERATION_DIR="cmake-build-debug" CONFIG_NAME="Debug" TOOLCHAIN_NAME="MinGW 8.1.0 QT" GENERATION_OPTIONS="-DCODE_COVERAGE=1" />
+      <configuration PROFILE_NAME="Release-MinGW" ENABLED="true" GENERATION_DIR="cmake-build-release" CONFIG_NAME="Release" TOOLCHAIN_NAME="MinGW 8.1.0 QT" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="94cd48a7-0310-4c15-8fea-99f71b2b545d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/docs/dynsections.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/dynsections.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/menudata.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/menudata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_10.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_10.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_11.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_12.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_12.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_13.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_13.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_14.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_14.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_9.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_a.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_b.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_b.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_c.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_c.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_d.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_d.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_e.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_e.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/all_f.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/all_f.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/classes_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/classes_5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_10.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_10.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_11.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_11.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_9.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_a.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_b.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_b.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_c.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_c.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_d.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_d.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_e.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_e.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/functions_f.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/functions_f.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/pages_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/pages_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/searchdata.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/searchdata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search/variables_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search/variables_0.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-MinGW" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/lib/3rd/Format.cmake" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1mY7PBPZL21grMCWq3k9KZ6qIe1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="ctest.advertisement.all.test.configuration.is.created" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake-build-debug/coverage" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5\tests\settings" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\example\tests" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\example" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\.github\workflows" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5\tests\settings\items" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5\tests" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5\events" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\src\utility_boilerplate_qt5" />
+      <recent name="R:\Workspace\C++\Qt\utility_boilerplate_qt\utility_boilerplate_qt5\settings\items" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.check-format">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check-format" type="CMakeRunConfiguration" factoryName="Application" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="check-format" CONFIG_NAME="Debug-MinGW" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="utility_boilerplate_qt_example">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="utility_boilerplate_qt_example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Release-MinGW" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="utility_boilerplate_qt_example" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All tests" type="CTestRunConfiguration" factoryName="CTestRun" PROGRAM_PARAMS="-VV" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$CMakeCurrentLocalGenerationDir$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Release-MinGW" RUN_PATH="$CTestCurrentExecutableName$" EXPLICIT_BUILD_TARGET_NAME="all" TEST_MODE="PATTERN">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.check-format" />
+      <item itemvalue="CMake Application.utility_boilerplate_qt_example" />
+      <item itemvalue="CTest Application.All tests" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="94cd48a7-0310-4c15-8fea-99f71b2b545d" name="Default Changelist" comment="" />
+      <created>1609658643815</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609658643815</updated>
+      <workItem from="1609658644937" duration="69000" />
+      <workItem from="1609658734661" duration="1352000" />
+      <workItem from="1609666480544" duration="788000" />
+      <workItem from="1609667281670" duration="10790000" />
+      <workItem from="1609741241354" duration="4138000" />
+      <workItem from="1609754465371" duration="6842000" />
+      <workItem from="1617960305560" duration="549000" />
+      <workItem from="1617961276441" duration="224000" />
+      <workItem from="1617961661681" duration="756000" />
+      <workItem from="1617972243250" duration="5719000" />
+      <workItem from="1618117926930" duration="3286000" />
+      <workItem from="1618202347964" duration="1275000" />
+      <workItem from="1618288389642" duration="12202000" />
+      <workItem from="1618642404424" duration="4026000" />
+      <workItem from="1618721957204" duration="1408000" />
+      <workItem from="1618753440247" duration="137000" />
+      <workItem from="1618807526960" duration="4807000" />
+      <workItem from="1618812367338" duration="1372000" />
+      <workItem from="1618814554959" duration="6595000" />
+      <workItem from="1619005228534" duration="3436000" />
+      <workItem from="1619092491165" duration="10738000" />
+      <workItem from="1619273419239" duration="32000" />
+      <workItem from="1619273508166" duration="5667000" />
+      <workItem from="1619279270721" duration="90000" />
+      <workItem from="1619407298906" duration="3861000" />
+      <workItem from="1619434738745" duration="1814000" />
+      <workItem from="1619609005519" duration="18000" />
+      <workItem from="1619678900421" duration="9000" />
+      <workItem from="1620363424932" duration="4813000" />
+      <workItem from="1620383109355" duration="607000" />
+      <workItem from="1620624988165" duration="627000" />
+      <workItem from="1620707988529" duration="56000" />
+      <workItem from="1620877228313" duration="1972000" />
+      <workItem from="1620881639487" duration="7274000" />
+      <workItem from="1623488112780" duration="2481000" />
+      <workItem from="1623490986428" duration="314000" />
+      <workItem from="1623491480408" duration="3329000" />
+      <workItem from="1623497126454" duration="1512000" />
+      <workItem from="1623498656286" duration="954000" />
+      <workItem from="1623499623234" duration="2805000" />
+      <workItem from="1623518281491" duration="1585000" />
+      <workItem from="1623575341689" duration="10461000" />
+      <workItem from="1623595107963" duration="122000" />
+      <workItem from="1623595357020" duration="206000" />
+      <workItem from="1623595571882" duration="387000" />
+      <workItem from="1623596846281" duration="500000" />
+      <workItem from="1623659825812" duration="4494000" />
+      <workItem from="1623672298955" duration="200000" />
+      <workItem from="1623679939664" duration="500000" />
+      <workItem from="1623682472392" duration="287000" />
+      <workItem from="1623682812163" duration="5734000" />
+      <workItem from="1623728868651" duration="11268000" />
+      <workItem from="1623820981845" duration="3219000" />
+      <workItem from="1623901560340" duration="6243000" />
+      <workItem from="1623994657696" duration="2143000" />
+      <workItem from="1624090741141" duration="2074000" />
+      <workItem from="1624117028647" duration="1840000" />
+      <workItem from="1624118885858" duration="502000" />
+      <workItem from="1624119402764" duration="12000" />
+      <workItem from="1624119442037" duration="136000" />
+      <workItem from="1624119589786" duration="248000" />
+      <workItem from="1624171118161" duration="629000" />
+      <workItem from="1624209843771" duration="462000" />
+      <workItem from="1624251016547" duration="1699000" />
+      <workItem from="1624254750839" duration="893000" />
+      <workItem from="1624256326997" duration="194000" />
+      <workItem from="1624256531188" duration="952000" />
+      <workItem from="1624268675958" duration="1943000" />
+      <workItem from="1624300338164" duration="1217000" />
+      <workItem from="1624384832695" duration="2732000" />
+      <workItem from="1624387648799" duration="418000" />
+      <workItem from="1624388077160" duration="436000" />
+      <workItem from="1624388524916" duration="1032000" />
+      <workItem from="1624421620132" duration="701000" />
+      <workItem from="1624460289452" duration="337000" />
+      <workItem from="1624460635879" duration="137000" />
+      <workItem from="1624460781804" duration="1059000" />
+      <workItem from="1624461853935" duration="7141000" />
+      <workItem from="1624640472854" duration="3551000" />
+      <workItem from="1624699291253" duration="768000" />
+      <workItem from="1624877403351" duration="7176000" />
+      <workItem from="1625027729182" duration="624000" />
+      <workItem from="1625028437393" duration="7290000" />
+      <workItem from="1625997355616" duration="46000" />
+      <workItem from="1625997411310" duration="264000" />
+      <workItem from="1626072211304" duration="812000" />
+      <workItem from="1628480310984" duration="5477000" />
+      <workItem from="1628499908519" duration="1291000" />
+      <workItem from="1628592204862" duration="10000" />
+      <workItem from="1628678611048" duration="7114000" />
+      <workItem from="1628862624186" duration="152000" />
+      <workItem from="1628862781354" duration="7000" />
+      <workItem from="1628938089583" duration="5254000" />
+      <workItem from="1628943939827" duration="988000" />
+      <workItem from="1628944939935" duration="781000" />
+      <workItem from="1628945920721" duration="587000" />
+      <workItem from="1628946791205" duration="496000" />
+      <workItem from="1629022978655" duration="6699000" />
+      <workItem from="1629086068986" duration="5935000" />
+      <workItem from="1629166032723" duration="7311000" />
+      <workItem from="1629432523877" duration="2113000" />
+      <workItem from="1629434950327" duration="55000" />
+      <workItem from="1629435013971" duration="375000" />
+      <workItem from="1629435620331" duration="311000" />
+      <workItem from="1629435943770" duration="105000" />
+      <workItem from="1629436058692" duration="270000" />
+      <workItem from="1629436340033" duration="180000" />
+      <workItem from="1629436529304" duration="3382000" />
+      <workItem from="1629624885278" duration="9829000" />
+      <workItem from="1629696798393" duration="4404000" />
+      <workItem from="1629782364033" duration="3287000" />
+      <workItem from="1629822607530" duration="6025000" />
+      <workItem from="1629872738732" duration="953000" />
+      <workItem from="1629949931014" duration="1797000" />
+      <workItem from="1629972675341" duration="5253000" />
+      <workItem from="1630032055585" duration="3688000" />
+      <workItem from="1630046749363" duration="1067000" />
+      <workItem from="1630051640439" duration="10192000" />
+      <workItem from="1630159739430" duration="4339000" />
+      <workItem from="1630236291272" duration="5613000" />
+      <workItem from="1630297174260" duration="3011000" />
+      <workItem from="1630313488299" duration="3013000" />
+      <workItem from="1630334560885" duration="8579000" />
+      <workItem from="1630901017464" duration="2705000" />
+      <workItem from="1631014915377" duration="3976000" />
+      <workItem from="1631438065795" duration="8675000" />
+      <workItem from="1631506639952" duration="5946000" />
+      <workItem from="1631515255144" duration="4714000" />
+      <workItem from="1631524567770" duration="1176000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="0db86f06-392d-44f4-9b73-ac119bb098b7">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:R:/Workspace/C++/Qt/utility_boilerplate_qt/.github/workflows" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="0db86f06-392d-44f4-9b73-ac119bb098b7" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/utility_boilerplate_qt5/tests/utilitymainwindow_test.cpp</url>
+          <line>32</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CTestRunConfiguration">
+        <watch expression="pathd.null" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="R:\Workspace\C++\Qt\utility_boilerplate_qt\cmake-build-debug" NAME="All tests Coverage Results" MODIFIED="1629830961176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="$PROJECT_DIR$/cmake-build-test-coverage" NAME="UiFixture.SettingItems_CheckBoxItem Coverage Results" MODIFIED="1624386479705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="$PROJECT_DIR$/cmake-build-test" NAME="All Tests Coverage Results" MODIFIED="1624387560906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

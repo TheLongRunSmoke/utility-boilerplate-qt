@@ -1,0 +1,1 @@
+CMakeLists.txt not found in R:\Workspace\C++\Qt\utility_boilerplate_qt Select CMakeLists.txt
