@@ -55,9 +55,12 @@ sudo apt install build-essential qt5-default qttools5-dev-tools
 See [Qt Wiki](https://wiki.qt.io/Main).
 
 ## Build
+Initialize submodules:
+```shell
+git submodule update --init
+```
 
 In-source build restricted. From source folder do:
-
 ```shell
 cmake -S. -Bbuild
 cmake --build build
